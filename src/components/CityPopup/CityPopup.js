@@ -27,7 +27,7 @@ function CityPopup(props) {
     <div className={`city-popup ${props.isCityPopupOpen ? 'city-popup_active' : ''}`}>
       <form className="city-popup__container">
         <svg onClick={() => { handleClose() }} className="city-popup__close" width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M1 21L21 1M1 1L21 21" stroke="black" stroke-width="2" stroke-linecap="round" />
+          <path d="M1 21L21 1M1 1L21 21" stroke="black" strokeWidth="2" strokeLinecap="round" />
         </svg>
         <h2 className="city-popup__title">Укажите или выберите город</h2>
         <p className="city-popup__input-title">Поиск города</p>

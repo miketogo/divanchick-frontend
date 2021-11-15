@@ -121,15 +121,15 @@ function Header(props) {
               <p className="header__icon-counter">12</p>
 
               <svg className="header__icon-svg" width="15" height="20" viewBox="0 0 15 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fillRule="evenodd" clipRule="evenodd" d="M11.1501 5.06429C11.1501 7.17105 9.4881 8.87858 7.43756 8.87858C5.38702 8.87858 3.72506 7.17105 3.72506 5.06429C3.72506 2.95753 5.38702 1.25 7.43756 1.25C9.4881 1.25 11.1501 2.95753 11.1501 5.06429Z" stroke="black" stroke-width="1.25" stroke-linecap="square" />
-                <path fillRule="evenodd" clipRule="evenodd" d="M13.6251 18.75H1.25006C1.25006 17.8466 1.25006 16.9872 1.25006 16.209C1.25006 14.101 2.9122 12.3928 4.96256 12.3928H9.91256C11.9629 12.3928 13.6251 14.101 13.6251 16.209C13.6251 16.9872 13.6251 17.8466 13.6251 18.75Z" stroke="black" stroke-width="1.25" stroke-linecap="square" />
+                <path fillRule="evenodd" clipRule="evenodd" d="M11.1501 5.06429C11.1501 7.17105 9.4881 8.87858 7.43756 8.87858C5.38702 8.87858 3.72506 7.17105 3.72506 5.06429C3.72506 2.95753 5.38702 1.25 7.43756 1.25C9.4881 1.25 11.1501 2.95753 11.1501 5.06429Z" stroke="black" strokeWidth="1.25" strokeLinecap="square" />
+                <path fillRule="evenodd" clipRule="evenodd" d="M13.6251 18.75H1.25006C1.25006 17.8466 1.25006 16.9872 1.25006 16.209C1.25006 14.101 2.9122 12.3928 4.96256 12.3928H9.91256C11.9629 12.3928 13.6251 14.101 13.6251 16.209C13.6251 16.9872 13.6251 17.8466 13.6251 18.75Z" stroke="black" strokeWidth="1.25" strokeLinecap="square" />
               </svg>
             </div>
             <div className="header__mobile-icon">
               <p className="header__icon-counter">12</p>
 
               <svg className="header__icon-svg" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M3.04687 3.33333L2.34375 1H0M3.04687 3.33333L5.85938 12.6667H18.75V5.66667C18.75 4.378 17.7007 3.33333 16.4062 3.33333H3.04687ZM16.4062 18.5C15.759 18.5 15.2344 17.9777 15.2344 17.3333C15.2344 16.689 15.759 16.1667 16.4062 16.1667C17.0535 16.1667 17.5781 16.689 17.5781 17.3333C17.5781 17.9777 17.0535 18.5 16.4062 18.5ZM7.03125 17.3333C7.03125 16.689 7.55592 16.1667 8.20312 16.1667C8.85033 16.1667 9.375 16.689 9.375 17.3333C9.375 17.9777 8.85033 18.5 8.20312 18.5C7.55592 18.5 7.03125 17.9777 7.03125 17.3333Z" stroke="black" stroke-width="1.25" />
+                <path d="M3.04687 3.33333L2.34375 1H0M3.04687 3.33333L5.85938 12.6667H18.75V5.66667C18.75 4.378 17.7007 3.33333 16.4062 3.33333H3.04687ZM16.4062 18.5C15.759 18.5 15.2344 17.9777 15.2344 17.3333C15.2344 16.689 15.759 16.1667 16.4062 16.1667C17.0535 16.1667 17.5781 16.689 17.5781 17.3333C17.5781 17.9777 17.0535 18.5 16.4062 18.5ZM7.03125 17.3333C7.03125 16.689 7.55592 16.1667 8.20312 16.1667C8.85033 16.1667 9.375 16.689 9.375 17.3333C9.375 17.9777 8.85033 18.5 8.20312 18.5C7.55592 18.5 7.03125 17.9777 7.03125 17.3333Z" stroke="black" strokeWidth="1.25" />
               </svg>
             </div>
 
@@ -164,7 +164,7 @@ function Header(props) {
           <input placeholder="Ищите среди 50 000 товаров!" className="header__input" name="search" type="text" value={searchValue} onChange={handleSearchChange} maxLength="50"></input>
           {isDropDownOpened ?
             <svg onClick={handleSearchReset} className="header__input-search-icon" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M1 11L11 1M1 1L11 11" stroke="black" stroke-width="2" stroke-linecap="round" />
+              <path d="M1 11L11 1M1 1L11 11" stroke="black" strokeWidth="2" strokeLinecap="round" />
             </svg>
 
             :
@@ -193,8 +193,8 @@ function Header(props) {
                 <p className="header__icon-counter">12</p>
 
                 <svg className="header__icon-svg" width="15" height="20" viewBox="0 0 15 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path fillRule="evenodd" clipRule="evenodd" d="M11.1501 5.06429C11.1501 7.17105 9.4881 8.87858 7.43756 8.87858C5.38702 8.87858 3.72506 7.17105 3.72506 5.06429C3.72506 2.95753 5.38702 1.25 7.43756 1.25C9.4881 1.25 11.1501 2.95753 11.1501 5.06429Z" stroke="black" stroke-width="1.25" stroke-linecap="square" />
-                  <path fillRule="evenodd" clipRule="evenodd" d="M13.6251 18.75H1.25006C1.25006 17.8466 1.25006 16.9872 1.25006 16.209C1.25006 14.101 2.9122 12.3928 4.96256 12.3928H9.91256C11.9629 12.3928 13.6251 14.101 13.6251 16.209C13.6251 16.9872 13.6251 17.8466 13.6251 18.75Z" stroke="black" stroke-width="1.25" stroke-linecap="square" />
+                  <path fillRule="evenodd" clipRule="evenodd" d="M11.1501 5.06429C11.1501 7.17105 9.4881 8.87858 7.43756 8.87858C5.38702 8.87858 3.72506 7.17105 3.72506 5.06429C3.72506 2.95753 5.38702 1.25 7.43756 1.25C9.4881 1.25 11.1501 2.95753 11.1501 5.06429Z" stroke="black" strokeWidth="1.25" strokeLinecap="square" />
+                  <path fillRule="evenodd" clipRule="evenodd" d="M13.6251 18.75H1.25006C1.25006 17.8466 1.25006 16.9872 1.25006 16.209C1.25006 14.101 2.9122 12.3928 4.96256 12.3928H9.91256C11.9629 12.3928 13.6251 14.101 13.6251 16.209C13.6251 16.9872 13.6251 17.8466 13.6251 18.75Z" stroke="black" strokeWidth="1.25" strokeLinecap="square" />
                 </svg>
               </div>
               <p className="header__icon-title">Профиль</p>
@@ -204,7 +204,7 @@ function Header(props) {
                 <p className="header__icon-counter">12</p>
 
                 <svg className="header__icon-svg" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M3.04687 3.33333L2.34375 1H0M3.04687 3.33333L5.85938 12.6667H18.75V5.66667C18.75 4.378 17.7007 3.33333 16.4062 3.33333H3.04687ZM16.4062 18.5C15.759 18.5 15.2344 17.9777 15.2344 17.3333C15.2344 16.689 15.759 16.1667 16.4062 16.1667C17.0535 16.1667 17.5781 16.689 17.5781 17.3333C17.5781 17.9777 17.0535 18.5 16.4062 18.5ZM7.03125 17.3333C7.03125 16.689 7.55592 16.1667 8.20312 16.1667C8.85033 16.1667 9.375 16.689 9.375 17.3333C9.375 17.9777 8.85033 18.5 8.20312 18.5C7.55592 18.5 7.03125 17.9777 7.03125 17.3333Z" stroke="black" stroke-width="1.25" />
+                  <path d="M3.04687 3.33333L2.34375 1H0M3.04687 3.33333L5.85938 12.6667H18.75V5.66667C18.75 4.378 17.7007 3.33333 16.4062 3.33333H3.04687ZM16.4062 18.5C15.759 18.5 15.2344 17.9777 15.2344 17.3333C15.2344 16.689 15.759 16.1667 16.4062 16.1667C17.0535 16.1667 17.5781 16.689 17.5781 17.3333C17.5781 17.9777 17.0535 18.5 16.4062 18.5ZM7.03125 17.3333C7.03125 16.689 7.55592 16.1667 8.20312 16.1667C8.85033 16.1667 9.375 16.689 9.375 17.3333C9.375 17.9777 8.85033 18.5 8.20312 18.5C7.55592 18.5 7.03125 17.9777 7.03125 17.3333Z" stroke="black" strokeWidth="1.25" />
                 </svg>
 
               </div>
@@ -217,7 +217,7 @@ function Header(props) {
       <div className="header__row header__row_third">
         <div className="header__main-categories">
           {props.categories.map((item, i) => (
-            <NavLink to={item.link} className="header__main-categories-text" activeClassName='header__main-categories-text_active' key={`main-categories-${i}`}>{item.name}</NavLink>
+            <NavLink to={`/categories/${item.link}`} className="header__main-categories-text" activeClassName='header__main-categories-text_active' key={`main-categories-${i}`}>{item.name}</NavLink>
           ))}
           <NavLink to='/promo' className="header__main-categories-text header__main-categories-text_type_promo" activeClassName='header__main-categories-text_active'>Скидки тут</NavLink>
         </div>
