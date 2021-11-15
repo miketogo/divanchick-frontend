@@ -97,6 +97,7 @@
 }
 
 .header__category-button {
+  position: relative;
   padding: 21px 12px;
   border: 2px solid #0FB0B5;
   box-sizing: border-box;
@@ -422,6 +423,8 @@
   margin: 8px 0 0;
 }
 
+
+
 @keyframes fadein {
   0% {
     opacity: 0
@@ -520,6 +523,7 @@
   .header__category-button {
     padding: 21px 12px 21px 0;
     border: none;
+    position: relative;
     margin: 0 14px 0 0;
   }
   .header__category-button-text {

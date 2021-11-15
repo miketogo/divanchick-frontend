@@ -15,7 +15,7 @@ function SubCategory(props) {
   let { sub_category } = useParams();
 
 
-
+  const [subCategory, setSubCategory] = useState({});
   const [filterdProducts, setFilterdProduct] = useState([]);
 
   React.useEffect(() => {
@@ -32,8 +32,15 @@ function SubCategory(props) {
   }, [filterdProducts])
 
   React.useEffect(() => {
-    console.log(url)
-  }, [url])
+    if (props.category && props.category.sub_catigories) {
+      setSubCategory(props.category.sub_catigories.filter((item, i) => {
+        if (item.link === sub_category) return true
+        else return false
+      })[0])
+    }
+  }, [props.category, sub_category])
+
+
 
   return (
     <div className="sub-category">
@@ -50,17 +57,11 @@ function SubCategory(props) {
               to: `/categories/${props.category && props.category.link}`,
             },
             {
-              name: props.category && props.category.sub_catigories && props.category.sub_catigories.filter((item, i) => {
-                if (item.link === sub_category) return true
-                else return false
-              })[0].name,
+              name: subCategory && subCategory.name && subCategory.name,
               to: `${url}`,
             },
           ]} />
-          <h2 className="sub-category__name">{props.category && props.category.sub_catigories && props.category.sub_catigories.filter((item, i) => {
-            if (item.link === sub_category) return true
-            else return false
-          })[0].name}</h2>
+          <h2 className="sub-category__name">{subCategory && subCategory.name && subCategory.name}</h2>
           <div className="sub-category__products">
             {filterdProducts && filterdProducts.map((product, i) => (
               <ProductCard link={`${url}/${product.link}`} product={product} key={`ProductCard${i}`} />
@@ -69,10 +70,7 @@ function SubCategory(props) {
 
         </Route>
         <Route path={`${url}/:product_name`}>
-          <ProductPage filterdProducts={filterdProducts} category={props.category} sub_category={props.category && props.category.sub_catigories && props.category.sub_catigories.filter((item, i) => {
-            if (item.link === sub_category) return true
-            else return false
-          })[0]} />
+          <ProductPage filterdProducts={filterdProducts} category={props.category} sub_category={subCategory} />
         </Route>
       </Switch>
 

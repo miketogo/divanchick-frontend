@@ -3,13 +3,15 @@ import { Link, NavLink } from 'react-router-dom';
 import './Header.css';
 
 import logo from '../../assets/images/header/logo.png'
+import SelectCategory from './SelectCategory/SelectCategory';
 
 
 function Header(props) {
   const ref = React.useRef()
   const [searchValue, setSearchValue] = React.useState('');
   const [isDropDownOpened, setDropDownOpened] = React.useState(false);
-
+  const [isSelectCategoryOpened, setSelectCategoryOpened] = React.useState(false);
+  const [selectedCategory, setSelectedCategory] = React.useState({});
   const [filterdProducts, setFilterdProducts] = React.useState(props.products);
 
   React.useEffect(() => {
@@ -28,6 +30,7 @@ function Header(props) {
       document.removeEventListener("mousedown", checkIfClickedOutside)
     }
   }, [isDropDownOpened])
+
 
   function closeDropdown() {
     console.log('sas')
@@ -100,18 +103,31 @@ function Header(props) {
 
   }, [filterdProducts])
 
+  function handleSelectCategoryOpen() {
+    console.log('dds')
+    setSelectCategoryOpened(true)
+  }
+  function handleSelectCategoryClose() {
+    console.log('dds')
+    setTimeout(() => {
+      setSelectCategoryOpened(false)
+    }, 1);
+
+  }
   return (
     <header className="header">
       <div className="header__row">
         {props.screenWidth > 937 ?
           <></> :
-          <div className="header__category-button">
+          <div onClick={handleSelectCategoryOpen} className="header__category-button">
             <svg className="header__category-button-icon" width="20" height="8" viewBox="0 0 20 8" fill="none" xmlns="http://www.w3.org/2000/svg">
               <rect width="20" height="2" rx="1" fill="#0FB0B5" />
               <rect y="6" width="13" height="2" rx="1" fill="#0FB0B5" />
             </svg>
 
             <p className="header__category-button-text">Все категории</p>
+            <SelectCategory isSelectCategoryOpened={isSelectCategoryOpened} categories={props.categories} setSelectedCategory={setSelectedCategory} selectedCategory={selectedCategory} handleSelectCategoryClose={handleSelectCategoryClose} />
+
           </div>}
         {
           props.screenWidth > 1115 ?
@@ -198,13 +214,14 @@ function Header(props) {
             : <></>
         }
         {props.screenWidth > 937 ?
-          <div className="header__category-button">
+          <div onClick={handleSelectCategoryOpen} className="header__category-button">
             <svg className="header__category-button-icon" width="20" height="8" viewBox="0 0 20 8" fill="none" xmlns="http://www.w3.org/2000/svg">
               <rect width="20" height="2" rx="1" fill="#0FB0B5" />
               <rect y="6" width="13" height="2" rx="1" fill="#0FB0B5" />
             </svg>
 
             <p className="header__category-button-text">Все категории</p>
+            <SelectCategory isSelectCategoryOpened={isSelectCategoryOpened} categories={props.categories} setSelectedCategory={setSelectedCategory} selectedCategory={selectedCategory} handleSelectCategoryClose={handleSelectCategoryClose} />
           </div>
           :
           <></>}
