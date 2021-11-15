@@ -1,0 +1,28 @@
+.sub-category {
+  display: flex;
+  flex-direction: column;
+}
+
+.sub-category__products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 436px);
+  grid-template-rows: 468px;
+  grid-auto-rows: 468px;
+  row-gap: 37px;
+  column-gap: 19px;
+  width: 100%;
+  align-items: center;
+  justify-items: center;
+  margin: 36px 0 0;
+}
+
+.sub-category__name {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 40px;
+  line-height: 140%;
+  /* identical to box height, or 56px */
+  /* colour/text/main */
+  color: #000000;
+  margin: 20px 0 0;
+}

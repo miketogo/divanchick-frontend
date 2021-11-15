@@ -57,6 +57,10 @@ function SubCategory(props) {
               to: `${url}`,
             },
           ]} />
+          <h2 className="sub-category__name">{props.category && props.category.sub_catigories && props.category.sub_catigories.filter((item, i) => {
+            if (item.link === sub_category) return true
+            else return false
+          })[0].name}</h2>
           <div className="sub-category__products">
             {filterdProducts && filterdProducts.map((product, i) => (
               <ProductCard link={`${url}/${product.link}`} product={product} key={`ProductCard${i}`} />

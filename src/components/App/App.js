@@ -31,7 +31,7 @@ const categories = [
     sub_catigories: [{
       name: 'Модульные кухни',
       link: 'kuhni-modulnie',
-      photo: 'https://i.ibb.co/2dW4mhz/image.png'
+      photo: 'https://i.ibb.co/qRKqDpk/image.png'
     },],
     link: 'kuhnya',
 

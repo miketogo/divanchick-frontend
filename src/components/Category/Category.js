@@ -56,16 +56,21 @@ function Category(props) {
               to: `${url}`,
             },
           ]} />
-          {selectedCategory && selectedCategory.sub_catigories ? selectedCategory.sub_catigories.map((sub_category, i) => (
+          <h2 className="category__name">{selectedCategory.name}</h2>
+          <div className="category__sub-categories">
+            {selectedCategory && selectedCategory.sub_catigories ? selectedCategory.sub_catigories.map((sub_category, i) => (
 
-            <Link to={`${url}/${sub_category.link}`} key={`sub_category.name${i}`}>
-              <h3>{sub_category.name}</h3>
-              <img src={sub_category.photo} alt={sub_category.name} />
-            </Link>
+              <Link className="category__sub-category" to={`${url}/${sub_category.link}`} key={`sub_category.name${i}`}>
+                <h3 className="category__sub-category-name">{sub_category.name}</h3>
+                <div className="category__sub-category-gradient"></div>
+                <img className="category__sub-category-img" src={sub_category.photo} alt={sub_category.name} />
+              </Link>
 
 
 
-          )) : <p key={'sub_category_empty'}>Пуста</p>}
+            )) : <p key={'sub_category_empty'}>Пуста</p>}
+          </div>
+
         </Route>
         <Route path={`${url}/:sub_category`}>
           <SubCategory products={props.products} category={selectedCategory} />
