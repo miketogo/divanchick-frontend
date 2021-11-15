@@ -28,7 +28,13 @@ const categories = [
   },
   {
     name: 'Кухня',
-    link: 'kuhnya'
+    sub_catigories: [{
+      name: 'Модульные кухни',
+      link: 'kuhni-modulnie',
+      photo: 'https://i.ibb.co/2dW4mhz/image.png'
+    },],
+    link: 'kuhnya',
+
   },
   {
     name: 'Сантехника',
@@ -99,7 +105,7 @@ const products = [
     },
     key_words: ['Диван', 'Монти', '156'],
     description: 'Диван тыры-пыры',
-    specifications:{
+    specifications: {
       width: 1000,
       height: 2000,
       length: 500,
@@ -123,7 +129,7 @@ const products = [
     },
     key_words: ['Диван', 'Монти', '157'],
     description: 'Диван тыры-пыры',
-    specifications:{
+    specifications: {
       width: 1000,
       height: 2000,
       length: 500,

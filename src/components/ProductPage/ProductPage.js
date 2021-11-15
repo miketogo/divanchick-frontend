@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import { useParams, useRouteMatch } from 'react-router';
-import { Link } from 'react-router-dom';
+
+
+import Crumbs from '../Сrumbs/Сrumbs'
+
 import './ProductPage.css';
 
 
@@ -30,15 +33,34 @@ function ProductPage(props) {
   }, [url])
 
   return (
-    <div className="category">
-      <div><Link to='/'>Главная /</Link><Link to={`/categories/${props.category && props.category.link}`}> {props.category && props.category.name} /</Link><Link to={`/categories/${props.category && props.category.link}/${props.sub_category && props.sub_category.link}`}> {props.sub_category && props.sub_category.name} /</Link><Link to={`${url}`}>{selectedProduct && selectedProduct.name}</Link></div>
+    <div className="product-page">
+      <Crumbs links={[
+        {
+          name: 'Главная',
+          to: '/',
+        },
+        {
+          name: props.category && props.category.name,
+          to: `/categories/${props.category && props.category.link}`,
+        },
+        {
+          name: props.sub_category && props.sub_category.name,
+          to: `/categories/${props.category && props.category.link}/${props.sub_category && props.sub_category.link}`,
+        },
+        {
+          name: selectedProduct && selectedProduct.name,
+          to: `${url}`,
+        },
+
+      ]} />
       {selectedProduct &&
         <>
           <h2>{selectedProduct.name}</h2>
-          <p>{selectedProduct.description}</p>
+
           {selectedProduct.photos && selectedProduct.photos.map((photo, i) => (
             <img src={photo} alt={selectedProduct.name} key={photo} />
           ))}
+          <p>{selectedProduct.description}</p>
         </>}
 
     </div>

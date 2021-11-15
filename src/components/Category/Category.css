@@ -1,0 +1,17 @@
+.category {
+  padding: 0 60px 0 60px;
+}
+
+@media (max-width: 1750px) {
+  .category {
+    padding: 0 20px 0 20px;
+  }
+}
+
+@media (max-width: 580px) {
+  .category {
+
+    padding: 0 12px 0 12px;
+  }
+
+}
