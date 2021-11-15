@@ -8,7 +8,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin: 0 4px 0 0;
+  margin: 0 10px 0 0;
 }
 .crumbs__link-container:last-of-type{
   margin: 0;
@@ -23,7 +23,8 @@
   /* colour/text/secondary */
   color: #323232;
   text-decoration: none;
-  margin: 0 4px 0 0;
+  margin: 0 10px 0 0;
+  transition: color 0.3s ease-in-out;
 }
 
 .crumbs__link-separetor {
@@ -43,4 +44,5 @@
 
 .crumbs__link-container:last-of-type .crumbs__link{
   margin: 0;
+  /* color: #9B38DC; */
 }

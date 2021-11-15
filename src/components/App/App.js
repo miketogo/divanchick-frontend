@@ -173,7 +173,7 @@ function App() {
   return (
     <div className="app">
       <CityPopup isCityPopupOpen={isCityPopupOpen} handleCityPopupClose={handleCityPopupClose} cityValue={cityValue} setCityValue={setCityValue} cities={cities} />
-      <Header categories={categories} screenWidth={screenWidth} handleCityPopupOpen={handleCityPopupOpen} cityValue={cityValue} />
+      <Header categories={categories} screenWidth={screenWidth} handleCityPopupOpen={handleCityPopupOpen} cityValue={cityValue} products={products}/>
       <Switch>
         <Route path={`/categories/:category`}>
           <Category products={products} categories={categories} />

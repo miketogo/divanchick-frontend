@@ -10,6 +10,7 @@ function Header(props) {
   const [searchValue, setSearchValue] = React.useState('');
   const [isDropDownOpened, setDropDownOpened] = React.useState(false);
 
+  const [filterdProducts, setFilterdProducts] = React.useState(props.products);
 
   React.useEffect(() => {
     const checkIfClickedOutside = e => {
@@ -28,6 +29,13 @@ function Header(props) {
     }
   }, [isDropDownOpened])
 
+  function closeDropdown() {
+    console.log('sas')
+    setDropDownOpened(false)
+    setTimeout(() => {
+      setDropDownOpened(false)
+    }, 1);
+  }
   function handleSearchChange(e) {
 
     if (e.target.value === '') {
@@ -46,9 +54,52 @@ function Header(props) {
       setDropDownOpened(false)
     }, 1);
   }
-  function handleDropDownOpen(){
-    if (searchValue !=='') setDropDownOpened(true)
+  function handleDropDownOpen() {
+    if (searchValue !== '') setDropDownOpened(true)
   }
+
+  React.useEffect(() => {
+    let wordsArray = searchValue.split(/\s/im)
+    console.log(wordsArray)
+    let filtered = props.products.filter((product) => {
+      if (wordsArray.filter((word) => {
+        if (product.key_words.filter((product_key) => {
+          if (product_key.toLowerCase().includes(word.toLowerCase())) return true
+          else return false
+        }).length > 0) return true
+        else return false
+      }).length > 0) return true
+      else return false
+    })
+    filtered = filtered.map((item) => {
+      return {
+        ...item,
+        search_points: wordsArray.filter((word) => {
+          if (item.key_words.filter((product_key) => {
+            if (product_key.toLowerCase().includes(word.toLowerCase())) return true
+            else return false
+          }).length > 0) return true
+          else return false
+        }).length
+      }
+
+    })
+    filtered = filtered.sort(function (a, b) {
+
+      if (a.search_points < b.search_points) return 1;
+      if (b.search_points < a.search_points) return -1;
+
+      return 0;
+    })
+
+    setFilterdProducts(filtered)
+
+  }, [searchValue, props.products])
+  React.useEffect(() => {
+    console.log(filterdProducts)
+
+  }, [filterdProducts])
+
   return (
     <header className="header">
       <div className="header__row">
@@ -159,8 +210,8 @@ function Header(props) {
           <></>}
 
         <div onClick={() => {
-         handleDropDownOpen()
-         }}  className="header__input-container"  ref={ref}>
+          handleDropDownOpen()
+        }} className="header__input-container" ref={ref}>
           <input placeholder="Ищите среди 50 000 товаров!" className="header__input" name="search" type="text" value={searchValue} onChange={handleSearchChange} maxLength="50"></input>
           {isDropDownOpened ?
             <svg onClick={handleSearchReset} className="header__input-search-icon" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -174,7 +225,20 @@ function Header(props) {
               <path fillRule="evenodd" clipRule="evenodd" d="M0.292908 22.5979L3.79291 19.1278L5.20712 20.5299L1.70712 24L0.292908 22.5979Z" fill="#9B38DC" />
             </svg>}
           <div className={`header__input-dropdown ${isDropDownOpened ? 'header__input-dropdown_active' : 'header__input-dropdown_inactive'}`}>
+            {filterdProducts && filterdProducts.length > 0 ?
+              filterdProducts.map((product, i) => (
+                <Link onClick={closeDropdown} to={`/categories/${product.category.link}/${product.sub_category.link}/${product.link}`} className="search__product-link" key={`search-product${i}`}>
+                  <img className="search__product-img" src={product.photos[0]} alt={product.name} />
+                  <div className="search__product-texts">
+                    <p className="search__product-name">{product.name}</p>
+                    <p className="search__product-subcategory">{product.sub_category.name}</p>
+                  </div>
 
+                </Link>
+
+              ))
+              :
+              <p className="search__product-error">Ничего не найдено</p>}
           </div>
         </div>
         {props.screenWidth > 576 ?

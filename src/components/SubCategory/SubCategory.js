@@ -59,7 +59,7 @@ function SubCategory(props) {
           ]} />
           <div className="sub-category__products">
             {filterdProducts && filterdProducts.map((product, i) => (
-              <ProductCard link={`${url}/${product.link}`} product={product} />
+              <ProductCard link={`${url}/${product.link}`} product={product} key={`ProductCard${i}`} />
             ))}
           </div>
 
