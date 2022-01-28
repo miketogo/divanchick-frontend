@@ -6,7 +6,7 @@
   width: 100vw;
   height: 130vh;
   visibility: hidden;
-  transition: visibility 1s, opacity 1s linear;
+  transition: visibility 0.3s, opacity 0.3s linear;
 }
 
 .filters-popup_active {

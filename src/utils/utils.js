@@ -22,7 +22,8 @@ export const products = [
         amount: 10,
         article: '0010000001',
         photos: ['https://i.ibb.co/TLjzF7B/image.png', 'https://i.ibb.co/WHC6kPx/image.png'],
-        price: 1400
+        price: 1400,
+        _id: '1',
 
     },
     {
@@ -48,7 +49,8 @@ export const products = [
         amount: 10,
         article: '0010000001',
         photos: ['https://i.ibb.co/TLjzF7B/image.png', 'https://i.ibb.co/WHC6kPx/image.png'],
-        price: 1500
+        price: 1500,
+        _id: '2',
 
     },
     {
@@ -74,7 +76,8 @@ export const products = [
         amount: 10,
         article: '0010000001',
         photos: ['https://i.ibb.co/TLjzF7B/image.png', 'https://i.ibb.co/WHC6kPx/image.png'],
-        price: 100
+        price: 100,
+        _id: '3',
 
     },
     {
@@ -100,7 +103,8 @@ export const products = [
         amount: 0,
         article: '0010000001',
         photos: ['https://i.ibb.co/TLjzF7B/image.png', 'https://i.ibb.co/WHC6kPx/image.png'],
-        price: 100
+        price: 100,
+        _id: '4',
 
     },
     {
@@ -126,7 +130,8 @@ export const products = [
         amount: 10,
         article: '0010000001',
         photos: ['https://i.ibb.co/TLjzF7B/image.png', 'https://i.ibb.co/WHC6kPx/image.png'],
-        price: 1500
+        price: 1500,
+        _id: '5',
 
     },
     {
@@ -152,7 +157,8 @@ export const products = [
         amount: 0,
         article: '0010000001',
         photos: ['https://i.ibb.co/TLjzF7B/image.png', 'https://i.ibb.co/WHC6kPx/image.png'],
-        price: 1500
+        price: 1500,
+        _id: '6',
 
     },
     {
@@ -178,7 +184,8 @@ export const products = [
         amount: 0,
         article: '0010000001',
         photos: ['https://i.ibb.co/TLjzF7B/image.png', 'https://i.ibb.co/WHC6kPx/image.png'],
-        price: 1500
+        price: 1500,
+        _id: '7',
 
     },
     {
@@ -204,7 +211,8 @@ export const products = [
         amount: 10,
         article: '0010000001',
         photos: ['https://i.ibb.co/TLjzF7B/image.png', 'https://i.ibb.co/WHC6kPx/image.png'],
-        price: 1
+        price: 1,
+        _id: '8',
 
     },
     {
@@ -230,7 +238,8 @@ export const products = [
         amount: 0,
         article: '0010000002',
         photos: ['https://i.ibb.co/TLjzF7B/image.png', 'https://i.ibb.co/WHC6kPx/image.png'],
-        price: 12500
+        price: 12500,
+        _id: '9',
 
     },
 

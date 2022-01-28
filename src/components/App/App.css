@@ -4,3 +4,8 @@
   font-family: Roboto, Arial, sans-serif;
   position: relative;
 }
+
+.app-stop-scrol{
+  position: fixed;
+
+}

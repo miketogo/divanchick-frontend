@@ -10,18 +10,23 @@ import Category from '../Category/Category';
 
 import { products, categories, cities } from '../../utils/utils';
 import FiltersPopup from '../FiltersPopup/FiltersPopup';
+import CartPopup from '../CartPopup/CartPopup';
+
+// import useScrollPosition from '../../utils/useScrollPosition';
 
 
 
 
 
 function App() {
+  // const scrollPosition = useScrollPosition();
   const [screenWidth, setScreenWidth] = React.useState(window.innerWidth);
   const [isCityPopupOpen, setCityPopupOpen] = React.useState(false);
   const [isFilterPopupOpen, setFilterPopupOpen] = React.useState(false);
+  const [isCartPopupOpen, setCartPopupOpen] = React.useState(false);
 
-  const [allProducts, ] = React.useState(products);
-  const [allCategories, ] = React.useState(categories);
+  const [allProducts,] = React.useState(products);
+  const [allCategories,] = React.useState(categories);
 
   // const [allProducts, setAllProducts] = React.useState(products);
   // const [allCategories, setAllCategories] = React.useState(categories);
@@ -73,6 +78,11 @@ function App() {
 
   function handleFilterPopupClose() {
     setFilterPopupOpen(false)
+  }
+
+
+  function handleCartPopupClose() {
+    setCartPopupOpen(false)
   }
 
   const [filterProducts, setFilterProducts] = React.useState([]);
@@ -149,14 +159,64 @@ function App() {
 
   }, [filterProducts]);
 
+  const [cart, setCart] = React.useState([]);
+
+  React.useEffect(() => {
+    let cartArray = JSON.parse(localStorage.getItem("cart"));
+    if (!cartArray || cartArray === []) {
+      cartArray = []
+      setCart(cartArray)
+      localStorage.setItem("cart", JSON.stringify(cartArray));
+    } else {
+      setCart(cartArray)
+    }
+
+  }, []);
+
+  // React.useEffect(() => {
+  //   console.log(cart)
+
+  // }, [cart]);
+
+  function handleToCartBtn(item) {
+
+    let cartArray = JSON.parse(localStorage.getItem("cart"));
+    item.count = 1
+    if (!cartArray || cartArray === []) {
+      cartArray = [item]
+      // let cartJson = JSON.stringify(cartArray)
+      // console.log(cartJson)
+      setCart(cartArray)
+      localStorage.setItem("cart", JSON.stringify(cartArray));
+    }
+    else if (cartArray && cartArray.filter((cart_item) => {
+      if (cart_item._id === item._id) return true
+      else return false
+    }).length > 0) {
+      cartArray = cartArray.filter((cart_item) => {
+        if (cart_item._id === item._id) return false
+        else return true
+      })
+      setCart(cartArray)
+      localStorage.setItem("cart", JSON.stringify(cartArray));
+    } else {
+      cartArray = [...cartArray, item]
+      setCart(cartArray)
+      localStorage.setItem("cart", JSON.stringify(cartArray));
+    }
+
+  }
+  // console.log(scrollPosition)
   return (
-    <div className="app">
+    // ${isCartPopupOpen ? 'app-stop-scrol' : ''}
+    <div  className={`app `} >
+      <CartPopup setCart={setCart} cart={cart} isCartPopupOpen={isCartPopupOpen} handleCartPopupClose={handleCartPopupClose} />
       <FiltersPopup filtersUpd={filtersUpd} setFiltersUpd={setFiltersUpd} filters={filters} handleFilterPopupClose={handleFilterPopupClose} isFilterPopupOpen={isFilterPopupOpen} />
       <CityPopup isCityPopupOpen={isCityPopupOpen} handleCityPopupClose={handleCityPopupClose} cityValue={cityValue} setCityValue={setCityValue} cities={cities} />
       <Header categories={allCategories} screenWidth={screenWidth} handleCityPopupOpen={handleCityPopupOpen} cityValue={cityValue} products={allProducts} />
       <Switch>
         <Route path={`/categories/:category`}>
-          <Category subcategoryPreloaderVisible={subcategoryPreloaderVisible} setFilterPopupOpen={setFilterPopupOpen} filtersUpd={filtersUpd} setFiltersUpd={setFiltersUpd} filters={filters} setFilterProducts={setFilterProducts} filterProducts={filterProducts} products={allProducts} categories={allCategories} />
+          <Category setCartPopupOpen={setCartPopupOpen} cart={cart} handleToCartBtn={handleToCartBtn} subcategoryPreloaderVisible={subcategoryPreloaderVisible} setFilterPopupOpen={setFilterPopupOpen} filtersUpd={filtersUpd} setFiltersUpd={setFiltersUpd} filters={filters} setFilterProducts={setFilterProducts} filterProducts={filterProducts} products={allProducts} categories={allCategories} />
         </Route>
         {/* <Route path={`/adm-products`}>
           <AdminProducts products={allProducts} />

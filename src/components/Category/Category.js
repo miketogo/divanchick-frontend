@@ -77,7 +77,7 @@ function Category(props) {
 
         </Route>
         <Route path={`${url}/:sub_category`}>
-          <SubCategory  subcategoryPreloaderVisible={props.subcategoryPreloaderVisible} setFilterPopupOpen={props.setFilterPopupOpen} filtersUpd={props.filtersUpd} setFiltersUpd={props.setFiltersUpd} filters={props.filters} setFilterProducts={props.setFilterProducts} filterProducts={props.filterProducts} products={props.products} category={selectedCategory} />
+          <SubCategory setCartPopupOpen={props.setCartPopupOpen} cart={props.cart} handleToCartBtn={props.handleToCartBtn}  subcategoryPreloaderVisible={props.subcategoryPreloaderVisible} setFilterPopupOpen={props.setFilterPopupOpen} filtersUpd={props.filtersUpd} setFiltersUpd={props.setFiltersUpd} filters={props.filters} setFilterProducts={props.setFilterProducts} filterProducts={props.filterProducts} products={props.products} category={selectedCategory} />
         </Route>
       </Switch>
 

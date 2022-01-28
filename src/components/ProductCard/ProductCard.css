@@ -126,6 +126,7 @@
 }
 
 .product-card__cart-btn {
+  cursor: pointer;
   border: 2px solid #9B38DC;
   box-sizing: border-box;
   border-radius: 40px;
@@ -136,6 +137,8 @@
   padding: 20px 0;
   width: 100%;
   margin: 27px 0 0;
+  height: 64px;
+  transition: background-color 0.3s ease-in-out;
 }
 
 .product-card__cart-btn-text {
@@ -150,8 +153,64 @@
   /* primary/500 */
 
   color: #9B38DC;
+  transition: color 0.3s ease-in-out;
+
+}
+
+.product-card__cart-btn-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.product-card__cart-btn-icon-container {
+  position: relative;
+  width: 20px;
+  height: 20px;
+}
+
+.product-card__cart-btn-icon-path {
+  transition: stroke 0.3s ease-in-out;
+}
+
+/* .product-card__cart-btn:hover {
+  background: #7928BD;
+} */
+
+/* .product-card__cart-btn:hover .product-card__cart-btn-text {
+  color: #FFFFFF;
+}
+
+.product-card__cart-btn:hover .product-card__cart-btn-icon-path {
+  stroke: #FFFFFF;
+} */
+
+.product-card__cart-btn_selected {
+  background: #7928BD;
+}
+
+.product-card__cart-btn-icon_tick {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: opacity 0.2s ease-in-out;
+}
 
 
+.product-card__cart-btn-icon_close {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: opacity 0.2s ease-in-out;
+  opacity: 0;
+}
+
+
+.product-card__cart-btn:hover .product-card__cart-btn-icon_tick {
+  opacity: 0;
+}
+
+.product-card__cart-btn:hover .product-card__cart-btn-icon_close {
+  opacity: 1;
 }
 
 @media (max-width: 1700px) {
@@ -206,6 +265,7 @@
 
   .product-card__cart-btn {
     margin: 8px 0 0;
+    height: 60px;
   }
 }
 
@@ -214,10 +274,11 @@
   /* .product-card__like-container {
     display: none;
   } */
-  .product-card__like-container{
+  .product-card__like-container {
     width: 20px;
     height: 20px;
   }
+
   .product-card__like {
     width: 20px;
     height: 20px;
@@ -285,6 +346,7 @@
     margin: 12px 0 0;
     padding: 12px 0;
     border: 1px solid #9B38DC;
+    height: 40px;
   }
 
   .product-card__cart-btn-text {
@@ -297,5 +359,21 @@
   .product-card__cart-btn-icon {
     width: 16px;
     height: 16px;
+  }
+
+  .product-card__cart-btn:hover {
+    background: unset;
+  }
+
+  .product-card__cart-btn:hover .product-card__cart-btn-text {
+    color: #9B38DC;
+  }
+
+  .product-card__cart-btn:hover .product-card__cart-btn-icon-path {
+    stroke: #9B38DC;
+  }
+
+  .product-card__cart-btn_selected {
+    background: #7928BD !important;
   }
 }

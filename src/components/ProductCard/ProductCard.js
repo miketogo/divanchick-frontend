@@ -9,6 +9,17 @@ import './ProductCard.css';
 
 function ProductCard(props) {
 
+  function addToCart() {
+    props.handleToCartBtn(props.product)
+    if (props.cart && props.cart.filter((item) => {
+      if (props.product._id === item._id) return true
+      else return false
+    }).length === 0) {
+      props.setCartPopupOpen(true)
+    }
+
+  }
+
   return (
 
     <div className='product-card'>
@@ -21,23 +32,50 @@ function ProductCard(props) {
       <Link to={props.link} key={props.link} className='product-card__link'>
         <img className='product-card__img' src={props.product.photos[0] !== 'Не указано' ? `${props.product.photos[0]}` : ''} alt={props.product.name} />
         <div className='product-card__price'>
-          <p className='product-card__main-price'>{props.product.discount && props.product.discount > 0 ? (props.product.price - (props.product.price / 100 * props.product.discount)) : props.product.price.toLocaleString('ru')}₽</p>
+          <p className='product-card__main-price'>{props.product.discount && props.product.discount > 0 ? (props.product.price - (props.product.price / 100 * props.product.discount)).toLocaleString('ru') : props.product.price.toLocaleString('ru')}&nbsp;₽</p>
           {props.product.discount && props.product.discount > 0 ?
             <>
               <div className='product-card__discount'>
                 <p className='product-card__discount-percent'>-{props.product.discount}%</p>
               </div>
-              <p className='product-card__last-price'>{props.product.price}р</p>
+              <p className='product-card__last-price'>{props.product.price.toLocaleString('ru')}р</p>
             </> : <></>}
         </div>
         <p className='product-card__name'>{props.product.name}</p>
         <p className={`product-card__amount ${props.product.amount > 0 ? '' : 'product-card__amount_zero'}`}>{props.product.amount > 0 ? `Доступно ${props.product.amount} шт.` : `Нет в наличии`}</p>
       </Link>
-      <div className='product-card__cart-btn'>
-        <p className='product-card__cart-btn-text'>В корзину</p>
-        <svg className='product-card__cart-btn-icon' width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M3.04687 3.58333L2.34375 1.25H0M3.04687 3.58333L5.85938 12.9167H18.75V5.91667C18.75 4.628 17.7007 3.58333 16.4062 3.58333H3.04687ZM16.4062 18.75C15.759 18.75 15.2344 18.2277 15.2344 17.5833C15.2344 16.939 15.759 16.4167 16.4062 16.4167C17.0535 16.4167 17.5781 16.939 17.5781 17.5833C17.5781 18.2277 17.0535 18.75 16.4062 18.75ZM7.03125 17.5833C7.03125 16.939 7.55592 16.4167 8.20312 16.4167C8.85033 16.4167 9.375 16.939 9.375 17.5833C9.375 18.2277 8.85033 18.75 8.20312 18.75C7.55592 18.75 7.03125 18.2277 7.03125 17.5833Z" stroke="#9B38DC" strokeWidth="1.25" />
-        </svg>
+      <div className={`product-card__cart-btn ${props.cart && props.cart.filter((item) => {
+        if (props.product._id === item._id) return true
+        else return false
+      }).length > 0 ? 'product-card__cart-btn_selected' : ''}`} onClick={addToCart}>
+        {props.cart && props.cart.filter((item) => {
+          if (props.product._id === item._id) return true
+          else return false
+        }).length > 0 ?
+          <div className='product-card__cart-btn-icon-container'>
+            <svg className='product-card__cart-btn-icon product-card__cart-btn-icon_tick' width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g clipPath="url(#clip0_968_16952)">
+                <path d="M8.46755 18.6887L8.84177 19.1111L9.216 18.6887L22.4909 3.707L23.7952 4.87004L8.84177 21.7461L1.20478 13.1272L2.50906 11.9641L8.46755 18.6887Z" fill="white" stroke="white" />
+              </g>
+              <defs>
+                <clipPath id="clip0_968_16952">
+                  <rect width="24" height="24" fill="white" transform="translate(0.5)" />
+                </clipPath>
+              </defs>
+            </svg>
+            <svg className='product-card__cart-btn-icon product-card__cart-btn-icon_close' width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3 22L23 2M3 2L23 22" stroke="white" strokeWidth="2" strokeLinecap="round" />
+            </svg>
+
+          </div>
+          :
+          <>
+            <p className='product-card__cart-btn-text'>В корзину</p>
+            <svg className='product-card__cart-btn-icon' width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path className='product-card__cart-btn-icon-path' d="M3.04687 3.58333L2.34375 1.25H0M3.04687 3.58333L5.85938 12.9167H18.75V5.91667C18.75 4.628 17.7007 3.58333 16.4062 3.58333H3.04687ZM16.4062 18.75C15.759 18.75 15.2344 18.2277 15.2344 17.5833C15.2344 16.939 15.759 16.4167 16.4062 16.4167C17.0535 16.4167 17.5781 16.939 17.5781 17.5833C17.5781 18.2277 17.0535 18.75 16.4062 18.75ZM7.03125 17.5833C7.03125 16.939 7.55592 16.4167 8.20312 16.4167C8.85033 16.4167 9.375 16.939 9.375 17.5833C9.375 18.2277 8.85033 18.75 8.20312 18.75C7.55592 18.75 7.03125 18.2277 7.03125 17.5833Z" stroke="#9B38DC" strokeWidth="1.25" />
+            </svg>
+
+          </>}
 
       </div>
       {/* <h2>{props.product.name}</h2>

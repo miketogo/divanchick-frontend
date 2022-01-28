@@ -212,6 +212,7 @@
     display: flex;
     flex-direction: column;
     margin: 24px 0 0;
+    
 }
 
 .filters__dropdown-hints::-webkit-scrollbar-track {

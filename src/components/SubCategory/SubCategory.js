@@ -235,7 +235,7 @@ function SubCategory(props) {
                       }
                     })
                      .map((product, i) => (
-                        <ProductCard link={`${url}/${product.link}`} product={product} key={`ProductCard${i}`} />
+                        <ProductCard setCartPopupOpen={props.setCartPopupOpen} cart={props.cart} handleToCartBtn={props.handleToCartBtn} link={`${url}/${product.link}`} product={product} key={`ProductCard${i}`} />
                       )) : <></>}
                 </div>
               }
