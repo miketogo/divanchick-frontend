@@ -1,0 +1,323 @@
+.filters {
+    display: flex;
+    flex-direction: column;
+    width: 258px;
+}
+
+.filters__in-stock {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.filters__in-stock-text {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 130%;
+    /* identical to box height, or 21px */
+
+
+    color: #000000;
+    margin: 0 16px 0 0;
+}
+
+.filters__in-stock-selector {
+    width: 54px;
+    height: 32px;
+    background: rgba(18, 18, 18, 0.56);
+    border-radius: 47px;
+    padding: 0 2px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.filters__in-stock-selector_active {
+    background: #40BF2F;
+}
+
+.filters__in-stock-selector-item {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    margin: 0 27px 0 0;
+    transition: margin 0.3s ease-in-out;
+    background: #FFFFFF;
+}
+
+.filters__in-stock-selector-item_active {
+    margin: 0 0 0 27px;
+}
+
+.filters__item {
+    display: flex;
+    flex-direction: column;
+    margin: 28px 0 0;
+}
+
+.filters__item:first-of-type {
+    margin: 24px 0 0;
+}
+
+.filters__item-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+}
+
+.filters__arrow {
+    margin: 0 8px 0 0;
+    transition: transform 0.3s ease-in-out;
+}
+
+.filters__arrow_active {
+    transform: rotate(180deg);
+}
+
+.filters__item-name {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 130%;
+    /* identical to box height, or 26px */
+
+
+    /* colour/text/main */
+
+    color: #000000;
+    margin: 0;
+}
+
+.filters__item-dropdown {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 16px 0 0;
+}
+
+.filters__item-dropdown_brand {
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 26px 0 0;
+}
+
+.filters__item-dropdown-text {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 150%;
+    /* identical to box height, or 24px */
+
+
+    /* colour/text/tetriary */
+
+    color: rgba(18, 18, 18, 0.56);
+    margin: 0 8px 0 0;
+}
+
+
+
+
+.filters__input {
+    caret-color: black;
+    -webkit-appearance: none;
+    background-color: unset;
+    font: unset;
+    text-rendering: unset;
+    letter-spacing: unset;
+    word-spacing: unset;
+    text-transform: unset;
+    text-indent: unset;
+    text-shadow: unset;
+    display: unset;
+    text-align: unset;
+    appearance: unset;
+    font-style: normal;
+    border: none;
+    padding: 8px;
+    transition: border-color 0.3s ease-in-out;
+    width: 88px;
+    margin: 0 8px 0 0;
+    border: 1px solid #D1D1D1;
+    box-sizing: border-box;
+    border-radius: 8px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 150%;
+    color: #000000;
+
+
+}
+
+
+
+
+.filters__input:hover {
+    border-color: #EBB0FB;
+}
+
+.filters__input:focus {
+    outline: none;
+    border-color: #9B38DC !important;
+}
+
+.filters__input_brands {
+    width: 100%;
+    border: none;
+}
+
+
+.filters__input-container {
+    width: 297px;
+    border: 1px solid #9B38DC;
+    box-sizing: border-box;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0 8px 0 0;
+}
+
+
+.filters__input::placeholder {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 150%;
+    color: #000000;
+    margin: 0;
+}
+
+.filters__input_second {
+    margin: 0;
+}
+
+.filters__item-dropdown-line {
+    width: 12px;
+    height: 2px;
+    background-color: #AAAAAA;
+    border-radius: 10px;
+    margin: 0 8px 0 0;
+}
+
+.filters__dropdown-hints {
+    height: 87px;
+    width: 297px;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    margin: 24px 0 0;
+}
+
+.filters__dropdown-hints::-webkit-scrollbar-track {
+    border: unset;
+    padding: 2px 0;
+    background-color: unset;
+}
+
+.filters__dropdown-hints::-webkit-scrollbar {
+    width: 1px;
+}
+
+.filters__dropdown-hints::-webkit-scrollbar-thumb {
+    border-radius: 2px;
+
+    background-color: #9B38DC;
+    border: none;
+}
+
+.filters__dropdown-hint {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+    margin: 12px 0 0;
+}
+
+.filters__dropdown-hint:first-of-type {
+    margin: 0;
+}
+
+.filters__dropdown-hint-checkbox {
+    width: 20px;
+    height: 20px;
+    border: 1px solid #A0A0A0;
+    transition: border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+    box-sizing: border-box;
+    border-radius: 3px;
+    margin: 0 8px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.filters__dropdown-hint:hover .filters__dropdown-hint-checkbox {
+    border-color: #9B38DC;
+}
+
+.filters__dropdown-hint-checkbox_active {
+    background: #F5EAFD;
+    border-color: #9B38DC;
+}
+
+.filters__dropdown-hint-checkbox-tick {
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.filters__dropdown-hint-checkbox-tick_active {
+    opacity: 1;
+}
+
+.filters__dropdown-hint-text {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 130%;
+    /* identical to box height, or 21px */
+
+
+    color: #000000;
+    margin: 0;
+}
+
+.filters__reset-btn {
+    margin: 28px 0 0;
+    cursor: pointer;
+    background: #FFDBD7;
+    border-radius: 45px;
+    padding: 12px 16px;
+    width: fit-content;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.filters__reset-btn-text {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 130%;
+    /* identical to box height, or 26px */
+
+
+    /* warning/600 */
+
+    color: #DB2A70;
+    margin: 0 12px 0 0;
+}
+.filters__reset-btn-icon{
+    margin: 4px 0;
+
+}
+
+.filters__reset-btn-icon_active{
+    transition: transform 0.5s ease-in-out;
+    transform: rotate(-360deg);
+}

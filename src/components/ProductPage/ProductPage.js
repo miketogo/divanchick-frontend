@@ -23,6 +23,10 @@ function ProductPage(props) {
       if (product.link === product_name) return true
       else return false
     })[0])
+    console.log(props.filterdProducts.filter((product) => {
+      if (product.link === product_name) return true
+      else return false
+    }))
   }, [props.filterdProducts, product_name])
 
 
@@ -58,7 +62,7 @@ function ProductPage(props) {
           <h2>{selectedProduct.name}</h2>
 
           {selectedProduct.photos && selectedProduct.photos.map((photo, i) => (
-            <img src={photo} alt={selectedProduct.name} key={photo} />
+            <img src={photo !== 'Не указано' ? `${photo}`: ''}  alt={selectedProduct.name} key={photo} />
           ))}
           <p>{selectedProduct.description}</p>
         </>}
