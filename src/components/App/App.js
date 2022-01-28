@@ -1,152 +1,52 @@
 import React from 'react'
 import Header from '../Header/Header';
 import './App.css';
+// import mainApi from '../../utils/MainApi';
 import { Switch, Route } from 'react-router-dom';
 import CityPopup from '../CityPopup/CityPopup';
 import Footer from '../Footer/Footer';
 import Category from '../Category/Category';
+// import AdminProducts from '../AdminProducts/AdminProducts';
 
-const categories = [
-  {
-    name: 'Мягкая мебель',
-    sub_catigories: [{
-      name: 'Диваны-кровати',
-      link: 'divany-krovati',
-      photo: 'https://i.ibb.co/2dW4mhz/image.png'
-    },
-    {
-      name: 'Диваны-кровати2',
-      link: 'divany-krovati2',
-      photo: 'https://i.ibb.co/nmxWQpN/image.png'
-    },
-    {
-      name: 'Диваны-кровати3',
-      link: 'divany-krovati3',
-      photo: 'https://i.ibb.co/yQ97xZh/image.png'
-    },],
-    link: 'myagkaya_mebel'
-  },
-  {
-    name: 'Кухня',
-    sub_catigories: [{
-      name: 'Модульные кухни',
-      link: 'kuhni-modulnie',
-      photo: 'https://i.ibb.co/qRKqDpk/image.png'
-    },],
-    link: 'kuhnya',
-
-  },
-  {
-    name: 'Сантехника',
-    link: 'santekhnika'
-  },
-  {
-    name: 'Спальня',
-    link: 'spalnya'
-  },
-  {
-    name: 'Прихожая',
-    link: 'prihozhaya'
-  },
-  {
-    name: 'Детская',
-    link: 'detskaya'
-  },
-  {
-    name: 'Шкафы-купе',
-    link: 'shkafy-kupe'
-  },
-  {
-    name: 'Офис',
-    link: 'ofis'
-  },
-  {
-    name: 'Малая-форма',
-    link: 'malaya-forma'
-  },
-]
-
-const cities = [
-  {
-    name: 'Тобольск'
-  },
-  {
-    name: 'Ханты - Мансийск'
-  },
-  {
-    name: 'Нефтеюганск'
-  },
-  {
-    name: 'Сургут'
-  },
-  {
-    name: 'Лангепас'
-  },
-  {
-    name: 'Мегион'
-  },
-  {
-    name: 'Нижневартовск'
-  },
-]
-
-const products = [
-  {
-    name: 'Диван Монти 156',
-    link: 'divan_monti_156',
-    manufacturer: 'Студия диванов',
-    category: {
-      name: 'Мягкая мебель',
-      link: 'myagkaya_mebel',
-    },
-    sub_category: {
-      name: 'Диваны-кровати',
-      link: 'divany-krovati',
-    },
-    key_words: ['Диван', 'Монти', '156'],
-    description: 'Диван тыры-пыры',
-    specifications: {
-      width: 1000,
-      height: 2000,
-      length: 500,
-    },
-    article: '0010000001',
-    photos: ['https://i.ibb.co/TLjzF7B/image.png', 'https://i.ibb.co/WHC6kPx/image.png'],
-    price: 1500
-
-  },
-  {
-    name: 'Диван Монти 157',
-    link: 'divan_monti_157',
-    manufacturer: 'Студия диванов',
-    category: {
-      name: 'Мягкая мебель',
-      link: 'myagkaya_mebel',
-    },
-    sub_category: {
-      name: 'Диваны-кровати',
-      link: 'divany-krovati',
-    },
-    key_words: ['Диван', 'Монти', '157'],
-    description: 'Диван тыры-пыры',
-    specifications: {
-      width: 1000,
-      height: 2000,
-      length: 500,
-    },
-    article: '0010000002',
-    photos: ['https://i.ibb.co/TLjzF7B/image.png', 'https://i.ibb.co/WHC6kPx/image.png'],
-    price: 1500
-
-  },
+import { products, categories, cities } from '../../utils/utils';
+import FiltersPopup from '../FiltersPopup/FiltersPopup';
 
 
-]
+
+
 
 function App() {
   const [screenWidth, setScreenWidth] = React.useState(window.innerWidth);
   const [isCityPopupOpen, setCityPopupOpen] = React.useState(false);
+  const [isFilterPopupOpen, setFilterPopupOpen] = React.useState(false);
+
+  const [allProducts, ] = React.useState(products);
+  const [allCategories, ] = React.useState(categories);
+
+  // const [allProducts, setAllProducts] = React.useState(products);
+  // const [allCategories, setAllCategories] = React.useState(categories);
+
   const [cityValue, setCityValue] = React.useState('');
+  React.useEffect(() => {
+    // mainApi.getBarcode(id)
+    // mainApi.getCategories()
+    //   .then((res) => {
+    //     console.log(res.categories)
+    //     setAllCategories(res.categories)
+    //     mainApi.getProducts()
+    //       .then((response) => {
+    //         setAllProducts(response.products)
+
+    //       })
+    //       .catch((err) => {
+    //         console.log(err)
+    //       })
+    //   })
+    //   .catch((err) => {
+    //     console.log(err)
+    //   })
+
+  }, [])
 
   React.useEffect(() => {
     let city = localStorage.getItem('city')
@@ -170,15 +70,97 @@ function App() {
   function handleCityPopupClose() {
     setCityPopupOpen(false)
   }
+
+  function handleFilterPopupClose() {
+    setFilterPopupOpen(false)
+  }
+
+  const [filterProducts, setFilterProducts] = React.useState([]);
+  const [subcategoryPreloaderVisible, setSubcategoryPreloaderVisible] = React.useState(false);
+  function handlePreloaderVisible() {
+    setSubcategoryPreloaderVisible(true)
+    setTimeout(() => {
+      setSubcategoryPreloaderVisible(false)
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }, 1000);
+  }
+
+  const [filters, setFilters] = React.useState({});
+  const [filtersUpd, setFiltersUpd] = React.useState({});
+
+  React.useEffect(() => {
+    handlePreloaderVisible()
+
+  }, [filtersUpd]);
+
+  React.useEffect(() => {
+
+    if (filterProducts && filterProducts.length > 0) {
+      let filters = {
+        inStock: true,
+        price: {
+          min: '',
+          max: '',
+        },
+        width: {
+          min: '',
+          max: '',
+        },
+        height: {
+          min: '',
+          max: '',
+        },
+        depth: {
+          min: '',
+          max: '',
+        },
+        brands: [],
+      }
+      filterProducts.forEach((item, i) => {
+        if (i === 0) {
+          filters.price.max = item.price
+          filters.price.min = item.price
+          filters.width.max = item.specifications.width
+          filters.width.min = item.specifications.width
+          filters.height.max = item.specifications.height
+          filters.height.min = item.specifications.height
+          filters.depth.max = item.specifications.length
+          filters.depth.min = item.specifications.length
+          filters.brands = [item.manufacturer]
+        }
+        if (filters.brands.filter((brand) => {
+          if (brand.toLowerCase() === item.manufacturer.toLowerCase()) return true
+          else return false
+        }).length === 0) filters.brands = [...filters.brands, item.manufacturer]
+        if (item.price > filters.price.max) filters.price.max = Math.floor(item.price)
+        if (item.price < filters.price.min) filters.price.min = Math.floor(item.price)
+        if (item.discount > 0 && item.price - (item.price / 100 * item.discount) < filters.price.min) filters.price.min = Math.floor(item.price - (item.price / 100 * item.discount))
+        if (item.discount > 0 && item.price - (item.price / 100 * item.discount) > filters.price.max) filters.price.max = Math.floor(item.price - (item.price / 100 * item.discount))
+        if (item.specifications.width > filters.width.max) filters.width.max = Math.floor(item.specifications.width)
+        if (item.specifications.width < filters.width.min) filters.width.min = Math.floor(item.specifications.width)
+        if (item.specifications.height > filters.height.max) filters.height.max = Math.floor(item.specifications.height)
+        if (item.specifications.height < filters.height.min) filters.height.min = Math.floor(item.specifications.height)
+        if (item.specifications.length > filters.depth.max) filters.depth.max = Math.floor(item.specifications.length)
+        if (item.specifications.length < filters.depth.min) filters.depth.min = Math.floor(item.specifications.length)
+      })
+      setFilters(filters)
+
+    } else setFilters({})
+
+  }, [filterProducts]);
+
   return (
     <div className="app">
+      <FiltersPopup filtersUpd={filtersUpd} setFiltersUpd={setFiltersUpd} filters={filters} handleFilterPopupClose={handleFilterPopupClose} isFilterPopupOpen={isFilterPopupOpen} />
       <CityPopup isCityPopupOpen={isCityPopupOpen} handleCityPopupClose={handleCityPopupClose} cityValue={cityValue} setCityValue={setCityValue} cities={cities} />
-      <Header categories={categories} screenWidth={screenWidth} handleCityPopupOpen={handleCityPopupOpen} cityValue={cityValue} products={products}/>
+      <Header categories={allCategories} screenWidth={screenWidth} handleCityPopupOpen={handleCityPopupOpen} cityValue={cityValue} products={allProducts} />
       <Switch>
         <Route path={`/categories/:category`}>
-          <Category products={products} categories={categories} />
+          <Category subcategoryPreloaderVisible={subcategoryPreloaderVisible} setFilterPopupOpen={setFilterPopupOpen} filtersUpd={filtersUpd} setFiltersUpd={setFiltersUpd} filters={filters} setFilterProducts={setFilterProducts} filterProducts={filterProducts} products={allProducts} categories={allCategories} />
         </Route>
-
+        {/* <Route path={`/adm-products`}>
+          <AdminProducts products={allProducts} />
+        </Route> */}
       </Switch>
       <Footer />
     </div>
