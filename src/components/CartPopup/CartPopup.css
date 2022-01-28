@@ -488,6 +488,9 @@
     font-size: 16px;
     line-height: 100%;
   }
+  .cart-popup__lower-btns {
+    margin: auto 0 140px;
+  }
 }
 
 @media (max-width: 457px) {
