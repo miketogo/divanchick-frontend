@@ -11,6 +11,7 @@ import Category from '../Category/Category';
 import { products, categories, cities } from '../../utils/utils';
 import FiltersPopup from '../FiltersPopup/FiltersPopup';
 import CartPopup from '../CartPopup/CartPopup';
+import CartPage from '../CartPage/CartPage';
 
 // import useScrollPosition from '../../utils/useScrollPosition';
 
@@ -99,9 +100,12 @@ function App() {
   const [filtersUpd, setFiltersUpd] = React.useState({});
 
   React.useEffect(() => {
-    handlePreloaderVisible()
+    if (Object.keys(filtersUpd).length !== 0 && filterProducts.length > 0) {
+      handlePreloaderVisible()
+    }
 
-  }, [filtersUpd]);
+
+  }, [filtersUpd, filterProducts]);
 
   React.useEffect(() => {
 
@@ -173,6 +177,32 @@ function App() {
 
   }, []);
 
+  const [allCartProductsCount, setCartAllProductsCount] = React.useState({
+    count: 0,
+    totalPrice: 0
+  });
+
+  React.useEffect(() => {
+    let counter = {
+      count: 0,
+      totalPrice: 0
+    }
+    if (cart) {
+      cart.forEach(item => {
+        counter.count = counter.count + item.count
+        if (item.discount && item.discount > 0) {
+          counter.totalPrice = counter.totalPrice + ((item.price - (item.price / 100 * item.discount)) * item.count)
+        } else {
+          counter.totalPrice = counter.totalPrice + (item.price * item.count)
+        }
+
+
+      });
+    }
+    setCartAllProductsCount(counter)
+
+  }, [cart]);
+
   // React.useEffect(() => {
   //   console.log(cart)
 
@@ -209,14 +239,17 @@ function App() {
   // console.log(scrollPosition)
   return (
     // ${isCartPopupOpen ? 'app-stop-scrol' : ''}
-    <div  className={`app `} >
-      <CartPopup setCart={setCart} cart={cart} isCartPopupOpen={isCartPopupOpen} handleCartPopupClose={handleCartPopupClose} />
+    <div className={`app `} >
+      <CartPopup allCartProductsCount={allCartProductsCount} setCart={setCart} cart={cart} isCartPopupOpen={isCartPopupOpen} handleCartPopupClose={handleCartPopupClose} />
       <FiltersPopup filtersUpd={filtersUpd} setFiltersUpd={setFiltersUpd} filters={filters} handleFilterPopupClose={handleFilterPopupClose} isFilterPopupOpen={isFilterPopupOpen} />
       <CityPopup isCityPopupOpen={isCityPopupOpen} handleCityPopupClose={handleCityPopupClose} cityValue={cityValue} setCityValue={setCityValue} cities={cities} />
-      <Header categories={allCategories} screenWidth={screenWidth} handleCityPopupOpen={handleCityPopupOpen} cityValue={cityValue} products={allProducts} />
+      <Header allCartProductsCount={allCartProductsCount} categories={allCategories} screenWidth={screenWidth} handleCityPopupOpen={handleCityPopupOpen} cityValue={cityValue} products={allProducts} />
       <Switch>
         <Route path={`/categories/:category`}>
           <Category setCartPopupOpen={setCartPopupOpen} cart={cart} handleToCartBtn={handleToCartBtn} subcategoryPreloaderVisible={subcategoryPreloaderVisible} setFilterPopupOpen={setFilterPopupOpen} filtersUpd={filtersUpd} setFiltersUpd={setFiltersUpd} filters={filters} setFilterProducts={setFilterProducts} filterProducts={filterProducts} products={allProducts} categories={allCategories} />
+        </Route>
+        <Route path={`/cart`}>
+          <CartPage allCartProductsCount={allCartProductsCount} setCart={setCart} cart={cart} />
         </Route>
         {/* <Route path={`/adm-products`}>
           <AdminProducts products={allProducts} />

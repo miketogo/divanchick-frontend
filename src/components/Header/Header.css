@@ -189,6 +189,7 @@
 }
 
 .header__icon {
+  text-decoration: none;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -217,6 +218,7 @@
   font-weight: normal;
   font-size: 13px;
   line-height: 130%;
+  text-decoration: none;
   /* identical to box height, or 17px */
   text-align: center;
   /* colour/text/tetriary */
@@ -333,6 +335,10 @@
   justify-content: center;
   padding: 10px 6px;
   margin: 0 16px 0 0;
+}
+
+.header__mobile-icon_phone{
+  margin: 0 14px 0 0 !important;
 }
 
 .header__mobile-icon:last-of-type {
@@ -466,6 +472,7 @@
   .header__logo-and-city {
     display: flex;
     flex-direction: row;
+    margin: 0 34px 0 auto;
   }
   .header__input-container {
     width: calc(100% - 170px - 250px);
@@ -479,6 +486,7 @@
   .header__icon {
     margin: 0 30px 2px 0;
   }
+
 }
 
 @media (max-width: 937px) {
@@ -550,5 +558,8 @@
     font-weight: normal;
     font-size: 12px;
     line-height: 130%;
+  }
+  .header__logo-and-city{
+    margin: 0;
   }
 }

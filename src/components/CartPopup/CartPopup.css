@@ -321,6 +321,7 @@
 }
 
 .cart-popup__order-btn {
+  text-decoration: none;
   width: 314px;
   padding: 20px 0;
   background: #9B38DC;
@@ -333,6 +334,7 @@
 }
 
 .cart-popup__order-btn-text {
+  text-decoration: none;
   font-style: normal;
   font-weight: normal;
   font-size: 20px;
@@ -515,6 +517,7 @@
   .cart-popup__item {
     padding-bottom: 8px;
     padding-top: 8px;
+    width: calc(100% - 12px);
   }
 
   .cart-popup__items::-webkit-scrollbar {

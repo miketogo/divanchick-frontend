@@ -1,38 +1,14 @@
 import './CartPopup.css';
 import React from "react";
 
-
+import { Link } from 'react-router-dom';
 
 
 
 
 function CartPopup(props) {
 
-  const [allProductsCount, setAllProductsCount] = React.useState({
-    count: 0,
-    totalPrice: 0
-  });
-
-  React.useEffect(() => {
-    let counter = {
-      count: 0,
-      totalPrice: 0
-    }
-    if (props.cart) {
-      props.cart.forEach(item => {
-        counter.count = counter.count + item.count
-        if (item.discount && item.discount > 0) {
-          counter.totalPrice = counter.totalPrice + ((item.price - (item.price / 100 * item.discount)) * item.count)
-        } else {
-          counter.totalPrice = counter.totalPrice + (item.price * item.count)
-        }
-
-
-      });
-    }
-    setAllProductsCount(counter)
-
-  }, [props.cart]);
+  
 
   React.useEffect(() => {
     if (props.isCartPopupOpen) {
@@ -218,10 +194,10 @@ function CartPopup(props) {
 
         </div>
         <div className="cart-popup__lower-btns">
-          <p className="cart-popup__amount">{allProductsCount.count} товаров на {allProductsCount.totalPrice.toLocaleString('ru')}&nbsp;₽</p>
-          <div className="cart-popup__order-btn">
+          <p className="cart-popup__amount">{props.allCartProductsCount.count} {props.allCartProductsCount.count % 10 === 1 && 'товар'}{(props.allCartProductsCount.count % 10 >= 2 && props.allCartProductsCount.count % 10 <= 4) && 'товара'}{((props.allCartProductsCount.count % 10 >= 5 && props.allCartProductsCount.count % 10 <= 9) || props.allCartProductsCount.count % 10 === 0) && 'товаров'} на {props.allCartProductsCount.totalPrice.toLocaleString('ru')}&nbsp;₽</p>
+          <Link to="/cart" className="cart-popup__order-btn" onClick={props.handleCartPopupClose}>
             <p className="cart-popup__order-btn-text">Оформить заказ</p>
-          </div>
+          </Link>
           <div className="cart-popup__go-back-btn" onClick={props.handleCartPopupClose}>
             <p className="cart-popup__go-back-btn-text">Продолжить покупки</p>
           </div>

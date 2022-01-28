@@ -322,24 +322,54 @@ export const categories = [
 
 export const cities = [
     {
-      name: 'Тобольск'
+        name: 'Тобольск'
     },
     {
-      name: 'Ханты - Мансийск'
+        name: 'Ханты - Мансийск'
     },
     {
-      name: 'Нефтеюганск'
+        name: 'Нефтеюганск'
     },
     {
-      name: 'Сургут'
+        name: 'Сургут'
     },
     {
-      name: 'Лангепас'
+        name: 'Лангепас'
     },
     {
-      name: 'Мегион'
+        name: 'Мегион'
     },
     {
-      name: 'Нижневартовск'
+        name: 'Нижневартовск'
     },
-  ]
+]
+
+export const deliveryMethods = [
+    {
+        name: 'Самовывоз',
+        adresses: [
+            {
+                name: '7-й микрорайон, 2А, Тобольск, Тюменская область',
+                workTime: {
+                    monday: '9:00 – 21:00',
+                    tuesday: '9:00 – 21:00',
+                    wednesday: '9:00 – 21:00',
+                    thursday: '9:00 – 21:00',
+                    friday: '9:00 – 21:00',
+                    saturday: '9:00 – 20:00',
+                    sunday: '9:00 – 20:00',
+                }
+            }
+        ],
+        price: 0,
+        storageLife: '3 Дня',
+
+
+    },
+
+    {
+        name: 'Доставка',
+        price: 1500,
+
+    }
+]
