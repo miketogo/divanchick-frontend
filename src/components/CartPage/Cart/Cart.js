@@ -51,7 +51,6 @@ function Cart(props) {
         } else {
             props.setCart([])
             localStorage.setItem("cart", JSON.stringify([]));
-            props.handleCartPopupClose()
         }
 
     }

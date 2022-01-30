@@ -404,12 +404,14 @@
 }
 
 @media (max-width: 700px) {
-    .delivery-method{
+    .delivery-method {
         margin: 24px 0 0;
     }
-    .delivery-method__delivery{
+
+    .delivery-method__delivery {
         margin: 22px 0 0;
     }
+
     .delivery-method__delivery-adress {
         width: 100%;
     }
@@ -417,10 +419,24 @@
     .delivery-method__delivery-adress-inputs {
         width: 100%;
         grid-template-columns: repeat(4, 1fr);
-        grid-template-rows: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 75px);
         grid-template-areas:
             "flat flat flat flat"
             "entrance entrance floor floor";
+    }
+
+    .delivery-method__to-go-adress {
+        font-style: normal;
+        font-weight: normal;
+        font-size: 16px;
+        line-height: 160%;
+    }
+
+    .delivery-method__to-go-date {
+        font-style: normal;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 160%;
     }
 
     .delivery-method__delivery-adress-input-container:first-of-type {
@@ -453,7 +469,25 @@
         font-size: 16px;
         line-height: 150%;
     }
+
     .delivery-method__delivery-cheekbox-selector {
         margin: 0 8px 0 0;
+    }
+
+    .delivery-method__to-go-work-time {
+        margin: 24px 0 0;
+    }
+
+    .delivery-method__to-go-work-time-value {
+        font-style: normal;
+        font-weight: normal;
+        font-size: 16px;
+        line-height: 160%;
+    }
+    .delivery-method__to-go-storage-life-value{
+        font-style: normal;
+        font-weight: normal;
+        font-size: 16px;
+        line-height: 160%;
     }
 }

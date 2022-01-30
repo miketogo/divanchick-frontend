@@ -188,12 +188,12 @@ function Header(props) {
         }
 
         <nav className="header__nav">
-          <a target="_blank" rel="noreferrer" href="tel:+79199401208" className="header__nav-item">+7 919 940 12 08</a>
+          <a rel="noreferrer" href="tel:+79199401208" className="header__nav-item">+7 919 940 12 08</a>
           <Link className="header__nav-item header__nav-item_type_track-order" to="/">Что с моим заказом?</Link>
         </nav>
         {props.screenWidth > 937 ?
           <></> :
-          <a target="_blank" rel="noreferrer" href="tel:+79199401208" className="header__contacts-phone">+7 919 940 12 08</a>
+          <a rel="noreferrer" href="tel:+79199401208" className="header__contacts-phone">+7 919 940 12 08</a>
         }
         {props.screenWidth > 576 ?
           <></>
@@ -221,7 +221,8 @@ function Header(props) {
               </svg>
             </Link>
             <Link to="/cart" className="header__mobile-icon">
-              <p className="header__icon-counter">{props.allCartProductsCount.count}</p>
+              {props.allCartProductsCount.count && props.allCartProductsCount.count > 0 ? <p className="header__icon-counter">{props.allCartProductsCount.count}</p> : <></>}
+             
 
               <svg className="header__icon-svg" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M3.04687 3.33333L2.34375 1H0M3.04687 3.33333L5.85938 12.6667H18.75V5.66667C18.75 4.378 17.7007 3.33333 16.4062 3.33333H3.04687ZM16.4062 18.5C15.759 18.5 15.2344 17.9777 15.2344 17.3333C15.2344 16.689 15.759 16.1667 16.4062 16.1667C17.0535 16.1667 17.5781 16.689 17.5781 17.3333C17.5781 17.9777 17.0535 18.5 16.4062 18.5ZM7.03125 17.3333C7.03125 16.689 7.55592 16.1667 8.20312 16.1667C8.85033 16.1667 9.375 16.689 9.375 17.3333C9.375 17.9777 8.85033 18.5 8.20312 18.5C7.55592 18.5 7.03125 17.9777 7.03125 17.3333Z" stroke="black" strokeWidth="1.25" />
@@ -310,7 +311,7 @@ function Header(props) {
             </Link>
             <Link to="/cart" className="header__icon">
               <div className="header__icon-container">
-                <p className="header__icon-counter">{props.allCartProductsCount.count}</p>
+              {props.allCartProductsCount.count && props.allCartProductsCount.count > 0 ? <p className="header__icon-counter">{props.allCartProductsCount.count}</p> : <></>}
 
                 <svg className="header__icon-svg" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M3.04687 3.33333L2.34375 1H0M3.04687 3.33333L5.85938 12.6667H18.75V5.66667C18.75 4.378 17.7007 3.33333 16.4062 3.33333H3.04687ZM16.4062 18.5C15.759 18.5 15.2344 17.9777 15.2344 17.3333C15.2344 16.689 15.759 16.1667 16.4062 16.1667C17.0535 16.1667 17.5781 16.689 17.5781 17.3333C17.5781 17.9777 17.0535 18.5 16.4062 18.5ZM7.03125 17.3333C7.03125 16.689 7.55592 16.1667 8.20312 16.1667C8.85033 16.1667 9.375 16.689 9.375 17.3333C9.375 17.9777 8.85033 18.5 8.20312 18.5C7.55592 18.5 7.03125 17.9777 7.03125 17.3333Z" stroke="black" strokeWidth="1.25" />

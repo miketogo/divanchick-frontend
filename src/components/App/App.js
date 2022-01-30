@@ -12,6 +12,7 @@ import { products, categories, cities } from '../../utils/utils';
 import FiltersPopup from '../FiltersPopup/FiltersPopup';
 import CartPopup from '../CartPopup/CartPopup';
 import CartPage from '../CartPage/CartPage';
+import SubmitActionPopup from '../SubmitActionPopup/SubmitActionPopup';
 
 // import useScrollPosition from '../../utils/useScrollPosition';
 
@@ -24,6 +25,7 @@ function App() {
   const [screenWidth, setScreenWidth] = React.useState(window.innerWidth);
   const [isCityPopupOpen, setCityPopupOpen] = React.useState(false);
   const [isFilterPopupOpen, setFilterPopupOpen] = React.useState(false);
+  const [isSubmitActionPopupOpen, setSubmitActionPopupOpen] = React.useState(false);
   const [isCartPopupOpen, setCartPopupOpen] = React.useState(false);
 
   const [allProducts,] = React.useState(products);
@@ -79,6 +81,17 @@ function App() {
 
   function handleFilterPopupClose() {
     setFilterPopupOpen(false)
+  }
+
+  function handleSubmitActionPopupClose() {
+    setSubmitActionPopupOpen(false)
+  }
+
+  function handleSubmitActionPopupSubmit() {
+    let cartArray = []
+    setCart(cartArray)
+    localStorage.setItem("cart", JSON.stringify(cartArray));
+    setSubmitActionPopupOpen(false)
   }
 
 
@@ -240,6 +253,7 @@ function App() {
   return (
     // ${isCartPopupOpen ? 'app-stop-scrol' : ''}
     <div className={`app `} >
+      <SubmitActionPopup handleSubmitActionPopupSubmit={handleSubmitActionPopupSubmit} isSubmitActionPopupOpen={isSubmitActionPopupOpen} handleSubmitActionPopupClose={handleSubmitActionPopupClose} />
       <CartPopup allCartProductsCount={allCartProductsCount} setCart={setCart} cart={cart} isCartPopupOpen={isCartPopupOpen} handleCartPopupClose={handleCartPopupClose} />
       <FiltersPopup filtersUpd={filtersUpd} setFiltersUpd={setFiltersUpd} filters={filters} handleFilterPopupClose={handleFilterPopupClose} isFilterPopupOpen={isFilterPopupOpen} />
       <CityPopup isCityPopupOpen={isCityPopupOpen} handleCityPopupClose={handleCityPopupClose} cityValue={cityValue} setCityValue={setCityValue} cities={cities} />
@@ -249,7 +263,7 @@ function App() {
           <Category setCartPopupOpen={setCartPopupOpen} cart={cart} handleToCartBtn={handleToCartBtn} subcategoryPreloaderVisible={subcategoryPreloaderVisible} setFilterPopupOpen={setFilterPopupOpen} filtersUpd={filtersUpd} setFiltersUpd={setFiltersUpd} filters={filters} setFilterProducts={setFilterProducts} filterProducts={filterProducts} products={allProducts} categories={allCategories} />
         </Route>
         <Route path={`/cart`}>
-          <CartPage allCartProductsCount={allCartProductsCount} setCart={setCart} cart={cart} />
+          <CartPage setSubmitActionPopupOpen={setSubmitActionPopupOpen} allCartProductsCount={allCartProductsCount} setCart={setCart} cart={cart} />
         </Route>
         {/* <Route path={`/adm-products`}>
           <AdminProducts products={allProducts} />
