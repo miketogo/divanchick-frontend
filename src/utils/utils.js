@@ -1,7 +1,7 @@
 export const products = [
     {
-        name: 'Диван Монти 156',
-        link: 'divan_monti_156',
+        name: 'Диван Монти 1599',
+        link: 'divan_monti_1599',
         manufacturer: 'Студия диванов',
         category: {
             name: 'Мягкая мебель',

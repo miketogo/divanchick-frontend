@@ -15,18 +15,52 @@ function DeliveryMethod(props) {
 
     const [privateHouseSelected, setPrivateHouseSelected] = React.useState(false);
     const [adressValue, setAdressValue] = React.useState('');
+    const [adressValidity, setAdressValidity] = React.useState({
+        errorMassage: '',
+        validState: false
+    });
+
     const [flatValue, setFlatValue] = React.useState('');
+    const [flatValidity, setFlatValidity] = React.useState({
+        errorMassage: '',
+        validState: false
+    });
+
+
     const [entranceValue, setEntranceValue] = React.useState('');
     const [floorValue, setFloorValue] = React.useState('');
 
 
     function handleAdressChange(e) {
-        setAdressValue(e.target.value)
+        let inputValue = e.target.value
+        setAdressValue(inputValue)
+        if (inputValue.length < 1) {
+            setAdressValidity({
+                errorMassage: 'Заполните поле',
+                validState: false
+            })
+        } else {
+            setAdressValidity({
+                errorMassage: (''),
+                validState: true
+            })
+        }
     }
 
     function handleFlatChange(e) {
         let inputValue = e.target.value
         setFlatValue(inputValue)
+        if (inputValue.length < 1) {
+            setFlatValidity({
+                errorMassage: 'Заполните поле',
+                validState: false
+            })
+        } else {
+            setFlatValidity({
+                errorMassage: (''),
+                validState: true
+            })
+        }
     }
 
     function handleEntranceChange(e) {
@@ -41,20 +75,36 @@ function DeliveryMethod(props) {
 
     React.useEffect(() => {
         if (privateHouseSelected) {
-            props.setFullAdressValue(adressValue ? adressValue : '')
+            props.setFullAdressValue(`${privateHouseSelected ? 'Частный дом по адресу: ' : ''}${adressValue ? adressValue : ''}`)
         } else {
             props.setFullAdressValue(`${adressValue ? adressValue : ''}${flatValue ? `, кв ${flatValue}` : ''}${entranceValue ? `, подъезд ${entranceValue}` : ''}${floorValue ? `, этаж ${floorValue}` : ''}`)
         }
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [privateHouseSelected, adressValue, flatValue, entranceValue, floorValue])
+
+    React.useEffect(() => {
+        if(props.deliveryMethod.toLowerCase() === 'Самовывоз'.toLowerCase()){
+            props.setDeliveryMethodValid(true)
+        } else if (privateHouseSelected) {
+            if (adressValidity.validState) {
+                props.setDeliveryMethodValid(true)
+            } else{
+                props.setDeliveryMethodValid(false)
+            }
+        } else {
+            if (adressValidity.validState && flatValidity.validState) {
+                props.setDeliveryMethodValid(true)
+            } else{
+                props.setDeliveryMethodValid(false)
+            }
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [privateHouseSelected, adressValidity, flatValidity, props.deliveryMethod])
 
     return (
         <section className="delivery-method">
-            <div className="delivery-method__heading">
-                <h2 className="delivery-method__heading-numeral">2</h2>
-                <h2 className="delivery-method__heading-title">Способ и дата получения</h2>
-            </div>
+
             <div className="delivery-method__btns">
                 {deliveryMethods.map((item, i) => (
                     <div className={`delivery-method__btn ${props.deliveryMethod.toLowerCase() === item.name.toLowerCase() ? 'delivery-method__btn_active' : ''}`} onClick={() => {

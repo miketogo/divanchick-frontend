@@ -1,6 +1,6 @@
 import React from 'react'
 // import { Route, Link } from 'react-router-dom';
-import { useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import './Cart.css';
 
@@ -9,7 +9,7 @@ import moreIcon from '../../../assets/images/more.svg'
 
 
 function Cart(props) {
-    const history = useHistory();
+
 
 
     function handleAddCounter(id) {
@@ -59,26 +59,16 @@ function Cart(props) {
     return (
 
         <section className="cart">
-            <div className="cart__heading">
-                <h2 className="cart__heading-numeral">1</h2>
-                <h2 className="cart__heading-title">Корзина</h2>
-                <div className="cart__reset-cart">
-                    <p className="cart__reset-cart-text">очистить корзину</p>
-                </div>
-                <div className="cart__go-back" onClick={() => history.goBack()}>
-                    <svg className="cart__go-back-arrow" width="10" height="9" viewBox="0 0 10 9" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path fillRule="evenodd" clipRule="evenodd" d="M1.30926 4.5L4.77722 7.86484L4.12259 8.5L0 4.5L4.12259 0.5L4.77723 1.13516L1.30926 4.5Z" fill="#9B38DC" />
-                        <path fillRule="evenodd" clipRule="evenodd" d="M0.633865 4.94907H10V4.05082H0.633865V4.94907Z" fill="#9B38DC" />
-                    </svg>
-                    <p className="cart__go-back-text">Вернуться к покупкам</p>
-                </div>
-            </div>
             <div className="cart__items">
                 {props.cart && props.cart.length > 0 ?
                     props.cart.map((item, i) => (
                         <>
+
                             <div className="cart__item cart__item_pc">
-                                <img className="cart__item-img" src={item.photos[0] !== 'Не указано' ? `${item.photos[0]}` : ''} alt={item.name}></img>
+                                <Link className="cart__item-img" to={`/categories/${item.category.link}/${item.sub_category.link}/${item.link}`}>
+                                    <img className="cart__item-img-photo" src={item.photos[0] !== 'Не указано' ? `${item.photos[0]}` : ''} alt={item.name}></img>
+                                </Link>
+
                                 <div className="cart__item-column">
                                     <p className="cart__article">Артикул: {item.article}</p>
                                     <div className="cart__item-row cart__item-row_first">
@@ -95,7 +85,7 @@ function Cart(props) {
                                             <p className="cart__count-number">{item.count}</p>
                                             <img onClick={() => handleAddCounter(item._id)} className="cart__count-more" src={moreIcon} alt="add" />
                                         </div>
-                                        <p className="cart__price">{item.discount && item.discount > 0 ? (item.price - (item.price / 100 * item.discount)).toLocaleString('ru') : item.price.toLocaleString('ru')}&nbsp;₽</p>
+                                        <p className="cart__price">{item.discount && item.discount > 0 ? ((item.price - (item.price / 100 * item.discount) * item.count)).toLocaleString('ru') : (item.count * item.price).toLocaleString('ru')}&nbsp;₽</p>
                                     </div>
                                     <div className="cart__item-row cart__item-row_second">
                                         {item.amount > 0 ?
@@ -124,7 +114,9 @@ function Cart(props) {
                             {/* MOBILE */}
                             <div className="cart__item cart__item_mobile">
                                 <div className="cart__item-row">
-                                    <img className="cart__item-img" src={item.photos[0] !== 'Не указано' ? `${item.photos[0]}` : ''} alt={item.name}></img>
+                                    <Link className="cart__item-img" to={`/categories/${item.category.link}/${item.sub_category.link}/${item.link}`}>
+                                        <img className="cart__item-img-photo" src={item.photos[0] !== 'Не указано' ? `${item.photos[0]}` : ''} alt={item.name}></img>
+                                    </Link>
                                     <div className="cart__item-column">
                                         <div className="cart__icons">
                                             <svg className="cart__icon-like" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -157,7 +149,7 @@ function Cart(props) {
                                         <p className="cart__count-number">{item.count}</p>
                                         <img onClick={() => handleAddCounter(item._id)} className="cart__count-more" src={moreIcon} alt="add" />
                                     </div>
-                                    <p className="cart__price">{item.discount && item.discount > 0 ? (item.price - (item.price / 100 * item.discount)).toLocaleString('ru') : item.price.toLocaleString('ru')}&nbsp;₽</p>
+                                    <p className="cart__price">{item.discount && item.discount > 0 ? ((item.price - (item.price / 100 * item.discount)) * item.count).toLocaleString('ru') : (item.count * item.price).toLocaleString('ru')}&nbsp;₽</p>
                                 </div>
 
 

@@ -2,13 +2,13 @@ import './CartPopup.css';
 import React from "react";
 
 import { Link } from 'react-router-dom';
-
+import moreIcon from '../../assets/images/more.svg'
 
 
 
 function CartPopup(props) {
 
-  
+
 
   React.useEffect(() => {
     if (props.isCartPopupOpen) {
@@ -82,7 +82,10 @@ function CartPopup(props) {
             props.cart.map((item, i) => (
               <>
                 <div className="cart-popup__item cart-popup__item_pc">
-                  <img className="cart-popup__item-img" src={item.photos[0] !== 'Не указано' ? `${item.photos[0]}` : ''} alt={item.name}></img>
+                  <Link onClick={props.handleCartPopupClose} className="cart-popup__item-img" to={`/categories/${item.category.link}/${item.sub_category.link}/${item.link}`}>
+                    <img className="cart-popup__item-img-photo" src={item.photos[0] !== 'Не указано' ? `${item.photos[0]}` : ''} alt={item.name}></img>
+                  </Link>
+
                   <div className="cart-popup__item-column">
                     <p className="cart-popup__article">Артикул: {item.article}</p>
                     <div className="cart-popup__item-row cart-popup__item-row_first">
@@ -97,19 +100,9 @@ function CartPopup(props) {
                           <rect y="7.5" width="15" height="1" fill="#CBCBCB" />
                         </svg>
                         <p className="cart-popup__count-number">{item.count}</p>
-                        <svg onClick={() => handleAddCounter(item._id)} className="cart-popup__count-more" width="15" height="16" viewBox="0 0 15 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <g clipPath="url(#clip0_970_15456)">
-                            <rect x="8" y="0.5" width="15" height="0.999999" transform="rotate(90 8 0.5)" fill="#7C7C7C" />
-                            <rect y="7.5" width="15" height="1" fill="#7C7C7C" />
-                          </g>
-                          <defs>
-                            <clipPath id="clip0_970_15456">
-                              <rect width="15" height="15" fill="white" transform="translate(0 0.5)" />
-                            </clipPath>
-                          </defs>
-                        </svg>
+                        <img onClick={() => handleAddCounter(item._id)} className="cart-popup__count-more" src={moreIcon} alt="add" />
                       </div>
-                      <p className="cart-popup__price">{item.discount && item.discount > 0 ? (item.price - (item.price / 100 * item.discount)).toLocaleString('ru') : item.price.toLocaleString('ru')}&nbsp;₽</p>
+                      <p className="cart-popup__price">{item.discount && item.discount > 0 ? ((item.price - (item.price / 100 * item.discount)) * item.count).toLocaleString('ru') : (item.count * item.price).toLocaleString('ru')}&nbsp;₽</p>
                     </div>
                     <div className="cart-popup__item-row cart-popup__item-row_second">
                       {item.amount > 0 ?
@@ -138,7 +131,9 @@ function CartPopup(props) {
                 {/* MOBILE */}
                 <div className="cart-popup__item cart-popup__item_mobile">
                   <div className="cart-popup__item-row">
-                    <img className="cart-popup__item-img" src={item.photos[0] !== 'Не указано' ? `${item.photos[0]}` : ''} alt={item.name}></img>
+                    <Link onClick={props.handleCartPopupClose} className="cart-popup__item-img" to={`/categories/${item.category.link}/${item.sub_category.link}/${item.link}`}>
+                      <img className="cart-popup__item-img-photo" src={item.photos[0] !== 'Не указано' ? `${item.photos[0]}` : ''} alt={item.name}></img>
+                    </Link>
                     <div className="cart-popup__item-column">
                       <div className="cart-popup__icons">
                         <svg className="cart-popup__icon-like" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -169,23 +164,13 @@ function CartPopup(props) {
                         <rect y="7.5" width="15" height="1" fill="#CBCBCB" />
                       </svg>
                       <p className="cart-popup__count-number">{item.count}</p>
-                      <svg onClick={() => handleAddCounter(item._id)} className="cart-popup__count-more" width="15" height="16" viewBox="0 0 15 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <g clipPath="url(#clip0_970_15456)">
-                          <rect x="8" y="0.5" width="15" height="0.999999" transform="rotate(90 8 0.5)" fill="#7C7C7C" />
-                          <rect y="7.5" width="15" height="1" fill="#7C7C7C" />
-                        </g>
-                        <defs>
-                          <clipPath id="clip0_970_15456">
-                            <rect width="15" height="15" fill="white" transform="translate(0 0.5)" />
-                          </clipPath>
-                        </defs>
-                      </svg>
+                      <img onClick={() => handleAddCounter(item._id)} className="cart-popup__count-more" src={moreIcon} alt="add" />
                     </div>
-                    <p className="cart-popup__price">{item.discount && item.discount > 0 ? (item.price - (item.price / 100 * item.discount)).toLocaleString('ru') : item.price.toLocaleString('ru')}&nbsp;₽</p>
+                    <p className="cart-popup__price">{item.discount && item.discount > 0 ? ((item.price - (item.price / 100 * item.discount)) * item.count).toLocaleString('ru') : (item.count * item.price).toLocaleString('ru')}&nbsp;₽</p>
                   </div>
-                
 
-                  
+
+
                 </div>
               </>
             ))

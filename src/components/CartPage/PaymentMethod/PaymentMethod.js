@@ -15,10 +15,6 @@ function PaymentMethod(props) {
 
     return (
         <section className="payment-method">
-            <div className="payment-method__heading">
-                <h2 className="payment-method__heading-numeral">3</h2>
-                <h2 className="payment-method__heading-title">Способ Оплаты</h2>
-            </div>
             <div className="payment-method__selectors">
                 <div className="payment-method__selector" onClick={() => { props.setPaymentMethod('Наличными или картой (переводом) при получении') }}>
                     <div className={`payment-method__selector-circle ${props.paymentMethod === 'Наличными или картой (переводом) при получении' ? 'payment-method__selector-circle_active' : ''}`}>
