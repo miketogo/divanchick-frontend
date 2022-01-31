@@ -13,6 +13,7 @@ import FiltersPopup from '../FiltersPopup/FiltersPopup';
 import CartPopup from '../CartPopup/CartPopup';
 import CartPage from '../CartPage/CartPage';
 import SubmitActionPopup from '../SubmitActionPopup/SubmitActionPopup';
+import Requisites from '../Requisites/Requisites';
 
 // import useScrollPosition from '../../utils/useScrollPosition';
 
@@ -264,6 +265,9 @@ function App() {
         </Route>
         <Route path={`/cart`}>
           <CartPage setSubmitActionPopupOpen={setSubmitActionPopupOpen} allCartProductsCount={allCartProductsCount} setCart={setCart} cart={cart} />
+        </Route>
+        <Route path={`/requisites`}>
+          <Requisites />
         </Route>
         {/* <Route path={`/adm-products`}>
           <AdminProducts products={allProducts} />

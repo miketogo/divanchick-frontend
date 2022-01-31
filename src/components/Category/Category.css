@@ -71,6 +71,8 @@
   background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.69) 100%);
 }
 
+
+
 @media (max-width: 1750px) {
   .category {
     padding: 0 20px 0 20px;
