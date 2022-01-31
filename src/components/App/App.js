@@ -2,7 +2,7 @@ import React from 'react'
 import Header from '../Header/Header';
 import './App.css';
 // import mainApi from '../../utils/MainApi';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import CityPopup from '../CityPopup/CityPopup';
 import Footer from '../Footer/Footer';
 import Category from '../Category/Category';
@@ -14,6 +14,7 @@ import CartPopup from '../CartPopup/CartPopup';
 import CartPage from '../CartPage/CartPage';
 import SubmitActionPopup from '../SubmitActionPopup/SubmitActionPopup';
 import Requisites from '../Requisites/Requisites';
+import Profile from '../Profile/Profile';
 
 // import useScrollPosition from '../../utils/useScrollPosition';
 
@@ -268,6 +269,12 @@ function App() {
         </Route>
         <Route path={`/requisites`}>
           <Requisites />
+        </Route>
+        <Route path={`/profile/:page`}>
+          <Profile />
+        </Route>
+        <Route exact path={`/profile/`}>
+          <Redirect to='/profile/account' />
         </Route>
         {/* <Route path={`/adm-products`}>
           <AdminProducts products={allProducts} />
