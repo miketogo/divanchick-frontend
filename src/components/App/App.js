@@ -16,6 +16,7 @@ import SubmitActionPopup from '../SubmitActionPopup/SubmitActionPopup';
 import Requisites from '../Requisites/Requisites';
 import Profile from '../Profile/Profile';
 import Favourites from '../Favourites/Favourites';
+import Refund from '../Refund/Refund';
 
 // import useScrollPosition from '../../utils/useScrollPosition';
 
@@ -315,6 +316,9 @@ function App() {
         </Route>
         <Route path={`/requisites`}>
           <Requisites />
+        </Route>
+        <Route path={`/refund`}>
+          <Refund />
         </Route>
         <Route path={`/favourites`}>
           <Favourites handleLikeBtn={handleLikeBtn} favouritesProducts={favouritesProducts} setCartPopupOpen={setCartPopupOpen} cart={cart} handleToCartBtn={handleToCartBtn}/>
