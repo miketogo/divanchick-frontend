@@ -15,6 +15,7 @@ import CartPage from '../CartPage/CartPage';
 import SubmitActionPopup from '../SubmitActionPopup/SubmitActionPopup';
 import Requisites from '../Requisites/Requisites';
 import Profile from '../Profile/Profile';
+import Favourites from '../Favourites/Favourites';
 
 // import useScrollPosition from '../../utils/useScrollPosition';
 
@@ -251,24 +252,72 @@ function App() {
     }
 
   }
+
+
+  const [favouritesProducts, setFavouritesProducts] = React.useState([]);
+
+  React.useEffect(() => {
+    let liked = JSON.parse(localStorage.getItem("favourites"));
+    if (!liked || liked === []) {
+      liked = []
+      setFavouritesProducts(liked)
+      localStorage.setItem("favourites", JSON.stringify(liked));
+    } else {
+      setFavouritesProducts(liked)
+    }
+
+  }, []);
+
+  function handleLikeBtn(item) {
+
+    let liked = JSON.parse(localStorage.getItem("favourites"));
+    if (!liked || liked === []) {
+      liked = [item]
+      // let cartJson = JSON.stringify(cartArray)
+      // console.log(cartJson)
+      setFavouritesProducts(liked)
+      localStorage.setItem("favourites", JSON.stringify(liked));
+    }
+    else if (liked && liked.filter((liked_item) => {
+      if (liked_item._id === item._id) return true
+      else return false
+    }).length > 0) {
+      liked = liked.filter((liked_item) => {
+        if (liked_item._id === item._id) return false
+        else return true
+      })
+      setFavouritesProducts(liked)
+      localStorage.setItem("favourites", JSON.stringify(liked));
+    } else {
+      liked = [...liked, item]
+      setFavouritesProducts(liked)
+      localStorage.setItem("favourites", JSON.stringify(liked));
+    }
+
+  }
+
+
   // console.log(scrollPosition)
   return (
     // ${isCartPopupOpen ? 'app-stop-scrol' : ''}
     <div className={`app `} >
       <SubmitActionPopup handleSubmitActionPopupSubmit={handleSubmitActionPopupSubmit} isSubmitActionPopupOpen={isSubmitActionPopupOpen} handleSubmitActionPopupClose={handleSubmitActionPopupClose} />
-      <CartPopup allCartProductsCount={allCartProductsCount} setCart={setCart} cart={cart} isCartPopupOpen={isCartPopupOpen} handleCartPopupClose={handleCartPopupClose} />
+      <CartPopup handleLikeBtn={handleLikeBtn} favouritesProducts={favouritesProducts} allCartProductsCount={allCartProductsCount} setCart={setCart} cart={cart} isCartPopupOpen={isCartPopupOpen} handleCartPopupClose={handleCartPopupClose} />
       <FiltersPopup filtersUpd={filtersUpd} setFiltersUpd={setFiltersUpd} filters={filters} handleFilterPopupClose={handleFilterPopupClose} isFilterPopupOpen={isFilterPopupOpen} />
       <CityPopup isCityPopupOpen={isCityPopupOpen} handleCityPopupClose={handleCityPopupClose} cityValue={cityValue} setCityValue={setCityValue} cities={cities} />
-      <Header allCartProductsCount={allCartProductsCount} categories={allCategories} screenWidth={screenWidth} handleCityPopupOpen={handleCityPopupOpen} cityValue={cityValue} products={allProducts} />
+      <Header favouritesProducts={favouritesProducts}  allCartProductsCount={allCartProductsCount} categories={allCategories} screenWidth={screenWidth} handleCityPopupOpen={handleCityPopupOpen} cityValue={cityValue} products={allProducts} />
       <Switch>
         <Route path={`/categories/:category`}>
-          <Category setCartPopupOpen={setCartPopupOpen} cart={cart} handleToCartBtn={handleToCartBtn} subcategoryPreloaderVisible={subcategoryPreloaderVisible} setFilterPopupOpen={setFilterPopupOpen} filtersUpd={filtersUpd} setFiltersUpd={setFiltersUpd} filters={filters} setFilterProducts={setFilterProducts} filterProducts={filterProducts} products={allProducts} categories={allCategories} />
+          <Category handleLikeBtn={handleLikeBtn} favouritesProducts={favouritesProducts} handlePreloaderVisible={handlePreloaderVisible} setCartPopupOpen={setCartPopupOpen} cart={cart} handleToCartBtn={handleToCartBtn} subcategoryPreloaderVisible={subcategoryPreloaderVisible} setFilterPopupOpen={setFilterPopupOpen} filtersUpd={filtersUpd} setFiltersUpd={setFiltersUpd} filters={filters} setFilterProducts={setFilterProducts} filterProducts={filterProducts} products={allProducts} categories={allCategories} />
         </Route>
         <Route path={`/cart`}>
-          <CartPage setSubmitActionPopupOpen={setSubmitActionPopupOpen} allCartProductsCount={allCartProductsCount} setCart={setCart} cart={cart} />
+          <CartPage handleLikeBtn={handleLikeBtn} favouritesProducts={favouritesProducts} setSubmitActionPopupOpen={setSubmitActionPopupOpen} allCartProductsCount={allCartProductsCount} setCart={setCart} cart={cart} />
         </Route>
         <Route path={`/requisites`}>
           <Requisites />
+        </Route>
+        <Route path={`/favourites`}>
+          <Favourites handleLikeBtn={handleLikeBtn} favouritesProducts={favouritesProducts} setCartPopupOpen={setCartPopupOpen} cart={cart} handleToCartBtn={handleToCartBtn}/>
         </Route>
         <Route path={`/profile/:page`}>
           <Profile />

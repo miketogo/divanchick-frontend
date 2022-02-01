@@ -141,7 +141,7 @@
 .header__input {
   caret-color: black;
   -webkit-appearance: none;
-  width: 100%;
+  width: calc(100% - 24px - 12px * 2 - 12px);
   background-color: unset;
   font: unset;
   text-rendering: unset;

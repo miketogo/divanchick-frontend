@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
 import { Switch, useParams, useRouteMatch } from 'react-router';
 import { Route, Link } from 'react-router-dom';
+
+
 import SubCategory from '../SubCategory/SubCategory';
 import Crumbs from '../Сrumbs/Сrumbs'
 import './Category.css';
+
 
 
 
@@ -77,7 +80,7 @@ function Category(props) {
 
         </Route>
         <Route path={`${url}/:sub_category`}>
-          <SubCategory setCartPopupOpen={props.setCartPopupOpen} cart={props.cart} handleToCartBtn={props.handleToCartBtn}  subcategoryPreloaderVisible={props.subcategoryPreloaderVisible} setFilterPopupOpen={props.setFilterPopupOpen} filtersUpd={props.filtersUpd} setFiltersUpd={props.setFiltersUpd} filters={props.filters} setFilterProducts={props.setFilterProducts} filterProducts={props.filterProducts} products={props.products} category={selectedCategory} />
+          <SubCategory handleLikeBtn={props.handleLikeBtn} favouritesProducts={props.favouritesProducts} handlePreloaderVisible={props.handlePreloaderVisible} setCartPopupOpen={props.setCartPopupOpen} cart={props.cart} handleToCartBtn={props.handleToCartBtn}  subcategoryPreloaderVisible={props.subcategoryPreloaderVisible} setFilterPopupOpen={props.setFilterPopupOpen} filtersUpd={props.filtersUpd} setFiltersUpd={props.setFiltersUpd} filters={props.filters} setFilterProducts={props.setFilterProducts} filterProducts={props.filterProducts} products={props.products} category={selectedCategory} />
         </Route>
       </Switch>
 

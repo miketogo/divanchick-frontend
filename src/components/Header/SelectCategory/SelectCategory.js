@@ -81,7 +81,7 @@ function SelectCategory(props) {
               })
               props.setSelectedCategory({})
             }, 100);
-          }} onMouseEnter={() => { setSubCategoryHoverd(sub_category) }} to={`/categories/${props.selectedCategory.link}/${sub_category.link}`} className='select-category__sub-category' key={`select-category__sub-category${i}`}>{sub_category.name}</Link>
+          }} onMouseEnter={() => { setSubCategoryHoverd(sub_category.sub_category_id) }} to={`/categories/${props.selectedCategory.link}/${sub_category.sub_category_id.link}`} className='select-category__sub-category' key={`select-category__sub-category${i}`}>{sub_category.sub_category_id.name}</Link>
         )) : <p className='select-category__help-text'>Выберите категорию</p>}
       </div>
       {Object.keys(props.selectedCategory).length !== 0 ?
@@ -114,7 +114,7 @@ function SelectCategory(props) {
           }} to={`/categories/${props.selectedCategory.link}/${props.selectedCategory.sub_catigories && props.selectedCategory.sub_catigories[0].link}`} className="select-category__preview">
             <p className="select-category__preview-name">{props.selectedCategory && props.selectedCategory.sub_catigories && props.selectedCategory.sub_catigories[0].name}</p>
             <div className="select-category__preview-gradient"></div>
-            <img className="select-category__preview-img" src={props.selectedCategory && props.selectedCategory.sub_catigories && props.selectedCategory.sub_catigories[0].photo} alt={props.selectedCategory && props.selectedCategory.sub_catigories && props.selectedCategory.sub_catigories[0].name} />
+            <img className="select-category__preview-img" src={props.selectedCategory && props.selectedCategory.sub_catigories && props.selectedCategory.sub_catigories[0].sub_category_id.photo} alt={props.selectedCategory && props.selectedCategory.sub_catigories && props.selectedCategory.sub_catigories[0].sub_category_id.name} />
           </Link>
         :
         props.categories && props.categories[categoryIndexes.categoryIndex].sub_catigories && props.categories[categoryIndexes.categoryIndex].sub_catigories[categoryIndexes.subCategoryIndex] &&
@@ -127,10 +127,10 @@ function SelectCategory(props) {
             })
             props.setSelectedCategory({})
           }, 100);
-        }} to={`/categories/${props.categories[categoryIndexes.categoryIndex].link}/${props.categories[categoryIndexes.categoryIndex].sub_catigories && props.categories[categoryIndexes.categoryIndex].sub_catigories[categoryIndexes.subCategoryIndex].link}`} className="select-category__preview">
-          <p className="select-category__preview-name">{props.categories[categoryIndexes.categoryIndex] && props.categories[categoryIndexes.categoryIndex].sub_catigories && props.categories[categoryIndexes.categoryIndex].sub_catigories[categoryIndexes.subCategoryIndex].name}</p>
+        }} to={`/categories/${props.categories[categoryIndexes.categoryIndex].link}/${props.categories[categoryIndexes.categoryIndex].sub_catigories && props.categories[categoryIndexes.categoryIndex].sub_catigories[categoryIndexes.subCategoryIndex].sub_category_id.link}`} className="select-category__preview">
+          <p className="select-category__preview-name">{props.categories[categoryIndexes.categoryIndex] && props.categories[categoryIndexes.categoryIndex].sub_catigories && props.categories[categoryIndexes.categoryIndex].sub_catigories[categoryIndexes.subCategoryIndex].sub_category_id.name}</p>
           <div className="select-category__preview-gradient"></div>
-          <img className="select-category__preview-img" src={props.categories[categoryIndexes.categoryIndex] && props.categories[categoryIndexes.categoryIndex].sub_catigories && props.categories[categoryIndexes.categoryIndex].sub_catigories[categoryIndexes.subCategoryIndex].photo} alt={props.categories[categoryIndexes.categoryIndex] && props.categories[categoryIndexes.categoryIndex].sub_catigories && props.categories[categoryIndexes.categoryIndex].sub_catigories[categoryIndexes.subCategoryIndex].name} />
+          <img className="select-category__preview-img" src={props.categories[categoryIndexes.categoryIndex] && props.categories[categoryIndexes.categoryIndex].sub_catigories && props.categories[categoryIndexes.categoryIndex].sub_catigories[categoryIndexes.subCategoryIndex].sub_category_id.photo} alt={props.categories[categoryIndexes.categoryIndex] && props.categories[categoryIndexes.categoryIndex].sub_catigories && props.categories[categoryIndexes.categoryIndex].sub_catigories[categoryIndexes.subCategoryIndex].sub_category_id.name} />
         </Link>
       }
 

@@ -51,7 +51,7 @@ function CartPage(props) {
                 <p className="cart-page__section-go-back-text">Вернуться к покупкам</p>
               </div>
             </div>
-            <Cart allCartProductsCount={props.allCartProductsCount} setCart={props.setCart} cart={props.cart} />
+            <Cart handleLikeBtn={props.handleLikeBtn} favouritesProducts={props.favouritesProducts} allCartProductsCount={props.allCartProductsCount} setCart={props.setCart} cart={props.cart} />
             <div className="cart-page__section-heading">
               <h2 className="cart-page__section-heading-numeral">2</h2>
               <h2 className="cart-page__section-heading-title">Способ и дата получения</h2>

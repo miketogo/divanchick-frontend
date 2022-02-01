@@ -206,6 +206,28 @@
     cursor: pointer;
 }
 
+.cart__icon-like-bg {
+  fill: transparent;
+  transition: fill 0.3s ease-in-out;
+}
+
+.cart__icon-like-stroke {
+  fill: #121212;
+  transition: fill 0.3s ease-in-out;
+}
+
+.cart__icon-like-container:hover .cart__icon-like-stroke {
+  fill: #9B38DC;
+}
+
+.cart__icon-like-bg_active {
+  fill: #9B38DC;
+}
+
+.cart__icon-like-stroke_active {
+  fill: #9B38DC;
+}
+
 .cart__icon-trash {
     width: 20px;
     height: 20px;

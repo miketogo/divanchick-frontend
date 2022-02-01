@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Switch, useParams, useRouteMatch } from 'react-router';
+import { Switch, useParams, useRouteMatch, useHistory } from 'react-router';
 import { Route } from 'react-router-dom';
 import Preloader from '../Preloader/Preloader';
 import ProductCard from '../ProductCard/ProductCard';
@@ -14,6 +14,7 @@ import './SubCategory.css';
 function SubCategory(props) {
   let divRef = React.createRef();
   const { url } = useRouteMatch();
+  const history = useHistory();
 
   let { sub_category } = useParams();
 
@@ -21,6 +22,11 @@ function SubCategory(props) {
   const [subCategory, setSubCategory] = useState({});
   const [filterdProducts, setFilterdProduct] = useState([]);
 
+  React.useEffect(() => {
+
+    props.handlePreloaderVisible()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
 
   React.useEffect(() => {
@@ -40,14 +46,20 @@ function SubCategory(props) {
 
 
   React.useEffect(() => {
-    if (props.category && props.category.sub_catigories) {
+    if (props.category && props.category.sub_catigories && props.category.sub_catigories.filter((item, i) => {
+      if (item.sub_category_id.link === sub_category) return true
+      else return false
+    }).length > 0) {
 
       setSubCategory(props.category.sub_catigories.filter((item, i) => {
         if (item.sub_category_id.link === sub_category) return true
         else return false
       })[0].sub_category_id)
     }
-  }, [props.category, sub_category])
+    else {
+      // history.push('/')
+    }
+  }, [history, props.category, sub_category])
 
 
   const [filteredProd, setFilteredProd] = useState({});
@@ -234,8 +246,8 @@ function SubCategory(props) {
                         }
                       }
                     })
-                     .map((product, i) => (
-                        <ProductCard setCartPopupOpen={props.setCartPopupOpen} cart={props.cart} handleToCartBtn={props.handleToCartBtn} link={`${url}/${product.link}`} product={product} key={`ProductCard${i}`} />
+                      .map((product, i) => (
+                        <ProductCard handleLikeBtn={props.handleLikeBtn} favouritesProducts={props.favouritesProducts} setCartPopupOpen={props.setCartPopupOpen} cart={props.cart} handleToCartBtn={props.handleToCartBtn} link={`${url}/${product.link}`} product={product} key={`ProductCard${i}`} />
                       )) : <></>}
                 </div>
               }
