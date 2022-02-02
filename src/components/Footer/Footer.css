@@ -185,13 +185,19 @@
     width: 32px;
     height: 32px;
   }
+  
 }
-@media (max-width: 580px){
+@media (max-width: 680px){
   .footer {
     flex-direction: column-reverse;
-    padding: 60px 12px 90px 12px;
   }
   .footer__contacts {
     margin: 0 0 40px 0;
   }
+}
+@media (max-width: 580px){
+  .footer {
+    padding: 60px 12px 90px 12px;
+  }
+  
 }

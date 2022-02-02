@@ -80,7 +80,7 @@ function Footer() {
       </nav>
       <div className="footer__contacts">
         <h2 className="footer__contacts-title">Позвоните нам, если остались вопросы</h2>
-        <a target="_blank" rel="noreferrer" href="tel:+79199401208" className="footer__contacts-tel">+7 919 940 12 08</a>
+        <a target="_blank" rel="noreferrer" href="tel:+79199401208" className="footer__contacts-tel">+7 (919) 940-12-08</a>
         <p className="footer__contacts-time">Ежедневно с 10:00 до 22:00</p>
         <div className="footer__contacts-socials">
           <a className="footer__contacts-social" target="_blank" rel="noreferrer" href="/#">

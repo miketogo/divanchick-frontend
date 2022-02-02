@@ -17,6 +17,9 @@ import Requisites from '../Requisites/Requisites';
 import Profile from '../Profile/Profile';
 import Favourites from '../Favourites/Favourites';
 import Refund from '../Refund/Refund';
+import Login from '../Login/Login';
+import Recovery from '../Recovery/Recovery';
+import Register from '../Register/Register';
 
 // import useScrollPosition from '../../utils/useScrollPosition';
 
@@ -319,6 +322,15 @@ function App() {
         </Route>
         <Route path={`/refund`}>
           <Refund />
+        </Route>
+        <Route path={`/login`}>
+          <Login />
+        </Route>
+        <Route path={`/recovery`}>
+          <Recovery />
+        </Route>
+        <Route path={`/signup`}>
+          <Register />
         </Route>
         <Route path={`/favourites`}>
           <Favourites handleLikeBtn={handleLikeBtn} favouritesProducts={favouritesProducts} setCartPopupOpen={setCartPopupOpen} cart={cart} handleToCartBtn={handleToCartBtn}/>
