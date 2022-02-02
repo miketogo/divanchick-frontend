@@ -20,10 +20,6 @@ const firstColumnLinks = [
     text: 'Отслеживание и отмена заказов',
     to: '/tracking'
   },
-  {
-    text: 'Замер',
-    to: '/measurement'
-  },
 ]
 
 const secondColumnLinks = [

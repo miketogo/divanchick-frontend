@@ -2,6 +2,7 @@
   margin: 12px 0 0;
   display: flex;
   flex-direction: row;
+  overflow: hidden;
 }
 
 .crumbs__link-container {
@@ -25,6 +26,7 @@
   text-decoration: none;
   margin: 0 10px 0 0;
   transition: color 0.3s ease-in-out;
+  width: max-content;
 }
 
 .crumbs__link-separetor {

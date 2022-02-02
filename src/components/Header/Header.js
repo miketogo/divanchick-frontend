@@ -213,7 +213,7 @@ function Header(props) {
               </svg>
             </Link>
             <Link to="/profile" className="header__mobile-icon">
-              <p className="header__icon-counter">12</p>
+
 
               <svg className="header__icon-svg" width="15" height="20" viewBox="0 0 15 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path fillRule="evenodd" clipRule="evenodd" d="M11.1501 5.06429C11.1501 7.17105 9.4881 8.87858 7.43756 8.87858C5.38702 8.87858 3.72506 7.17105 3.72506 5.06429C3.72506 2.95753 5.38702 1.25 7.43756 1.25C9.4881 1.25 11.1501 2.95753 11.1501 5.06429Z" stroke="black" strokeWidth="1.25" strokeLinecap="square" />
@@ -301,7 +301,7 @@ function Header(props) {
             </Link>
             <Link to="/profile"  className="header__icon">
               <div className="header__icon-container">
-                <p className="header__icon-counter">12</p>
+                
 
                 <svg className="header__icon-svg" width="15" height="20" viewBox="0 0 15 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path fillRule="evenodd" clipRule="evenodd" d="M11.1501 5.06429C11.1501 7.17105 9.4881 8.87858 7.43756 8.87858C5.38702 8.87858 3.72506 7.17105 3.72506 5.06429C3.72506 2.95753 5.38702 1.25 7.43756 1.25C9.4881 1.25 11.1501 2.95753 11.1501 5.06429Z" stroke="black" strokeWidth="1.25" strokeLinecap="square" />

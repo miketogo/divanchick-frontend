@@ -549,8 +549,8 @@
     display: none;
   }
   .header__icon-counter {
-    top: -5.5px;
-    left: 15px;
+    top: 1.5px;
+    left: 16px;
   }
   .header__input {
     font-style: normal;

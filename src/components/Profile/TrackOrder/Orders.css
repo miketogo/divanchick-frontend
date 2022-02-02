@@ -275,6 +275,11 @@
     margin: 0 20px 0 0;
 }
 
+.order__item-product-img-photo{
+    width: 100%;
+    height: 100%;
+    object-fit: scale-down;
+}
 .order__item-product-names {
     display: flex;
     flex-direction: column;

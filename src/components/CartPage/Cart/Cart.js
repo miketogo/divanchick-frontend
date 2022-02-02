@@ -147,6 +147,11 @@ function Cart(props) {
 
 
                                         </div>
+                                        {item.amount > 0 ?
+                                            <p className="cart__take-from-showroom">Забрать сегодня <span className='cart__take-from-showroom_span'>в шоуруме</span></p>
+                                            :
+                                            <p className="cart__take-from-showroom">Доступно для предзаказа</p>
+                                        }
                                     </div>
                                 </div>
                                 <div className="cart__item-row cart__item-row_second">

@@ -109,7 +109,7 @@ function App() {
     setSubcategoryPreloaderVisible(true)
     setTimeout(() => {
       setSubcategoryPreloaderVisible(false)
-      window.scrollTo({ top: 0, behavior: 'smooth' })
+      // window.scrollTo({ top: 0, behavior: 'smooth' })
     }, 1000);
   }
 
@@ -155,8 +155,8 @@ function App() {
           filters.width.min = item.specifications.width
           filters.height.max = item.specifications.height
           filters.height.min = item.specifications.height
-          filters.depth.max = item.specifications.length
-          filters.depth.min = item.specifications.length
+          filters.depth.max = item.specifications.depth
+          filters.depth.min = item.specifications.depth
           filters.brands = [item.manufacturer]
         }
         if (filters.brands.filter((brand) => {
@@ -171,8 +171,8 @@ function App() {
         if (item.specifications.width < filters.width.min) filters.width.min = Math.floor(item.specifications.width)
         if (item.specifications.height > filters.height.max) filters.height.max = Math.floor(item.specifications.height)
         if (item.specifications.height < filters.height.min) filters.height.min = Math.floor(item.specifications.height)
-        if (item.specifications.length > filters.depth.max) filters.depth.max = Math.floor(item.specifications.length)
-        if (item.specifications.length < filters.depth.min) filters.depth.min = Math.floor(item.specifications.length)
+        if (item.specifications.depth > filters.depth.max) filters.depth.max = Math.floor(item.specifications.depth)
+        if (item.specifications.depth < filters.depth.min) filters.depth.min = Math.floor(item.specifications.depth)
       })
       setFilters(filters)
 

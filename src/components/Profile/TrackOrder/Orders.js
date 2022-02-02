@@ -2,6 +2,7 @@ import React from 'react'
 import './Orders.css';
 
 import { testOrders } from '../../../utils/utils'
+import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 
 
 function Orders(props) {
@@ -56,43 +57,46 @@ function Orders(props) {
                 {testOrders.filter((item) => {
                     if (selectedStatus.toLowerCase() === 'все') return true
                     else {
-                        if(selectedStatus.toLowerCase() === item.status.toLowerCase()) return true
+                        if (selectedStatus.toLowerCase() === item.status.toLowerCase()) return true
                         else return false
                     }
                 }).map((item, i) => (
-                        <div className="order__item" key={`order__item${i}`}>
-                            <div className="order__item-title">
-                                <p className="order__item-number">Заказ №{item.order_number}</p>
-                                <div className={`order__item-status ${item.status.toLowerCase() === 'в работе' ? 'order__item-status_type_in-work' : ''} ${item.status.toLowerCase() === 'отмененный' ? 'order__item-status_type_cancelled' : ''} ${item.status.toLowerCase() === 'доставлен' ? 'order__item-status_type_delivered' : ''}`}>
-                                    <p className={`order__item-status-text ${item.status.toLowerCase() === 'в работе' ? 'order__item-status-text_type_in-work' : ''} ${item.status.toLowerCase() === 'отмененный' ? 'order__item-status-text_type_cancelled' : ''} ${item.status.toLowerCase() === 'доставлен' ? 'order__item-status-text_type_delivered' : ''}`}>{item.status.toLowerCase()[0].toUpperCase()}{item.status.toLowerCase().slice(1)}</p>
-                                </div>
+                    <div className="order__item" key={`order__item${i}`}>
+                        <div className="order__item-title">
+                            <p className="order__item-number">Заказ №{item.order_number}</p>
+                            <div className={`order__item-status ${item.status.toLowerCase() === 'в работе' ? 'order__item-status_type_in-work' : ''} ${item.status.toLowerCase() === 'отмененный' ? 'order__item-status_type_cancelled' : ''} ${item.status.toLowerCase() === 'доставлен' ? 'order__item-status_type_delivered' : ''}`}>
+                                <p className={`order__item-status-text ${item.status.toLowerCase() === 'в работе' ? 'order__item-status-text_type_in-work' : ''} ${item.status.toLowerCase() === 'отмененный' ? 'order__item-status-text_type_cancelled' : ''} ${item.status.toLowerCase() === 'доставлен' ? 'order__item-status-text_type_delivered' : ''}`}>{item.status.toLowerCase()[0].toUpperCase()}{item.status.toLowerCase().slice(1)}</p>
                             </div>
-                            <p className="order__item-fullprice">Стоимость заказа: <span className="order__item-fullprice-value">{item.full_price.toLocaleString('ru')} руб.</span></p>
-                            <p className="order__item-address">{item.isDelivery ? `Адрес доставки: ${item.address}` : `Самовывоз: ${item.address}`}</p>
-                            {orderNumberOpen === item.order_number ? <></> : <p className="order__item-show-products" onClick={() => { setOrderNumberOpen(item.order_number) }}>Посмотреть состав заказа</p>}
-                            {orderNumberOpen === item.order_number ?
-                                <div className="order__item-products">
-                                    {item.order_items.map((product, product_i) => (
-                                        <div className="order__item-product" key={`order__item-product${product_i}`}>
-                                            <img className="order__item-product-img" src={product.photos[0]} alt={product.name} />
-                                            <div className="order__item-product-names">
-                                                <p className="order__item-product-article">Артикул: {product.article}</p>
-                                                <p className="order__item-product-name">{product.name}</p>
-                                            </div>
-                                            <div className="order__item-product-info">
-                                                <p className="order__item-product-count">{product.count} шт.</p>
-                                                <p className="order__item-product-price">{product.discount && product.discount > 0 ? ((product.price - (product.price / 100 * product.discount)) * product.count).toLocaleString('ru') : (product.count * product.price).toLocaleString('ru')}&nbsp;₽</p>
-                                            </div>
-                                        </div>
-                                    ))}
-                                    <p className="order__item-hide-products" onClick={() => { setOrderNumberOpen('') }}>Скрыть</p>
-                                </div>
-                                :
-                                <></>}
-
-
                         </div>
-                    ))}
+                        <p className="order__item-fullprice">Стоимость заказа: <span className="order__item-fullprice-value">{item.full_price.toLocaleString('ru')} руб.</span></p>
+                        <p className="order__item-address">{item.isDelivery ? `Адрес доставки: ${item.address}` : `Самовывоз: ${item.address}`}</p>
+                        {orderNumberOpen === item.order_number ? <></> : <p className="order__item-show-products" onClick={() => { setOrderNumberOpen(item.order_number) }}>Посмотреть состав заказа</p>}
+                        {orderNumberOpen === item.order_number ?
+                            <div className="order__item-products">
+                                {item.order_items.map((product, product_i) => (
+                                    <div className="order__item-product" key={`order__item-product${product_i}`}>
+                                        <Link className="order__item-product-img" to={`/categories/${product.category.link}/${product.sub_category.link}/${product.link}`}>
+                                            <img className="order__item-product-img-photo" src={product.photos[0]} alt={product.name} />
+                                        </Link>
+
+                                        <div className="order__item-product-names">
+                                            <p className="order__item-product-article">Артикул: {product.article}</p>
+                                            <p className="order__item-product-name">{product.name}</p>
+                                        </div>
+                                        <div className="order__item-product-info">
+                                            <p className="order__item-product-count">{product.count} шт.</p>
+                                            <p className="order__item-product-price">{product.discount && product.discount > 0 ? ((product.price - (product.price / 100 * product.discount)) * product.count).toLocaleString('ru') : (product.count * product.price).toLocaleString('ru')}&nbsp;₽</p>
+                                        </div>
+                                    </div>
+                                ))}
+                                <p className="order__item-hide-products" onClick={() => { setOrderNumberOpen('') }}>Скрыть</p>
+                            </div>
+                            :
+                            <></>}
+
+
+                    </div>
+                ))}
             </div>
         </section>
 

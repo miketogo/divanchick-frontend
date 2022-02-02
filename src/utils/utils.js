@@ -14,9 +14,12 @@ export const products = [
         key_words: ['Диван', 'Монти', '156'],
         description: 'Диван тыры-пыры',
         specifications: {
+            weight: 1000,
+            material: 'ЛДСП, дубовая доска, медная пружина, ЛДСП, дубовая доска, медная пружина',
+            colour: 'Коричневый',
             width: 1000,
             height: 2000,
-            length: 500,
+            depth: 500,
         },
         discount: 0,
         amount: 10,
@@ -41,21 +44,24 @@ export const products = [
         key_words: ['Диван', 'Монти', '156'],
         description: 'Диван тыры-пыры',
         specifications: {
+            weight: 'Не указано',
+            material: 'ЛДСП, дубовая доска, медная пружина',
+            colour: 'Коричневый',
             width: 1000,
             height: 2000,
-            length: 500,
+            depth: 500,
         },
-        discount: 0,
+        discount: 10,
         amount: 10,
         article: '0010000001',
-        photos: ['https://i.ibb.co/TLjzF7B/image.png', 'https://i.ibb.co/WHC6kPx/image.png'],
+        photos: ['https://i.ibb.co/TLjzF7B/image.png', 'https://i.ibb.co/WHC6kPx/image.png', 'https://i.ibb.co/WHC6kPx/image.png', 'https://i.ibb.co/WHC6kPx/image.png', 'https://i.ibb.co/WHC6kPx/image.png', 'https://i.ibb.co/WHC6kPx/image.png', 'https://i.ibb.co/WHC6kPx/image.png'],
         price: 1500,
         _id: '2',
 
     },
     {
-        name: 'Диван Монти 156',
-        link: 'divan_monti_156',
+        name: 'Диван Монти 158',
+        link: 'divan_monti_158',
         manufacturer: 'Студия диванов',
         category: {
             name: 'Мягкая мебель',
@@ -68,9 +74,12 @@ export const products = [
         key_words: ['Диван', 'Монти', '156'],
         description: 'Диван тыры-пыры',
         specifications: {
-            width: 100,
-            height: 200,
-            length: 50,
+            weight: 200,
+            material: 'ЛДСП, дубовая доска, медная пружина',
+            colour: 'Коричневый',
+            width: 1000,
+            height: 2000,
+            depth: 500,
         },
         discount: 10,
         amount: 10,
@@ -81,8 +90,8 @@ export const products = [
 
     },
     {
-        name: 'Диван Монти 156',
-        link: 'divan_monti_156',
+        name: 'Диван Монти 159',
+        link: 'divan_monti_159',
         manufacturer: 'Студия диванов',
         category: {
             name: 'Мягкая мебель',
@@ -95,9 +104,12 @@ export const products = [
         key_words: ['Диван', 'Монти', '156'],
         description: 'Диван тыры-пыры',
         specifications: {
+            weight: 'Не указано',
+            material: 'ЛДСП, дубовая доска, медная пружина',
+            colour: 'Коричневый',
             width: 100,
             height: 200,
-            length: 50,
+            depth: 50,
         },
         discount: 10,
         amount: 0,
@@ -108,8 +120,8 @@ export const products = [
 
     },
     {
-        name: 'Диван Монти 156',
-        link: 'divan_monti_156',
+        name: 'Диван Монти 1510',
+        link: 'divan_monti_1510',
         manufacturer: 'Тобольск люкс',
         category: {
             name: 'Мягкая мебель',
@@ -122,9 +134,12 @@ export const products = [
         key_words: ['Диван', 'Монти', '156'],
         description: 'Диван тыры-пыры',
         specifications: {
+            weight: 'Не указано',
+            material: 'ЛДСП',
+            colour: 'Коричневый',
             width: 1000,
             height: 2000,
-            length: 500,
+            depth: 500,
         },
         discount: 24,
         amount: 10,
@@ -135,8 +150,8 @@ export const products = [
 
     },
     {
-        name: 'Диван Монти 156',
-        link: 'divan_monti_156',
+        name: 'Диван Монти',
+        link: 'divan_monti',
         manufacturer: 'Копиван',
         category: {
             name: 'Мягкая мебель',
@@ -149,9 +164,12 @@ export const products = [
         key_words: ['Диван', 'Монти', '156'],
         description: 'Диван тыры-пыры',
         specifications: {
+            weight: 'Не указано',
+            material: 'ЛДСП, дубовая доска, медная пружина',
+            colour: 'Коричневый',
             width: 1000,
             height: 2000,
-            length: 500,
+            depth: 500,
         },
         discount: 0,
         amount: 0,
@@ -162,8 +180,8 @@ export const products = [
 
     },
     {
-        name: 'Диван Монти 156',
-        link: 'divan_monti_156',
+        name: 'Диван Монти 1532',
+        link: 'divan_monti_1532',
         manufacturer: 'Копиван',
         category: {
             name: 'Мягкая мебель',
@@ -176,9 +194,12 @@ export const products = [
         key_words: ['Диван', 'Монти', '156'],
         description: 'Диван тыры-пыры',
         specifications: {
+            weight: 'Не указано',
+            material: 'ЛДСП, дубовая доска, медная пружина',
+            colour: 'Коричневый',
             width: 1000,
             height: 2000,
-            length: 500,
+            depth: 500,
         },
         discount: 0,
         amount: 0,
@@ -189,7 +210,7 @@ export const products = [
 
     },
     {
-        name: 'Диван Монти 156',
+        name: 'Раскладушка типо дивана',
         link: 'divan_monti_156',
         manufacturer: 'Студия диванов',
         category: {
@@ -203,9 +224,12 @@ export const products = [
         key_words: ['Диван', 'Монти', '156'],
         description: 'Диван тыры-пыры',
         specifications: {
+            weight: 'Не указано',
+            material: 'ЛДСП, дубовая доска, медная пружина',
+            colour: 'Коричневый',
             width: 1000,
             height: 2000,
-            length: 500,
+            depth: 500,
         },
         discount: 10,
         amount: 10,
@@ -216,8 +240,8 @@ export const products = [
 
     },
     {
-        name: 'Диван Монти 157',
-        link: 'divan_monti_157',
+        name: 'Диван Монти 1500',
+        link: 'divan_monti_1500',
         manufacturer: 'Дианчикус',
         category: {
             name: 'Мягкая мебель',
@@ -230,9 +254,12 @@ export const products = [
         key_words: ['Диван', 'Монти', '157'],
         description: 'Диван тыры-пыры',
         specifications: {
+            weight: 'Не указано',
+            material: 'ЛДСП, дубовая доска, медная пружина',
+            colour: 'Коричневый',
             width: 10,
             height: 20,
-            length: 5,
+            depth: 5,
         },
         discount: 0,
         amount: 0,
@@ -399,7 +426,7 @@ export const testOrders = [
                 specifications: {
                     width: 1000,
                     height: 2000,
-                    length: 500,
+                    depth: 500,
                 },
                 discount: 0,
                 amount: 10,
@@ -426,7 +453,7 @@ export const testOrders = [
                 specifications: {
                     width: 1000,
                     height: 2000,
-                    length: 500,
+                    depth: 500,
                 },
                 discount: 0,
                 amount: 10,
@@ -462,7 +489,7 @@ export const testOrders = [
                 specifications: {
                     width: 1000,
                     height: 2000,
-                    length: 500,
+                    depth: 500,
                 },
                 discount: 0,
                 amount: 10,
@@ -489,7 +516,7 @@ export const testOrders = [
                 specifications: {
                     width: 1000,
                     height: 2000,
-                    length: 500,
+                    depth: 500,
                 },
                 discount: 0,
                 amount: 10,
@@ -525,7 +552,7 @@ export const testOrders = [
                 specifications: {
                     width: 1000,
                     height: 2000,
-                    length: 500,
+                    depth: 500,
                 },
                 discount: 0,
                 amount: 10,
@@ -552,7 +579,7 @@ export const testOrders = [
                 specifications: {
                     width: 1000,
                     height: 2000,
-                    length: 500,
+                    depth: 500,
                 },
                 discount: 0,
                 amount: 10,
@@ -579,7 +606,7 @@ export const testOrders = [
                 specifications: {
                     width: 1000,
                     height: 2000,
-                    length: 500,
+                    depth: 500,
                 },
                 discount: 0,
                 amount: 10,
@@ -606,7 +633,7 @@ export const testOrders = [
                 specifications: {
                     width: 1000,
                     height: 2000,
-                    length: 500,
+                    depth: 500,
                 },
                 discount: 0,
                 amount: 10,
@@ -633,7 +660,7 @@ export const testOrders = [
                 specifications: {
                     width: 1000,
                     height: 2000,
-                    length: 500,
+                    depth: 500,
                 },
                 discount: 0,
                 amount: 10,
@@ -660,7 +687,7 @@ export const testOrders = [
                 specifications: {
                     width: 1000,
                     height: 2000,
-                    length: 500,
+                    depth: 500,
                 },
                 discount: 0,
                 amount: 10,
@@ -687,7 +714,7 @@ export const testOrders = [
                 specifications: {
                     width: 1000,
                     height: 2000,
-                    length: 500,
+                    depth: 500,
                 },
                 discount: 0,
                 amount: 10,
@@ -714,7 +741,7 @@ export const testOrders = [
                 specifications: {
                     width: 1000,
                     height: 2000,
-                    length: 500,
+                    depth: 500,
                 },
                 discount: 0,
                 amount: 10,
@@ -741,7 +768,7 @@ export const testOrders = [
                 specifications: {
                     width: 1000,
                     height: 2000,
-                    length: 500,
+                    depth: 500,
                 },
                 discount: 0,
                 amount: 10,

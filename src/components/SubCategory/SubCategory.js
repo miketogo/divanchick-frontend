@@ -121,8 +121,8 @@ function SubCategory(props) {
     }).filter((item) => {
       //DEPTH MIN-MAX//
       if (Object.keys(props.filtersUpd).length !== 0) {
-        if (item.specifications.length >= props.filtersUpd.depth.min) {
-          if (item.specifications.length <= props.filtersUpd.depth.max) return true
+        if (item.specifications.depth >= props.filtersUpd.depth.min) {
+          if (item.specifications.depth <= props.filtersUpd.depth.max) return true
           else return false
         }
         else return false
@@ -260,7 +260,7 @@ function SubCategory(props) {
 
         </Route>
         <Route path={`${url}/:product_name`}>
-          <ProductPage filterdProducts={filterdProducts} category={props.category} sub_category={subCategory} />
+          <ProductPage  setCartPopupOpen={props.setCartPopupOpen} cart={props.cart} handleToCartBtn={props.handleToCartBtn}  handleLikeBtn={props.handleLikeBtn} favouritesProducts={props.favouritesProducts} filterdProducts={filterdProducts} category={props.category} sub_category={subCategory} />
         </Route>
       </Switch>
 

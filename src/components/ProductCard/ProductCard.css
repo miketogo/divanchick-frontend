@@ -128,6 +128,8 @@
   color: #000000;
   max-width: 100%;
   text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 
 }
 
@@ -237,10 +239,11 @@
   opacity: 1;
 }
 
-.product-card__link{
+.product-card__link {
   display: flex;
   flex-direction: column;
 }
+
 @media (max-width: 1700px) {
   .product-card__like {
     width: 32px;

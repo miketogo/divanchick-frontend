@@ -18,7 +18,7 @@
 .category__sub-categories {
   margin: 36px 0 0;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(540px, 700px));
+  grid-template-columns: repeat(auto-fit, minmax(540px, 1fr));
   grid-template-rows: 300px;
   grid-auto-rows: 300px;
   row-gap: 20px;
@@ -112,7 +112,7 @@
 
 @media (max-width: 1145px) {
   .category__sub-categories {
-    grid-template-columns: repeat(auto-fit, minmax(270px, 500px));
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
     grid-template-rows: 158px;
     grid-auto-rows: 158px;
     row-gap: 12px;
