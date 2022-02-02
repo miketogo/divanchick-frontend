@@ -283,7 +283,7 @@
 
 
     /* colour/text/secondary */
-
+    cursor: pointer;
     color: #686868;
     transition: color 0.3s ease-in-out;
 }
