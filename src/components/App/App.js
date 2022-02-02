@@ -20,6 +20,7 @@ import Refund from '../Refund/Refund';
 import Login from '../Login/Login';
 import Recovery from '../Recovery/Recovery';
 import Register from '../Register/Register';
+import ColorPopup from '../ColorPopup/ColorPopup';
 
 // import useScrollPosition from '../../utils/useScrollPosition';
 
@@ -34,6 +35,7 @@ function App() {
   const [isFilterPopupOpen, setFilterPopupOpen] = React.useState(false);
   const [isSubmitActionPopupOpen, setSubmitActionPopupOpen] = React.useState(false);
   const [isCartPopupOpen, setCartPopupOpen] = React.useState(false);
+  const [isColorPopupOpen, setColorPopupOpen] = React.useState(false);
 
   const [allProducts,] = React.useState(products);
   const [allCategories,] = React.useState(categories);
@@ -88,6 +90,10 @@ function App() {
 
   function handleFilterPopupClose() {
     setFilterPopupOpen(false)
+  }
+
+  function handleColorPopupClose() {
+    setColorPopupOpen(false)
   }
 
   function handleSubmitActionPopupClose() {
@@ -301,18 +307,37 @@ function App() {
   }
 
 
+  const [selectedColor, setSelectedColor] = React.useState('');
+  const [availibleColors, setAvailibleColors] = React.useState([]);
+
+  function handleColorPopupOpen({ product, active_color }) {
+    console.log(product, active_color)
+    let colors = [{ name: product.specifications.colour, link: `/categories/${product.category.link}/${product.sub_category.link}/${product.link}` }]
+    if (product.variations) {
+      product.variations.forEach((item) => {
+        colors = [...colors, {name: item.product_id.specifications.colour, link: `/categories/${product.category.link}/${product.sub_category.link}/${product.link}/${item.product_id.specifications.colour}`}]
+      })
+    }
+    console.log(colors)
+
+
+    setSelectedColor(active_color)
+    setAvailibleColors(colors)
+    setColorPopupOpen(true)
+  }
   // console.log(scrollPosition)
   return (
     // ${isCartPopupOpen ? 'app-stop-scrol' : ''}
     <div className={`app `} >
+      <ColorPopup selectedColor={selectedColor} availibleColors={availibleColors} isColorPopupOpen={isColorPopupOpen} handleColorPopupClose={handleColorPopupClose} />
       <SubmitActionPopup handleSubmitActionPopupSubmit={handleSubmitActionPopupSubmit} isSubmitActionPopupOpen={isSubmitActionPopupOpen} handleSubmitActionPopupClose={handleSubmitActionPopupClose} />
       <CartPopup handleLikeBtn={handleLikeBtn} favouritesProducts={favouritesProducts} allCartProductsCount={allCartProductsCount} setCart={setCart} cart={cart} isCartPopupOpen={isCartPopupOpen} handleCartPopupClose={handleCartPopupClose} />
       <FiltersPopup filtersUpd={filtersUpd} setFiltersUpd={setFiltersUpd} filters={filters} handleFilterPopupClose={handleFilterPopupClose} isFilterPopupOpen={isFilterPopupOpen} />
       <CityPopup isCityPopupOpen={isCityPopupOpen} handleCityPopupClose={handleCityPopupClose} cityValue={cityValue} setCityValue={setCityValue} cities={cities} />
-      <Header favouritesProducts={favouritesProducts}  allCartProductsCount={allCartProductsCount} categories={allCategories} screenWidth={screenWidth} handleCityPopupOpen={handleCityPopupOpen} cityValue={cityValue} products={allProducts} />
+      <Header favouritesProducts={favouritesProducts} allCartProductsCount={allCartProductsCount} categories={allCategories} screenWidth={screenWidth} handleCityPopupOpen={handleCityPopupOpen} cityValue={cityValue} products={allProducts} />
       <Switch>
         <Route path={`/categories/:category`}>
-          <Category handleLikeBtn={handleLikeBtn} favouritesProducts={favouritesProducts} handlePreloaderVisible={handlePreloaderVisible} setCartPopupOpen={setCartPopupOpen} cart={cart} handleToCartBtn={handleToCartBtn} subcategoryPreloaderVisible={subcategoryPreloaderVisible} setFilterPopupOpen={setFilterPopupOpen} filtersUpd={filtersUpd} setFiltersUpd={setFiltersUpd} filters={filters} setFilterProducts={setFilterProducts} filterProducts={filterProducts} products={allProducts} categories={allCategories} />
+          <Category handleColorPopupOpen={handleColorPopupOpen} handleLikeBtn={handleLikeBtn} favouritesProducts={favouritesProducts} handlePreloaderVisible={handlePreloaderVisible} setCartPopupOpen={setCartPopupOpen} cart={cart} handleToCartBtn={handleToCartBtn} subcategoryPreloaderVisible={subcategoryPreloaderVisible} setFilterPopupOpen={setFilterPopupOpen} filtersUpd={filtersUpd} setFiltersUpd={setFiltersUpd} filters={filters} setFilterProducts={setFilterProducts} filterProducts={filterProducts} products={allProducts} categories={allCategories} />
         </Route>
         <Route path={`/cart`}>
           <CartPage handleLikeBtn={handleLikeBtn} favouritesProducts={favouritesProducts} setSubmitActionPopupOpen={setSubmitActionPopupOpen} allCartProductsCount={allCartProductsCount} setCart={setCart} cart={cart} />
@@ -333,7 +358,7 @@ function App() {
           <Register />
         </Route>
         <Route path={`/favourites`}>
-          <Favourites handleLikeBtn={handleLikeBtn} favouritesProducts={favouritesProducts} setCartPopupOpen={setCartPopupOpen} cart={cart} handleToCartBtn={handleToCartBtn}/>
+          <Favourites handleLikeBtn={handleLikeBtn} favouritesProducts={favouritesProducts} setCartPopupOpen={setCartPopupOpen} cart={cart} handleToCartBtn={handleToCartBtn} />
         </Route>
         <Route path={`/profile/:page`}>
           <Profile />

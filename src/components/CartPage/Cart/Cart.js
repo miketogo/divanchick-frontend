@@ -120,7 +120,7 @@ function Cart(props) {
                             {/* MOBILE */}
                             <div className="cart__item cart__item_mobile">
                                 <div className="cart__item-row">
-                                    <Link className="cart__item-img" to={`/categories/${item.category.link}/${item.sub_category.link}/${item.link}`}>
+                                    <Link className="cart__item-img" to={`/categories/${item.category.link}/${item.sub_category.link}/${item.link}/${item.specifications.colour}`}>
                                         <img className="cart__item-img-photo" src={item.photos[0] !== 'Не указано' ? `${item.photos[0]}` : ''} alt={item.name}></img>
                                     </Link>
                                     <div className="cart__item-column">

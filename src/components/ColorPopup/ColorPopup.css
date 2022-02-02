@@ -1,0 +1,227 @@
+.color-popup {
+  z-index: 1000;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
+  visibility: hidden;
+  transition: visibility 0.3s, opacity 0.3s linear;
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Safari */
+  -khtml-user-select: none;
+  /* Konqueror HTML */
+  -moz-user-select: none;
+  /* Old versions of Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+  user-select: none;
+  /* Non-prefixed version, currently
+                                supported by Chrome, Edge, Opera and Firefox */
+
+}
+
+.color-popup_active {
+  visibility: visible;
+}
+
+
+.color-popup__container {
+  font-family: Inter, Arial, sans-serif;
+  width: 392px;
+  height: 100vh;
+  background: #FFFFFF;
+  z-index: 1001;
+  position: absolute;
+  top: 0;
+  /* padding-bottom: 70px;
+	transform: translateY(70px); */
+  display: flex;
+  flex-direction: column;
+  right: -392px;
+  transition: transform 0.2s linear;
+}
+
+.color-popup__container_active {
+  transform: translateX(-392px);
+}
+
+.color-popup__background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: #000000;
+  opacity: 0;
+  z-index: 999;
+  transition: opacity 0.4s linear;
+}
+
+.color-popup__background_active {
+  opacity: 0.3;
+  transition: opacity 0.4s linear;
+}
+
+.color-popup__close-and-title {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 44px 24px 0 40px;
+  max-width: calc(100% - 40px - 24px);
+}
+
+.color-popup__title {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 130%;
+  /* or 31px */
+
+
+  color: #000000;
+  margin: 0;
+}
+
+.color-popup__close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  background: rgba(18, 18, 18, 0);
+  transition: background-color 0.3s ease-in-out;
+  cursor: pointer;
+
+}
+
+.color-popup__close:hover {
+  background: rgba(18, 18, 18, 0.08);
+}
+
+.color-popup__items {
+  display: flex;
+  flex-direction: column;
+  margin: 32px 24px 40px 40px;
+  width: 100%;
+  max-width: calc(100% - 40px - 24px);
+  height: 100%;
+  overflow-y: scroll;
+}
+
+.color-popup__items::-webkit-scrollbar-track {
+  border: unset;
+  padding: 2px 0;
+  background: transparent;
+  border-radius: 8px;
+}
+
+.color-popup__items::-webkit-scrollbar {
+  width: 4px;
+}
+
+.color-popup__items::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+
+  background-color: #9B38DC;
+  border: none;
+}
+
+
+.color-popup__item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 24px 12px 24px 32px;
+  margin: 12px 0 0;
+  border: 1px solid rgba(18, 18, 18, 0.2);
+  box-sizing: border-box;
+  border-radius: 9px;
+  transition: border-color 0.3s ease-in-out;
+  text-decoration: none;
+}
+
+.color-popup__item_active {
+  border-color: #9B38DC;
+}
+
+.color-popup__item:first-of-type {
+  margin: 0;
+}
+
+
+.color-popup__item-text {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 100%;
+  /* identical to box height, or 20px */
+
+
+  /* colour/text/main */
+  transition: color 0.3s ease-in-out;
+  color: #000000;
+  margin: 0;
+  text-decoration: none;
+}
+
+.color-popup__item-text_active{
+  color: #9B38DC;
+}
+
+
+@media (max-width: 700px) {
+  /* .color-popup__container {
+    width: 100%;
+    right: -100%;
+  }
+
+  .color-popup__container_active {
+    transform: translateX(100%);
+  } */
+
+}
+
+@media (max-width: 1400px) {
+  .color-popup__container {
+    width: 392px;
+    display: flex;
+    flex-direction: column;
+    right: -392px;
+    transition: transform 0.2s linear;
+  }
+
+  .color-popup__container_active {
+    transform: translateX(-100%);
+  }
+
+}
+
+@media (max-width: 700px) {
+  .color-popup__container {
+    width: 100%;
+    right: -100%;
+  }
+
+  .color-popup__close-and-title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 44px 12px 0 12px;
+    max-width: calc(100% - 12px - 12px);
+  }
+
+  .color-popup__items {
+    max-width: calc(100% - 12px - 12px);
+    margin: 25px 12px 40px 12px;
+  }
+
+
+  .color-popup__items::-webkit-scrollbar {
+    width: 2px;
+  }
+
+}

@@ -27,6 +27,102 @@ export const products = [
         photos: ['https://i.ibb.co/TLjzF7B/image.png', 'https://i.ibb.co/WHC6kPx/image.png'],
         price: 1400,
         _id: '1',
+        variations: [
+            {
+                product_id: {
+                    name: 'Диван Монти 156',
+                    link: 'divan_monti_156',
+                    manufacturer: 'Яна-фабрика',
+                    category: {
+                        name: 'Мягкая мебель',
+                        link: 'myagkaya_mebel',
+                    },
+                    sub_category: {
+                        name: 'Диваны-кровати',
+                        link: 'divany-krovati',
+                    },
+                    key_words: ['Диван', 'Монти', '156'],
+                    description: 'Диван тыры-пыры',
+                    specifications: {
+                        weight: 'Не указано',
+                        material: 'ЛДСП, дубовая доска, медная пружина',
+                        colour: 'Красный',
+                        width: 1000,
+                        height: 2000,
+                        depth: 500,
+                    },
+                    discount: 10,
+                    amount: 10,
+                    article: '0010000001',
+                    photos: ['https://i.ibb.co/TLjzF7B/image.png', 'https://i.ibb.co/WHC6kPx/image.png', 'https://i.ibb.co/WHC6kPx/image.png', 'https://i.ibb.co/WHC6kPx/image.png', 'https://i.ibb.co/WHC6kPx/image.png', 'https://i.ibb.co/WHC6kPx/image.png', 'https://i.ibb.co/WHC6kPx/image.png'],
+                    price: 1500,
+                    _id: '222',
+                },
+            },
+
+            {
+                product_id: {
+                    name: 'Диван Монти 156',
+                    link: 'divan_monti_156',
+                    manufacturer: 'Яна-фабрика',
+                    category: {
+                        name: 'Мягкая мебель',
+                        link: 'myagkaya_mebel',
+                    },
+                    sub_category: {
+                        name: 'Диваны-кровати',
+                        link: 'divany-krovati',
+                    },
+                    key_words: ['Диван', 'Монти', '156'],
+                    description: 'Диван тыры-пыры',
+                    specifications: {
+                        weight: 'Не указано',
+                        material: 'ЛДСП, дубовая доска, медная пружина',
+                        colour: 'Оранжевый',
+                        width: 1000,
+                        height: 2000,
+                        depth: 500,
+                    },
+                    discount: 10,
+                    amount: 10,
+                    article: '0010000001',
+                    photos: ['https://i.ibb.co/TLjzF7B/image.png', 'https://i.ibb.co/WHC6kPx/image.png', 'https://i.ibb.co/WHC6kPx/image.png', 'https://i.ibb.co/WHC6kPx/image.png', 'https://i.ibb.co/WHC6kPx/image.png', 'https://i.ibb.co/WHC6kPx/image.png', 'https://i.ibb.co/WHC6kPx/image.png'],
+                    price: 1500,
+                    _id: '2224',
+                },
+            },
+            {
+                product_id: {
+                    name: 'Диван Монти 156',
+                    link: 'divan_monti_156',
+                    manufacturer: 'Яна-фабрика',
+                    category: {
+                        name: 'Мягкая мебель',
+                        link: 'myagkaya_mebel',
+                    },
+                    sub_category: {
+                        name: 'Диваны-кровати',
+                        link: 'divany-krovati',
+                    },
+                    key_words: ['Диван', 'Монти', '156'],
+                    description: 'Диван тыры-пыры',
+                    specifications: {
+                        weight: 'Не указано',
+                        material: 'ЛДСП, дубовая доска, медная пружина',
+                        colour: 'Розовый',
+                        width: 1000,
+                        height: 2000,
+                        depth: 500,
+                    },
+                    discount: 10,
+                    amount: 10,
+                    article: '0010000001',
+                    photos: ['https://i.ibb.co/TLjzF7B/image.png', 'https://i.ibb.co/WHC6kPx/image.png', 'https://i.ibb.co/WHC6kPx/image.png', 'https://i.ibb.co/WHC6kPx/image.png', 'https://i.ibb.co/WHC6kPx/image.png', 'https://i.ibb.co/WHC6kPx/image.png', 'https://i.ibb.co/WHC6kPx/image.png'],
+                    price: 1500,
+                    _id: '2226',
+                },
+            }
+        ]
 
     },
     {

@@ -12,10 +12,11 @@ import './ProductPage.css';
 function ProductPage(props) {
   const { url } = useRouteMatch();
   const history = useHistory();
-  let { product_name } = useParams();
+  let { product_name, color } = useParams();
 
 
   const [selectedProduct, setSelectedProduct] = useState([]);
+  const [selectedByColorProduct, setSelectedByColorProduct] = useState(null);
 
 
   React.useEffect(() => {
@@ -28,6 +29,35 @@ function ProductPage(props) {
       else return false
     }))
   }, [props.filterdProducts, product_name])
+
+  React.useEffect(() => {
+    if (color) {
+      let filteredItem = props.filterdProducts.filter((product) => {
+        if (product.link === product_name) return true
+        else return false
+      })[0]
+      setSelectedProduct(filteredItem)
+      // console.log(filteredItem)
+      if (filteredItem && filteredItem.variations && filteredItem.variations.length > 0) {
+        let filtered = filteredItem.variations.filter((product) => {
+          if (product.product_id.specifications.colour.toLowerCase() === color.toLowerCase()) return true
+          else return false
+        })[0].product_id
+        console.log(filtered)
+        setSelectedByColorProduct(filtered)
+      } else {
+        setSelectedByColorProduct(null)
+      }
+      // console.log(filteredItem.variations.filter((product) => {
+      //   if (product.product_id.specifications.colour.toLowerCase() === color.toLowerCase()) return true
+      //   else return false
+      // })[0].product_id)
+    }
+    else {
+      setSelectedByColorProduct(null)
+    }
+
+  }, [props.filterdProducts, product_name, color])
 
   const [selectedPhotoId, setSelectedPhotoId] = useState(1);
 
@@ -58,13 +88,35 @@ function ProductPage(props) {
   }
 
   function addToCart() {
-    props.handleToCartBtn(selectedProduct)
-    if (props.cart && props.cart.filter((item) => {
-      if (selectedProduct._id === item._id) return true
-      else return false
-    }).length === 0) {
-      history.push('/cart')
-      // props.setCartPopupOpen(true)
+    if (selectedByColorProduct) {
+      props.handleToCartBtn(selectedByColorProduct)
+      if (props.cart && props.cart.filter((item) => {
+        if (selectedByColorProduct._id === item._id) return true
+        else return false
+      }).length === 0) {
+        history.push('/cart')
+        // props.setCartPopupOpen(true)
+      }
+    } else {
+      props.handleToCartBtn(selectedProduct)
+      if (props.cart && props.cart.filter((item) => {
+        if (selectedProduct._id === item._id) return true
+        else return false
+      }).length === 0) {
+        history.push('/cart')
+        // props.setCartPopupOpen(true)
+      }
+
+    }
+
+  }
+
+  function handleColorOpen() {
+    console.log(color)
+    if (!color) {
+      props.handleColorPopupOpen({ product: selectedProduct, active_color: selectedProduct.specifications.colour })
+    } else {
+      props.handleColorPopupOpen({ product: selectedProduct, active_color: color })
     }
 
   }
@@ -92,7 +144,14 @@ function ProductPage(props) {
       ]} />
       {selectedProduct &&
         <div className="product-page__container">
-          <div className="product-page__favorite-container product-page__favorite-container_mobile" onClick={() => { props.handleLikeBtn(selectedProduct) }}>
+          <div className="product-page__favorite-container product-page__favorite-container_mobile" onClick={() => {
+            if (selectedByColorProduct) {
+              props.handleLikeBtn(selectedByColorProduct)
+            }
+            else {
+              props.handleLikeBtn(selectedProduct)
+            }
+          }}>
             <svg className="product-page__favorite-icon" width="23" height="19" viewBox="0 0 23 19" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path className={`product-page__favorite-icon-path ${props.favouritesProducts && props.favouritesProducts.filter((item) => {
                 if (item._id === selectedProduct._id) return true
@@ -111,7 +170,11 @@ function ProductPage(props) {
           <div className="product-page__photo-and-info">
             <div className="product-page__photos">
               <div className="product-page__photos-mini" id="mini-photos">
-                {selectedProduct.photos && selectedProduct.photos.slice(0, 5).map((item, i) => (
+                {selectedByColorProduct ? selectedByColorProduct.photos && selectedByColorProduct.photos.slice(0, 5).map((item, i) => (
+                  <div className={`product-page__photo-mini ${selectedPhotoId === i + 1 ? 'product-page__photo-mini_selected' : ''}`} key={`product-page__photo-mini${i}`} onClick={() => { setSelectedPhotoId(i + 1) }}>
+                    <img className="product-page__photo-mini-img" src={item} alt={`${selectedProduct.name} фото №${i + 1}`}></img>
+                  </div>
+                )) : selectedProduct.photos && selectedProduct.photos.slice(0, 5).map((item, i) => (
                   <div className={`product-page__photo-mini ${selectedPhotoId === i + 1 ? 'product-page__photo-mini_selected' : ''}`} key={`product-page__photo-mini${i}`} onClick={() => { setSelectedPhotoId(i + 1) }}>
                     <img className="product-page__photo-mini-img" src={item} alt={`${selectedProduct.name} фото №${i + 1}`}></img>
                   </div>
@@ -132,58 +195,68 @@ function ProductPage(props) {
                     </svg>
                   </div>
                 </div>
-                <img className="product-page__big-photo-img" src={selectedProduct.photos && selectedProduct.photos[selectedPhotoId - 1]} alt={`${selectedProduct.name} фото №${selectedPhotoId}`}></img>
+                <img className="product-page__big-photo-img" src={selectedByColorProduct ? selectedByColorProduct.photos && selectedByColorProduct.photos[selectedPhotoId - 1] : selectedProduct.photos && selectedProduct.photos[selectedPhotoId - 1]} alt={`${selectedProduct.name} фото №${selectedPhotoId}`}></img>
               </div>
             </div>
             <div className="product-page__info-container">
               <div className="product-page__firts-info-row">
-                <div className="product-page__favorite-container product-page__favorite-container_pc" onClick={() => { props.handleLikeBtn(selectedProduct) }}>
+                <div className="product-page__favorite-container product-page__favorite-container_pc" onClick={() => {
+            if (selectedByColorProduct) {
+              props.handleLikeBtn(selectedByColorProduct)
+            }
+            else {
+              props.handleLikeBtn(selectedProduct)
+            }
+          }}>
                   <svg className="product-page__favorite-icon" width="23" height="19" viewBox="0 0 23 19" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path className={`product-page__favorite-icon-path ${props.favouritesProducts && props.favouritesProducts.filter((item) => {
-                      if (item._id === selectedProduct._id) return true
+                      if (selectedByColorProduct ? item._id === selectedByColorProduct._id : item._id === selectedProduct._id) return true
                       else return false
                     }).length > 0 ? 'product-page__favorite-icon-path_selected' : ''}`} fillRule="evenodd" clipRule="evenodd" d="M1 6.41942C1 3.35052 3.67497 1 6.79822 1C8.31068 1 9.77606 1.55263 10.8686 2.55887L11.5 3.14046L12.1314 2.55887C13.2239 1.55263 14.6893 1 16.2018 1C19.325 1 22 3.35052 22 6.41942C22 7.88451 21.3674 9.27117 20.2721 10.28L12.1775 17.7355C11.7946 18.0882 11.2054 18.0882 10.8225 17.7355L2.72789 10.28C1.63263 9.27117 1 7.88451 1 6.41942Z" fill="#9B38DC" stroke="#B3B3B3" />
                   </svg>
                   <p className={`product-page__favorite-text ${props.favouritesProducts && props.favouritesProducts.filter((item) => {
-                    if (item._id === selectedProduct._id) return true
+                    if (selectedByColorProduct ? item._id === selectedByColorProduct._id : item._id === selectedProduct._id) return true
                     else return false
                   }).length > 0 ? 'product-page__favorite-text_selected' : ''}`}>{props.favouritesProducts && props.favouritesProducts.filter((item) => {
-                    if (item._id === selectedProduct._id) return true
+                    if (selectedByColorProduct ? item._id === selectedByColorProduct._id : item._id === selectedProduct._id) return true
                     else return false
                   }).length > 0 ? 'В избранном' : 'В избранное'}</p>
                 </div>
-                <p className="product-page__article">Артикул<span className="product-page__article-value">{selectedProduct.article}</span></p>
+                <p className="product-page__article">Артикул<span className="product-page__article-value">{selectedByColorProduct ? selectedByColorProduct.article : selectedProduct.article}</span></p>
                 <a href='/#' className="product-page__specifications-link">Все характеристики</a>
               </div>
               <div className="product-page__second-info-row">
-                <p className="product-page__price">{selectedProduct && selectedProduct.price ? selectedProduct.discount && selectedProduct.discount > 0 ? (selectedProduct.price - (selectedProduct.price / 100 * selectedProduct.discount)).toLocaleString('ru') : selectedProduct.price.toLocaleString('ru') : ''}&nbsp;₽</p>
+                <p className="product-page__price">{selectedByColorProduct ? selectedByColorProduct && selectedByColorProduct.price ? selectedByColorProduct.discount && selectedByColorProduct.discount > 0 ? (selectedByColorProduct.price - (selectedByColorProduct.price / 100 * selectedByColorProduct.discount)).toLocaleString('ru') : selectedByColorProduct.price.toLocaleString('ru') : '' : selectedProduct && selectedProduct.price ? selectedProduct.discount && selectedProduct.discount > 0 ? (selectedProduct.price - (selectedProduct.price / 100 * selectedProduct.discount)).toLocaleString('ru') : selectedProduct.price.toLocaleString('ru') : ''}&nbsp;₽</p>
                 {selectedProduct && selectedProduct.price && selectedProduct.discount > 0 ?
                   <div className="product-page__discount-container">
                     <p className="product-page__discount">-{selectedProduct.discount}% <span className="product-page__discount-last-price">{selectedProduct.price.toLocaleString('ru')}&nbsp;₽</span></p>
                   </div>
                   : <></>}
                 <div className={`product-page__buy-btn ${props.cart && props.cart.filter((item) => {
-                  if (selectedProduct._id === item._id) return true
+                  if (selectedByColorProduct ? item._id === selectedByColorProduct._id : selectedProduct._id === item._id) return true
                   else return false
                 }).length > 0 ? 'product-page__buy-btn_in-cart' : ''}`} onClick={addToCart}>
                   <p className={`product-page__buy-btn-text ${props.cart && props.cart.filter((item) => {
-                  if (selectedProduct._id === item._id) return true
-                  else return false
-                }).length > 0 ? 'product-page__buy-btn-text_in-cart' : ''}`}>{props.cart && props.cart.filter((item) => {
-                  if (selectedProduct._id === item._id) return true
-                  else return false
-                }).length > 0 ? 'Убрать из корзины' : selectedProduct.amount > 0 ? 'Купить' : 'Предзаказ'}</p>
+                    if (selectedByColorProduct ? item._id === selectedByColorProduct._id : selectedProduct._id === item._id) return true
+                    else return false
+                  }).length > 0 ? 'product-page__buy-btn-text_in-cart' : ''}`}>{props.cart && props.cart.filter((item) => {
+                    if (selectedByColorProduct ? item._id === selectedByColorProduct._id : selectedProduct._id === item._id) return true
+                    else return false
+                  }).length > 0 ? 'Убрать из корзины' : selectedByColorProduct ? selectedByColorProduct.amount > 0 ? 'Купить' : 'Предзаказ' : selectedProduct.amount > 0 ? 'Купить' : 'Предзаказ'}</p>
                 </div>
               </div>
-              <div className="product-page__change-color-btn">
-                <div className="product-page__change-color-data">
-                  <p className="product-page__change-color-name">Черныйffffjnsjndindinciniuscnicniscnicnsini</p>
-                  <p className="product-page__change-color-title">Цвет</p>
+              {selectedProduct.variations && selectedProduct.variations.length > 0 ?
+                <div className="product-page__change-color-btn" onClick={handleColorOpen}>
+                  <div className="product-page__change-color-data">
+                    <p className="product-page__change-color-name">{selectedByColorProduct ? selectedByColorProduct.specifications.colour : selectedProduct && selectedProduct.specifications.colour}</p>
+                    <p className="product-page__change-color-title">Цвет</p>
+                  </div>
+                  <svg className="product-page__change-color-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 18L13.2929 10.7071C13.6834 10.3166 13.6834 9.68342 13.2929 9.29289L6 2" stroke="black" strokeWidth="2" strokeLinecap="round" />
+                  </svg>
                 </div>
-                <svg className="product-page__change-color-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M6 18L13.2929 10.7071C13.6834 10.3166 13.6834 9.68342 13.2929 9.29289L6 2" stroke="black" strokeWidth="2" strokeLinecap="round" />
-                </svg>
-              </div>
+                : <></>}
+
               <div className="product-page__delivery">
                 <div className="product-page__delivery-icon-container">
                   <svg className="product-page__delivery-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -212,7 +285,7 @@ function ProductPage(props) {
                 <div className="product-page__specification-item">
                   <p className="product-page__specification-name">Цвет</p>
                   <div className="product-page__specification-line"></div>
-                  <p className={`product-page__specification-value ${selectedProduct.specifications.colour.length <= 36 ? 'product-page__specification-value_nowrap' : ''}`}>{selectedProduct.specifications.colour}</p>
+                  <p className={`product-page__specification-value ${selectedByColorProduct ? selectedByColorProduct.specifications.colour.length <= 36 ? 'product-page__specification-value_nowrap' : '' : selectedProduct.specifications.colour.length <= 36 ? 'product-page__specification-value_nowrap' : ''}`}>{selectedByColorProduct ? selectedByColorProduct.specifications.colour : selectedProduct.specifications.colour}</p>
                 </div>
                 : <></>}
               {selectedProduct && selectedProduct.specifications && selectedProduct.specifications.width && selectedProduct.specifications.width !== 'Не указано' ?
@@ -247,7 +320,7 @@ function ProductPage(props) {
                 <div className="product-page__specification-item">
                   <p className="product-page__specification-name">Материалы</p>
                   <div className="product-page__specification-line"></div>
-                  <p className={`product-page__specification-value ${selectedProduct.specifications.material.length <= 20 ? 'product-page__specification-value_nowrap' : ''}`}>{selectedProduct.specifications.material}</p>
+                  <p className={`product-page__specification-value ${selectedByColorProduct ? selectedByColorProduct.specifications.material.length <= 20 ? 'product-page__specification-value_nowrap' : '' : selectedProduct.specifications.material.length <= 20 ? 'product-page__specification-value_nowrap' : ''}`}>{selectedByColorProduct ? selectedByColorProduct.specifications.material : selectedProduct.specifications.material}</p>
                 </div>
                 : <></>}
 

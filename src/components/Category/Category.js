@@ -80,7 +80,7 @@ function Category(props) {
 
         </Route>
         <Route path={`${url}/:sub_category`}>
-          <SubCategory handleLikeBtn={props.handleLikeBtn} favouritesProducts={props.favouritesProducts} handlePreloaderVisible={props.handlePreloaderVisible} setCartPopupOpen={props.setCartPopupOpen} cart={props.cart} handleToCartBtn={props.handleToCartBtn}  subcategoryPreloaderVisible={props.subcategoryPreloaderVisible} setFilterPopupOpen={props.setFilterPopupOpen} filtersUpd={props.filtersUpd} setFiltersUpd={props.setFiltersUpd} filters={props.filters} setFilterProducts={props.setFilterProducts} filterProducts={props.filterProducts} products={props.products} category={selectedCategory} />
+          <SubCategory handleColorPopupOpen={props.handleColorPopupOpen} handleLikeBtn={props.handleLikeBtn} favouritesProducts={props.favouritesProducts} handlePreloaderVisible={props.handlePreloaderVisible} setCartPopupOpen={props.setCartPopupOpen} cart={props.cart} handleToCartBtn={props.handleToCartBtn}  subcategoryPreloaderVisible={props.subcategoryPreloaderVisible} setFilterPopupOpen={props.setFilterPopupOpen} filtersUpd={props.filtersUpd} setFiltersUpd={props.setFiltersUpd} filters={props.filters} setFilterProducts={props.setFilterProducts} filterProducts={props.filterProducts} products={props.products} category={selectedCategory} />
         </Route>
       </Switch>
 

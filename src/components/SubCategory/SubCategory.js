@@ -259,9 +259,13 @@ function SubCategory(props) {
           </div>
 
         </Route>
-        <Route path={`${url}/:product_name`}>
-          <ProductPage  setCartPopupOpen={props.setCartPopupOpen} cart={props.cart} handleToCartBtn={props.handleToCartBtn}  handleLikeBtn={props.handleLikeBtn} favouritesProducts={props.favouritesProducts} filterdProducts={filterdProducts} category={props.category} sub_category={subCategory} />
+        <Route path={`${url}/:product_name/:color`}>
+          <ProductPage handleColorPopupOpen={props.handleColorPopupOpen} setCartPopupOpen={props.setCartPopupOpen} cart={props.cart} handleToCartBtn={props.handleToCartBtn} handleLikeBtn={props.handleLikeBtn} favouritesProducts={props.favouritesProducts} filterdProducts={filterdProducts} category={props.category} sub_category={subCategory} />
         </Route>
+        <Route path={`${url}/:product_name`}>
+          <ProductPage handleColorPopupOpen={props.handleColorPopupOpen} setCartPopupOpen={props.setCartPopupOpen} cart={props.cart} handleToCartBtn={props.handleToCartBtn} handleLikeBtn={props.handleLikeBtn} favouritesProducts={props.favouritesProducts} filterdProducts={filterdProducts} category={props.category} sub_category={subCategory} />
+        </Route>
+
       </Switch>
 
     </div>
