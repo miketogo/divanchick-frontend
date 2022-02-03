@@ -1,8 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+import { useHistory } from 'react-router-dom';
 
 import validator from 'validator'
 
+import mainApi from '../../utils/MainApi';
 
 import './Register.css';
 
@@ -10,7 +12,7 @@ import './Register.css';
 
 
 function Register(props) {
-
+    const history = useHistory()
     const [nameValue, setNameValue] = React.useState('');
     const [nameValidity, setNameValidity] = React.useState({
         errorMassage: '',
@@ -193,9 +195,10 @@ function Register(props) {
 
 
     const [step, setStep] = React.useState(0);
-    function handleNextStep() {
-        setStep(step + 1)
-    }
+    // function handleNextStep() {
+    //     setStep(step + 1)
+    // }
+    const [regToken, setRegToken] = React.useState('');
 
     function handleCodeChange(e) {
         let inputValue = e.target.value.replace(/\D/g, '')
@@ -208,11 +211,40 @@ function Register(props) {
         }
         else {
             setCodeValue(inputValue.slice(0, 4))
+            setCodeValidity({
+                errorMassage: '',
+                validState: false
+            })
             if (inputValue.length >= 4) {
-                setCodeValidity({
-                    errorMassage: '',
-                    validState: true
+
+                mainApi.registerCheckCode({
+                    token: regToken,
+                    code: inputValue.slice(0, 4)
                 })
+                    .then((res) => {
+                        setCodeValidity({
+                            errorMassage: '',
+                            validState: true
+                        })
+                        localStorage.setItem('jwt', res.token);
+                        mainApi.checkJwt({ token: res.token })
+                            .then((data) => {
+                                console.log(data)
+                                props.setLoggedIn(true)
+                                props.setCurrentUser(data.user)
+                                history.push('/')
+                            })
+                            .catch((err) => {
+                                console.log(err)
+                            })
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                        setCodeValidity({
+                            errorMassage: err.message,
+                            validState: false,
+                        })
+                    })
             }
         }
     }
@@ -256,14 +288,14 @@ function Register(props) {
         }
     }
 
-    React.useEffect(() => {
-        if (codeValidity.validState) {
-            setTimeout(() => {
-                handleSubmit()
-            }, 300);
-        }
+    // React.useEffect(() => {
+    //     if (codeValidity.validState) {
+    //         setTimeout(() => {
+    //             handleSubmit()
+    //         }, 300);
+    //     }
 
-    }, [codeValidity.validState])
+    // }, [codeValidity.validState])
 
     React.useEffect(() => {
         if (passValue && passValue.length >= 8 && passCheckValue.length >= 8) {
@@ -287,11 +319,25 @@ function Register(props) {
     }, [passValue, passCheckValue])
 
 
-    function handleSubmit() {
 
+    function handleSubmit() {
+        mainApi.register({
+            email: emailValue,
+            password: passValue,
+            firstname: nameValue,
+            surname: surnameValue,
+            phone_number: phoneValue
+        })
+            .then((res) => {
+                setRegToken(res.token)
+                setStep(1)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
     }
 
-    const timerDefValue = 60
+    const timerDefValue = 62
     const [timerValue, setTimerValue] = React.useState(timerDefValue);
     const [sendCounter, setSendCounter] = React.useState(0);
     const [sendAgainAvailible, setSendAgainAvailible] = React.useState(false);
@@ -319,7 +365,13 @@ function Register(props) {
 
     function handleSendCodeAgain() {
         if (sendCounter < 2) {
-            setSendCounter(sendCounter + 1)
+            mainApi.registerGetNewCode({ token: regToken })
+                .then(() => {
+                    setSendCounter(sendCounter + 1)
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
         }
 
 
@@ -410,8 +462,8 @@ function Register(props) {
 
                     {step === 0 ?
                         <div onClick={() => {
-                            if (step === 0 && phoneValidity.validState) {
-                                handleNextStep()
+                            if (step === 0 && nameValidity.validState && surnameValidity.validState && emailValidity.validState && phoneValidity.validState && passValidity.validState && passCheckValidity.validState) {
+                                handleSubmit()
                             }
 
                         }} className={`register__btn register__btn_login ${nameValidity.validState && surnameValidity.validState && emailValidity.validState && phoneValidity.validState && passValidity.validState && passCheckValidity.validState ? '' : 'register__btn_inactive'}`}>

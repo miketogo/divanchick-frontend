@@ -193,6 +193,21 @@
     margin: 8px 0 0;
 }
 
+.login__submit-error {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 130%;
+    /* identical to box height, or 21px */
+
+
+    /* warning/500 */
+    max-width: 310px;
+    text-align: center;
+    color: #FF3A75;
+    margin: 8px auto 0;
+}
+
 .login__recover-pass {
     margin: 16px 0 0;
     font-style: normal;
@@ -352,10 +367,12 @@
         font-size: 16px;
         line-height: 100%;
     }
-    .login__btn{
+
+    .login__btn {
         padding: 16px 0;
     }
-    .login__btn_signup{
+
+    .login__btn_signup {
         margin: 12px 0 0;
     }
 }

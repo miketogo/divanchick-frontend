@@ -1,7 +1,7 @@
 import React from 'react'
 import Header from '../Header/Header';
 import './App.css';
-// import mainApi from '../../utils/MainApi';
+import mainApi from '../../utils/MainApi';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import CityPopup from '../CityPopup/CityPopup';
 import Footer from '../Footer/Footer';
@@ -21,6 +21,8 @@ import Login from '../Login/Login';
 import Recovery from '../Recovery/Recovery';
 import Register from '../Register/Register';
 import ColorPopup from '../ColorPopup/ColorPopup';
+import Preloader from '../Preloader/Preloader';
+import MainPreloader from '../MainPreloader/MainPreloader';
 
 // import useScrollPosition from '../../utils/useScrollPosition';
 
@@ -30,6 +32,10 @@ import ColorPopup from '../ColorPopup/ColorPopup';
 
 function App() {
   // const scrollPosition = useScrollPosition();
+
+  const [loggedIn, setLoggedIn] = React.useState(undefined);
+  const [currentUser, setCurrentUser] = React.useState(undefined);
+
   const [screenWidth, setScreenWidth] = React.useState(window.innerWidth);
   const [isCityPopupOpen, setCityPopupOpen] = React.useState(false);
   const [isFilterPopupOpen, setFilterPopupOpen] = React.useState(false);
@@ -62,6 +68,27 @@ function App() {
     //   .catch((err) => {
     //     console.log(err)
     //   })
+
+  }, [])
+
+  React.useEffect(() => {
+
+    let jwt = localStorage.getItem('jwt');
+    if (jwt) {
+      mainApi.checkJwt({ token: jwt })
+        .then((data) => {
+          console.log(data)
+          setLoggedIn(true)
+          setCurrentUser(data.user)
+
+        })
+        .catch((err) => {
+          setLoggedIn(false)
+          console.log(err)
+        })
+    } else {
+      setLoggedIn(false)
+    }
 
   }, [])
 
@@ -315,7 +342,7 @@ function App() {
     let colors = [{ name: product.specifications.colour, link: `/categories/${product.category.link}/${product.sub_category.link}/${product.link}` }]
     if (product.variations) {
       product.variations.forEach((item) => {
-        colors = [...colors, {name: item.product_id.specifications.colour, link: `/categories/${product.category.link}/${product.sub_category.link}/${product.link}/${item.product_id.specifications.colour}`}]
+        colors = [...colors, { name: item.product_id.specifications.colour, link: `/categories/${product.category.link}/${product.sub_category.link}/${product.link}/${item.product_id.specifications.colour}` }]
       })
     }
     console.log(colors)
@@ -325,52 +352,68 @@ function App() {
     setAvailibleColors(colors)
     setColorPopupOpen(true)
   }
+
   // console.log(scrollPosition)
   return (
     // ${isCartPopupOpen ? 'app-stop-scrol' : ''}
     <div className={`app `} >
-      <ColorPopup selectedColor={selectedColor} availibleColors={availibleColors} isColorPopupOpen={isColorPopupOpen} handleColorPopupClose={handleColorPopupClose} />
-      <SubmitActionPopup handleSubmitActionPopupSubmit={handleSubmitActionPopupSubmit} isSubmitActionPopupOpen={isSubmitActionPopupOpen} handleSubmitActionPopupClose={handleSubmitActionPopupClose} />
-      <CartPopup handleLikeBtn={handleLikeBtn} favouritesProducts={favouritesProducts} allCartProductsCount={allCartProductsCount} setCart={setCart} cart={cart} isCartPopupOpen={isCartPopupOpen} handleCartPopupClose={handleCartPopupClose} />
-      <FiltersPopup filtersUpd={filtersUpd} setFiltersUpd={setFiltersUpd} filters={filters} handleFilterPopupClose={handleFilterPopupClose} isFilterPopupOpen={isFilterPopupOpen} />
-      <CityPopup isCityPopupOpen={isCityPopupOpen} handleCityPopupClose={handleCityPopupClose} cityValue={cityValue} setCityValue={setCityValue} cities={cities} />
-      <Header favouritesProducts={favouritesProducts} allCartProductsCount={allCartProductsCount} categories={allCategories} screenWidth={screenWidth} handleCityPopupOpen={handleCityPopupOpen} cityValue={cityValue} products={allProducts} />
-      <Switch>
-        <Route path={`/categories/:category`}>
-          <Category handleColorPopupOpen={handleColorPopupOpen} handleLikeBtn={handleLikeBtn} favouritesProducts={favouritesProducts} handlePreloaderVisible={handlePreloaderVisible} setCartPopupOpen={setCartPopupOpen} cart={cart} handleToCartBtn={handleToCartBtn} subcategoryPreloaderVisible={subcategoryPreloaderVisible} setFilterPopupOpen={setFilterPopupOpen} filtersUpd={filtersUpd} setFiltersUpd={setFiltersUpd} filters={filters} setFilterProducts={setFilterProducts} filterProducts={filterProducts} products={allProducts} categories={allCategories} />
-        </Route>
-        <Route path={`/cart`}>
-          <CartPage handleLikeBtn={handleLikeBtn} favouritesProducts={favouritesProducts} setSubmitActionPopupOpen={setSubmitActionPopupOpen} allCartProductsCount={allCartProductsCount} setCart={setCart} cart={cart} />
-        </Route>
-        <Route path={`/requisites`}>
-          <Requisites />
-        </Route>
-        <Route path={`/refund`}>
-          <Refund />
-        </Route>
-        <Route path={`/login`}>
-          <Login />
-        </Route>
-        <Route path={`/recovery`}>
-          <Recovery />
-        </Route>
-        <Route path={`/signup`}>
-          <Register />
-        </Route>
-        <Route path={`/favourites`}>
-          <Favourites handleLikeBtn={handleLikeBtn} favouritesProducts={favouritesProducts} setCartPopupOpen={setCartPopupOpen} cart={cart} handleToCartBtn={handleToCartBtn} />
-        </Route>
-        <Route path={`/profile/:page`}>
-          <Profile />
-        </Route>
-        <Route exact path={`/profile/`}>
-          <Redirect to='/profile/account' />
-        </Route>
-        {/* <Route path={`/adm-products`}>
+      {loggedIn !== undefined ?
+        <>
+          <ColorPopup selectedColor={selectedColor} availibleColors={availibleColors} isColorPopupOpen={isColorPopupOpen} handleColorPopupClose={handleColorPopupClose} />
+          <SubmitActionPopup handleSubmitActionPopupSubmit={handleSubmitActionPopupSubmit} isSubmitActionPopupOpen={isSubmitActionPopupOpen} handleSubmitActionPopupClose={handleSubmitActionPopupClose} />
+          <CartPopup handleLikeBtn={handleLikeBtn} favouritesProducts={favouritesProducts} allCartProductsCount={allCartProductsCount} setCart={setCart} cart={cart} isCartPopupOpen={isCartPopupOpen} handleCartPopupClose={handleCartPopupClose} />
+          <FiltersPopup filtersUpd={filtersUpd} setFiltersUpd={setFiltersUpd} filters={filters} handleFilterPopupClose={handleFilterPopupClose} isFilterPopupOpen={isFilterPopupOpen} />
+          <CityPopup isCityPopupOpen={isCityPopupOpen} handleCityPopupClose={handleCityPopupClose} cityValue={cityValue} setCityValue={setCityValue} cities={cities} />
+          <Header currentUser={currentUser} loggedIn={loggedIn} favouritesProducts={favouritesProducts} allCartProductsCount={allCartProductsCount} categories={allCategories} screenWidth={screenWidth} handleCityPopupOpen={handleCityPopupOpen} cityValue={cityValue} products={allProducts} />
+          <Switch>
+            <Route path={`/categories/:category`}>
+              <Category handleColorPopupOpen={handleColorPopupOpen} handleLikeBtn={handleLikeBtn} favouritesProducts={favouritesProducts} handlePreloaderVisible={handlePreloaderVisible} setCartPopupOpen={setCartPopupOpen} cart={cart} handleToCartBtn={handleToCartBtn} subcategoryPreloaderVisible={subcategoryPreloaderVisible} setFilterPopupOpen={setFilterPopupOpen} filtersUpd={filtersUpd} setFiltersUpd={setFiltersUpd} filters={filters} setFilterProducts={setFilterProducts} filterProducts={filterProducts} products={allProducts} categories={allCategories} />
+            </Route>
+            <Route path={`/cart`}>
+              <CartPage currentUser={currentUser} handleLikeBtn={handleLikeBtn} favouritesProducts={favouritesProducts} setSubmitActionPopupOpen={setSubmitActionPopupOpen} allCartProductsCount={allCartProductsCount} setCart={setCart} cart={cart} />
+            </Route>
+            <Route path={`/requisites`}>
+              <Requisites />
+            </Route>
+            <Route path={`/refund`}>
+              <Refund />
+            </Route>
+            <Route path={`/login/:from`}>
+              <Login setLoggedIn={setLoggedIn} setCurrentUser={setCurrentUser} />
+            </Route>
+            <Route path={`/login`}>
+              <Login setLoggedIn={setLoggedIn} setCurrentUser={setCurrentUser} />
+            </Route>
+            <Route path={`/recovery`}>
+              <Recovery setLoggedIn={setLoggedIn} setCurrentUser={setCurrentUser} />
+            </Route>
+            <Route path={`/signup`}>
+              <Register setLoggedIn={setLoggedIn} setCurrentUser={setCurrentUser} />
+            </Route>
+            <Route path={`/favourites`}>
+              <Favourites handleLikeBtn={handleLikeBtn} favouritesProducts={favouritesProducts} setCartPopupOpen={setCartPopupOpen} cart={cart} handleToCartBtn={handleToCartBtn} />
+            </Route>
+            <Route path={`/profile/:page`}>
+              {currentUser !== undefined && loggedIn !== undefined ?
+                currentUser && loggedIn ?
+                  <Profile currentUser={currentUser} />
+                  :
+                  <Redirect to='/login' />
+                : <Preloader />
+              }
+
+            </Route>
+            <Route exact path={`/profile/`}>
+              <Redirect to='/profile/account' />
+            </Route>
+            {/* <Route path={`/adm-products`}>
           <AdminProducts products={allProducts} />
         </Route> */}
-      </Switch>
-      <Footer />
+          </Switch>
+          <Footer />
+        </>
+        : <MainPreloader />}
+
     </div>
   );
 }

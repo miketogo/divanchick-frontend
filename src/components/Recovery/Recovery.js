@@ -1,11 +1,14 @@
 import React from 'react'
 // import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+import { useHistory } from 'react-router-dom';
+
 import './Recovery.css';
 
-
+import mainApi from '../../utils/MainApi';
 
 
 function Recovery(props) {
+    const history = useHistory()
 
     const [phoneValue, setPhoneValue] = React.useState('');
     const [phoneValidity, setPhoneValidity] = React.useState({
@@ -113,29 +116,11 @@ function Recovery(props) {
 
 
     const [step, setStep] = React.useState(0);
-    function handleNextStep() {
-        setStep(step + 1)
-    }
+    // function handleNextStep() {
+    //     setStep(step + 1)
+    // }
 
-    function handleCodeChange(e) {
-        let inputValue = e.target.value.replace(/\D/g, '')
-        if (!inputValue) {
-            setCodeValue('')
-            setCodeValidity({
-                errorMassage: '',
-                validState: false
-            })
-        }
-        else {
-            setCodeValue(inputValue.slice(0, 4))
-            if (inputValue.length >= 4) {
-                setCodeValidity({
-                    errorMassage: '',
-                    validState: true
-                })
-            }
-        }
-    }
+
 
     function handlePassChange(e) {
         let inputValue = e.target.value
@@ -176,14 +161,14 @@ function Recovery(props) {
         }
     }
 
-    React.useEffect(() => {
-        if (codeValidity.validState) {
-            setTimeout(() => {
-                setStep(2)
-            }, 300);
-        }
+    // React.useEffect(() => {
+    //     if (codeValidity.validState) {
+    //         setTimeout(() => {
+    //             setStep(2)
+    //         }, 300);
+    //     }
 
-    }, [codeValidity.validState])
+    // }, [codeValidity.validState])
 
     React.useEffect(() => {
         if (passValue && passValue.length >= 8 && passCheckValue.length >= 8) {
@@ -207,9 +192,7 @@ function Recovery(props) {
     }, [passValue, passCheckValue])
 
 
-    function handleSubmit() {
 
-    }
 
     const timerDefValue = 60
     const [timerValue, setTimerValue] = React.useState(timerDefValue);
@@ -237,13 +220,108 @@ function Recovery(props) {
 
     }, [step, timerValue, sendAgainAvailible])
 
-    function handleSendCodeAgain() {
-        if (sendCounter < 2) {
-            setSendCounter(sendCounter + 1)
+    
+    const [firstStepToken, setFirstStepToken] = React.useState('');
+    const [secondStepToken, setSecondStepToken] = React.useState('');
+    const [firstStepError, setFirstStepError] = React.useState('');
+    const [secondStepError, setSecondStepError] = React.useState('');
+
+    function handleFirstStep() {
+        if (phoneValidity.validState) {
+            mainApi.recoveryStep1({ phone_number: phoneValue })
+                .then((res) => {
+                    setFirstStepToken(res.token)
+                    setStep(1)
+                })
+                .catch((err) => {
+                    setFirstStepError(err.message)
+                    setTimeout(() => {
+                        setFirstStepError('')
+                    }, 10000);
+                })
         }
 
 
     }
+
+    function handleCodeChange(e) {
+        let inputValue = e.target.value.replace(/\D/g, '')
+        if (!inputValue) {
+            setCodeValue('')
+            setCodeValidity({
+                errorMassage: '',
+                validState: false
+            })
+        }
+        else {
+            setCodeValue(inputValue.slice(0, 4))
+            setCodeValidity({
+                errorMassage: '',
+                validState: false
+            })
+            if (inputValue.length >= 4) {
+
+                mainApi.recoveryCheckCode({
+                    token: firstStepToken,
+                    code: inputValue.slice(0, 4)
+                })
+                    .then((res) => {
+                        setCodeValidity({
+                            errorMassage: '',
+                            validState: true
+                        })
+                        setSecondStepToken(res.token)
+                        setTimeout(() => {
+                            setStep(2)
+                        }, 1000);
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                        setCodeValidity({
+                            errorMassage: err.message,
+                            validState: false,
+                        })
+                    })
+            }
+        }
+    }
+    function handleSendCodeAgain() {
+        if (sendCounter < 2) {
+            mainApi.recoverySendCodeAgian({ token: firstStepToken })
+                .then(() => {
+                    setSendCounter(sendCounter + 1)
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+        }
+
+
+    }
+
+    function handleSubmit() {
+        mainApi.recoverySetPass({ password: passValue, token: secondStepToken })
+            .then((res) => {
+                localStorage.setItem('jwt', res.token);
+                mainApi.checkJwt({ token: res.token })
+                    .then((data) => {
+                        console.log(data)
+                        props.setLoggedIn(true)
+                        props.setCurrentUser(data.user)
+                        history.push('/')
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                    })
+            })
+            .catch((err) => {
+                setSecondStepError(err.message)
+                setTimeout(() => {
+                    setSecondStepError('')
+                }, 10000);
+            })
+    }
+
 
     return (
         <div className="recovery">
@@ -258,7 +336,7 @@ function Recovery(props) {
                     {step === 2 ? <p className="recovery__form-title">Новый пароль</p> : <></>}
 
                     {step === 0 ? <p className="recovery__form-subtitle">Введите ваш номер телефона для восстановления пароля</p> : <></>}
-                    {step === 1 ? <p className="recovery__form-subtitle">Мы выслали код на номер<br/>{phoneValue}</p> : <></>}
+                    {step === 1 ? <p className="recovery__form-subtitle">Мы выслали код на номер<br />{phoneValue}</p> : <></>}
                     {step === 2 ? <p className="recovery__form-subtitle">Введите ваш новый пароль</p> : <></>}
 
                     {step === 0 ?
@@ -310,23 +388,24 @@ function Recovery(props) {
                     {step === 0 ?
                         <div onClick={() => {
                             if (step === 0 && phoneValidity.validState) {
-                                handleNextStep()
+                                handleFirstStep()
                             }
 
                         }} className={`recovery__btn recovery__btn_login ${phoneValidity.validState ? '' : 'recovery__btn_inactive'}`}>
                             <p className="recovery__btn-text recovery__btn-text_login">Восстановить</p>
                         </div> : <></>}
+                    {firstStepError ? <p className="recovery__submit-error">{firstStepError}</p> : <></>}
 
-                    {step === 1 ? 
-                    <p onClick={() => {
-                        if (sendAgainAvailible) {
-                            setSendAgainAvailible(false)
-                            handleSendCodeAgain()
-                        }
-                    }} className={`recovery__code-timeout ${sendAgainAvailible ? sendCounter === 2 ? '' : 'recovery__code-timeout_active' : ''}`}>
-                        {sendAgainAvailible ? sendCounter === 2 ? 'Если смс все еще не пришла, обратитесь в службу поддержки: +7 (919) 940-12-08' :
-                            'Выслать код повторно' : sendCounter === 2 ? 'Если смс все еще не пришла, обратитесь в службу поддержки: +7 (919) 940-12-08' : `Выслать код повторно: ${timerValue}`
-                        }</p>
+                    {step === 1 ?
+                        <p onClick={() => {
+                            if (sendAgainAvailible) {
+                                setSendAgainAvailible(false)
+                                handleSendCodeAgain()
+                            }
+                        }} className={`recovery__code-timeout ${sendAgainAvailible ? sendCounter === 2 ? '' : 'recovery__code-timeout_active' : ''}`}>
+                            {sendAgainAvailible ? sendCounter === 2 ? 'Если смс все еще не пришла, обратитесь в службу поддержки: +7 (919) 940-12-08' :
+                                'Выслать код повторно' : sendCounter === 2 ? 'Если смс все еще не пришла, обратитесь в службу поддержки: +7 (919) 940-12-08' : `Выслать код повторно: ${timerValue}`
+                            }</p>
 
                         : <></>}
                     {step === 2 ?
@@ -338,6 +417,7 @@ function Recovery(props) {
                         }} className={`recovery__btn recovery__btn_login ${passValidity.validState && passCheckValidity.validState ? '' : 'recovery__btn_inactive'}`}>
                             <p className="recovery__btn-text recovery__btn-text_login">Сохранить пароль</p>
                         </div> : <></>}
+                    {secondStepError ? <p className="recovery__submit-error">{secondStepError}</p> : <></>}
 
                 </div>
             </div>

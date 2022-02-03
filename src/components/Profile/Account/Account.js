@@ -32,6 +32,33 @@ function Account(props) {
         validState: false
     });
 
+    React.useEffect(() => {
+        if (props.currentUser) {
+            console.log(props.currentUser)
+            setNameValue(props.currentUser.firstname)
+            setNameValidity({
+                errorMassage: (''),
+                validState: true
+            })
+            setSurnameValue(props.currentUser.surname)
+            setSurnameValidity({
+                errorMassage: (''),
+                validState: true
+            })
+            setPhoneValue(props.currentUser.formatedPhoneNumber)
+            setPhoneValidity({
+                errorMassage: '',
+                validState: true
+            });
+            setEmailValue(props.currentUser.email)
+            setEmailValidity({
+                errorMassage: '',
+                validState: true
+            })
+        }
+
+    }, [props.currentUser])
+
 
     function handleNameChange(e) {
         let inputValue = e.target.value.replace(/[^a-zA-Zа-яА-ЯёЁ]/g, '')
@@ -145,6 +172,8 @@ function Account(props) {
     }
 
 
+
+
     function handleEmailChange(e) {
         let inputValue = e.target.value
         setEmailValue(inputValue);
@@ -208,7 +237,11 @@ function Account(props) {
                 </div>
 
             </div>
-            <div className="account__submit-btn">
+            <div onClick={()=>{
+                if((phoneValue !== props.currentUser.formatedPhoneNumber || emailValue !== props.currentUser.email || surnameValue !== props.currentUser.surname || nameValue !== props.currentUser.firstname) && phoneValidity.validState && emailValidity.validState && nameValidity.validState && surnameValidity.validState){
+                    console.log('change')
+                }
+            }} className={`account__submit-btn ${(phoneValue === props.currentUser.formatedPhoneNumber && emailValue === props.currentUser.email && surnameValue === props.currentUser.surname && nameValue === props.currentUser.firstname) || (!phoneValidity.validState || !emailValidity.validState || !nameValidity.validState || !surnameValidity.validState)? 'account__submit-btn_inactive' : ''}`}>
                 <p className="account__submit-btn-text">Сохранить изменения</p>
             </div>
         </section>

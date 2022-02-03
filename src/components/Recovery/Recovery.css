@@ -279,6 +279,7 @@
 
 
     /* colour/text/secondary */
+    max-width: 310px;
     cursor: pointer;
     color: #686868;
     transition: color 0.3s ease-in-out;
@@ -287,7 +288,20 @@
 .recovery__code-timeout_active {
     color: #9B38DC;
 }
+.recovery__submit-error{
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 130%;
+    /* identical to box height, or 21px */
 
+
+    /* warning/500 */
+    max-width: 310px;
+    text-align: center;
+    color: #FF3A75;
+    margin: 8px auto 0;
+}
 @media (max-width: 1000px) {
     .recovery__container {
         flex-direction: column;

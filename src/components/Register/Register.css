@@ -284,6 +284,7 @@
 
     /* colour/text/secondary */
     cursor: pointer;
+    max-width: 310px;
     color: #686868;
     transition: color 0.3s ease-in-out;
 }

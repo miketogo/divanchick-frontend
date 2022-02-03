@@ -308,7 +308,7 @@ function Header(props) {
                   <path fillRule="evenodd" clipRule="evenodd" d="M13.6251 18.75H1.25006C1.25006 17.8466 1.25006 16.9872 1.25006 16.209C1.25006 14.101 2.9122 12.3928 4.96256 12.3928H9.91256C11.9629 12.3928 13.6251 14.101 13.6251 16.209C13.6251 16.9872 13.6251 17.8466 13.6251 18.75Z" stroke="black" strokeWidth="1.25" strokeLinecap="square" />
                 </svg>
               </div>
-              <p className="header__icon-title">Профиль</p>
+              <p className="header__icon-title">{props.currentUser && props.loggedIn ? 'Профиль' : 'Войти'}</p>
             </Link>
             <Link to="/cart" className="header__icon">
               <div className="header__icon-container">

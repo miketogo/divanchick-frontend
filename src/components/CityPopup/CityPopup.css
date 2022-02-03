@@ -4,7 +4,6 @@
   font-family: Roboto, Arial, sans-serif;
   visibility: hidden;
   display: none;
-  overflow: scroll;
 }
 
 .city-popup_active {
@@ -24,7 +23,6 @@
 }
 
 .city-popup__container {
-  overflow: scroll;
   z-index: 10001;
   width: 100vw;
   height: 100vh;

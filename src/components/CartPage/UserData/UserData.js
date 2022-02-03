@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 
 import validator from 'validator'
 
@@ -33,6 +34,34 @@ function UserData(props) {
         errorMassage: '',
         validState: false
     });
+
+    React.useEffect(() => {
+        if (props.currentUser) {
+            console.log(props.currentUser)
+            setNameValue(props.currentUser.firstname)
+            setNameValidity({
+                errorMassage: (''),
+                validState: true
+            })
+            setSurnameValue(props.currentUser.surname)
+            setSurnameValidity({
+                errorMassage: (''),
+                validState: true
+            })
+            setPhoneValue(props.currentUser.formatedPhoneNumber)
+            setPhoneValidity({
+                errorMassage: '',
+                validState: true
+            });
+            setEmailValue(props.currentUser.email)
+            setEmailValidity({
+                errorMassage: '',
+                validState: true
+            })
+        }
+
+    }, [props.currentUser])
+
 
 
     function handleNameChange(e) {
@@ -184,12 +213,13 @@ function UserData(props) {
 
     return (
         <section className="cart-user-data">
-            <div className="cart-user-data__login-btn">
-                <p className="cart-user-data__login-btn-text">Войти</p>
-            </div>
+            {!props.currentUser ?
+                <Link to='/login/cart' className="cart-user-data__login-btn">
+                    <p className="cart-user-data__login-btn-text">Войти</p>
+                </Link> : <></>}
             <div className="cart-user-data__inputs">
                 <div className="cart-user-data__name-inputs">
-                    <div  className="cart-user-data__input-container-box">
+                    <div className="cart-user-data__input-container-box">
                         <div className={`cart-user-data__input-container ${!nameValidity.validState && nameValidity.errorMassage ? 'cart-user-data__input-container_error' : ''} ${nameValidity.validState ? 'cart-user-data__input-container_valid' : ''}`}>
                             <input placeholder='Иван' className="cart-user-data__input" name="text" type="text" value={nameValue} onChange={handleNameChange} maxLength="250"></input>
                             <p className="cart-user-data__input-title">Имя <span className="cart-user-data__input-reqiered">*</span></p>

@@ -66,7 +66,7 @@ function CartPage(props) {
               <h2 className="cart-page__section-heading-numeral">4</h2>
               <h2 className="cart-page__section-heading-title">Ваши данные</h2>
             </div>
-            <UserData setUserDataValid={setUserDataValid} />
+            <UserData setUserDataValid={setUserDataValid} currentUser={props.currentUser} />
           </div>
           <div className="cart-page__summary">
             <div className="cart-page__summary-info">
@@ -78,7 +78,7 @@ function CartPage(props) {
               <p className="cart-page__summary-date">Дата: <span className="cart-page__summary-date-period">{deliveryMethod === 'Самовывоз'.toLowerCase() ? 'Завтра после 17:00' : '2 Октября - 16 Ноября'}</span></p>
               <p className="cart-page__summary-payment">Оплата: <span className="cart-page__summary-payment-method">{paymentMethod}</span></p>
               <div className={`cart-page__summary-pay-btn ${userDataValid && deliveryMethodValid ? '' : 'cart-page__summary-pay-btn_inactive'}`}>
-                <p className="cart-page__summary-pay-btn-text">{deliveryMethod === 'Самовывоз'.toLowerCase() ? 'Оформить заказ' : 'Оплатить заказ'}</p>
+                <p className="cart-page__summary-pay-btn-text">{deliveryMethod === 'Самовывоз'.toLowerCase() ? 'Оформить заказ' : 'Оформить заказ'}</p>
               </div>
             </div>
             <p className="cart-page__summary-share">Поделиться корзиной</p>

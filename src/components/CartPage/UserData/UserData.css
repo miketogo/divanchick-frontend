@@ -16,6 +16,8 @@
     border-radius: 40px;
     width: fit-content;
     margin: 0 0 24px 0;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 .cart-user-data__login-btn-text {

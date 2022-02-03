@@ -1,12 +1,16 @@
 import React from 'react'
-import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+import { Link, useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import './Login.css';
+import mainApi from '../../utils/MainApi';
+import { useHistory } from 'react-router-dom';
 
 
 
 
 function Login(props) {
+    let { from } = useParams();
 
+    const history = useHistory()
     const [phoneValue, setPhoneValue] = React.useState('');
     const [phoneValidity, setPhoneValidity] = React.useState({
         errorMassage: '',
@@ -118,6 +122,42 @@ function Login(props) {
 
     }
 
+    const [submitError, setSubmitError] = React.useState('');
+
+    function handleSubmit() {
+        setSubmitError('')
+        if (phoneValidity.validState && passValidity.validState) {
+            mainApi.login({ phone_number: phoneValue, password: passValue })
+                .then((res) => {
+                    localStorage.setItem('jwt', res.token);
+                    mainApi.checkJwt({ token: res.token })
+                        .then((data) => {
+                            console.log(data)
+                            props.setLoggedIn(true)
+                            props.setCurrentUser(data.user)
+                            if (from ) {
+                                if(from === 'cart'){
+                                    history.push('/cart')
+                                }
+                                
+                            } else {
+                                history.push('/')
+                            }
+
+                        })
+                        .catch((err) => {
+                            console.log(err)
+                        })
+                })
+                .catch((err) => {
+                    setSubmitError(err.message)
+                    setTimeout(() => {
+                        setSubmitError('')
+                    }, 6000);
+                })
+        }
+    }
+
 
 
     return (
@@ -146,9 +186,15 @@ function Login(props) {
                         </div>
                     </div>
                     <Link className="login__recover-pass" to='/recovery'>Забыли пароль?</Link>
-                    <div className={`login__btn login__btn_login ${phoneValidity.validState && passValidity.validState ? '': 'login__btn_inactive'}`}>
+                    <div className={`login__btn login__btn_login ${phoneValidity.validState && passValidity.validState ? '' : 'login__btn_inactive'}`} onClick={() => {
+                        if (phoneValidity.validState && passValidity.validState) {
+                            handleSubmit()
+                        }
+                    }}>
                         <p className="login__btn-text login__btn-text_login">Войти</p>
                     </div>
+                    {submitError ? <p className="login__submit-error">{submitError}</p> : <></>}
+
                     <Link className="login__btn login__btn_signup" to='/signup'>
                         <p className="login__btn-text login__btn-text_signup">Регистрация</p>
                     </Link>
