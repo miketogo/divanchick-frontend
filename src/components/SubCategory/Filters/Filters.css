@@ -185,10 +185,6 @@
 
 
 .filters__input::placeholder {
-    font-style: normal;
-    font-weight: normal;
-    font-size: 16px;
-    line-height: 150%;
     color: #000000;
     margin: 0;
 }
