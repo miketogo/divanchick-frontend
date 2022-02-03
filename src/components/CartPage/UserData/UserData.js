@@ -213,7 +213,7 @@ function UserData(props) {
 
     return (
         <section className="cart-user-data">
-            {!props.currentUser ?
+            {!props.loggedIn ?
                 <Link to='/login/cart' className="cart-user-data__login-btn">
                     <p className="cart-user-data__login-btn-text">Войти</p>
                 </Link> : <></>}

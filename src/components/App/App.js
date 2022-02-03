@@ -370,7 +370,7 @@ function App() {
               <Category handleColorPopupOpen={handleColorPopupOpen} handleLikeBtn={handleLikeBtn} favouritesProducts={favouritesProducts} handlePreloaderVisible={handlePreloaderVisible} setCartPopupOpen={setCartPopupOpen} cart={cart} handleToCartBtn={handleToCartBtn} subcategoryPreloaderVisible={subcategoryPreloaderVisible} setFilterPopupOpen={setFilterPopupOpen} filtersUpd={filtersUpd} setFiltersUpd={setFiltersUpd} filters={filters} setFilterProducts={setFilterProducts} filterProducts={filterProducts} products={allProducts} categories={allCategories} />
             </Route>
             <Route path={`/cart`}>
-              <CartPage currentUser={currentUser} handleLikeBtn={handleLikeBtn} favouritesProducts={favouritesProducts} setSubmitActionPopupOpen={setSubmitActionPopupOpen} allCartProductsCount={allCartProductsCount} setCart={setCart} cart={cart} />
+              <CartPage currentUser={currentUser} loggedIn={loggedIn} handleLikeBtn={handleLikeBtn} favouritesProducts={favouritesProducts} setSubmitActionPopupOpen={setSubmitActionPopupOpen} allCartProductsCount={allCartProductsCount} setCart={setCart} cart={cart} />
             </Route>
             <Route path={`/requisites`}>
               <Requisites />
@@ -394,7 +394,7 @@ function App() {
               <Favourites handleLikeBtn={handleLikeBtn} favouritesProducts={favouritesProducts} setCartPopupOpen={setCartPopupOpen} cart={cart} handleToCartBtn={handleToCartBtn} />
             </Route>
             <Route path={`/profile/:page`}>
-              {currentUser && loggedIn ?
+              {loggedIn ?
                 <Profile currentUser={currentUser} />
                 :
                 <Redirect to='/login' />

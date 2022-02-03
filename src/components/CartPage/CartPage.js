@@ -66,7 +66,7 @@ function CartPage(props) {
               <h2 className="cart-page__section-heading-numeral">4</h2>
               <h2 className="cart-page__section-heading-title">Ваши данные</h2>
             </div>
-            <UserData setUserDataValid={setUserDataValid} currentUser={props.currentUser} />
+            <UserData setUserDataValid={setUserDataValid} currentUser={props.currentUser} loggedIn={props.loggedIn} />
           </div>
           <div className="cart-page__summary">
             <div className="cart-page__summary-info">
