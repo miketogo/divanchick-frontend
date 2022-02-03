@@ -394,12 +394,10 @@ function App() {
               <Favourites handleLikeBtn={handleLikeBtn} favouritesProducts={favouritesProducts} setCartPopupOpen={setCartPopupOpen} cart={cart} handleToCartBtn={handleToCartBtn} />
             </Route>
             <Route path={`/profile/:page`}>
-              {currentUser !== undefined && loggedIn !== undefined ?
-                currentUser && loggedIn ?
-                  <Profile currentUser={currentUser} />
-                  :
-                  <Redirect to='/login' />
-                : <Preloader />
+              {currentUser && loggedIn ?
+                <Profile currentUser={currentUser} />
+                :
+                <Redirect to='/login' />
               }
 
             </Route>
