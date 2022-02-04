@@ -433,6 +433,7 @@
 
     .register__btn {
         padding: 16px 0;
+        margin: 40px 0 0;
     }
 
     .register__btn_signup {
@@ -454,6 +455,10 @@
 
     .register__input-container-box {
         width: 100%;
+    }
+    .register__login-link{
+        font-size: 14px;
+        margin: 16px 0 0;
     }
 }
 
