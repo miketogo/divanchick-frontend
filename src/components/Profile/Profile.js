@@ -24,7 +24,7 @@ function Profile(props) {
             </div>
             
             <div className="profile__item">
-                {page && page.toLowerCase() === 'account' ? <Account currentUser={props.currentUser} /> : <></>}
+                {page && page.toLowerCase() === 'account' ? <Account currentUser={props.currentUser} setLoggedIn={props.setLoggedIn} setCurrentUser={props.setCurrentUser} /> : <></>}
                 {page && page.toLowerCase() === 'addresses' ? <Addresses /> : <></>}
                 {page && page.toLowerCase() === 'orders' ? <TrackOrder /> : <></>}
             </div>

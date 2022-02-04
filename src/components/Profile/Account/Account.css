@@ -142,24 +142,41 @@
     margin: 8px 0 0;
 }
 
-.account__submit-btn {
+.account__btns {
+    display: flex;
+    flex-direction: row;
+    margin: 28px 0 0;
+}
+
+.account__btn {
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 20px 28px;
-    background: #9B38DC;
+   
     border-radius: 40px;
     width: fit-content;
-    margin: 28px 0 0;
+
     cursor: pointer;
     transition: opacity 0.3s ease-in-out;
 }
-.account__submit-btn_inactive{
+
+.account__btn_submit{
+    background: #9B38DC;
+    margin: 0 20px 0 0;
+}
+
+.account__btn_exit {
+    border: 2px solid #9B38DC;
+    background: transparent;
+}
+
+.account__btn_submit-inactive {
     opacity: 0.3;
     cursor: no-drop;
 }
 
-.account__submit-btn-text {
+.account__btn-text {
     font-style: normal;
     font-weight: normal;
     font-size: 20px;
@@ -167,8 +184,15 @@
     /* identical to box height, or 20px */
 
 
-    color: #FFFFFF;
+   
     margin: 0;
+}
+
+.account__btn-text_submit{
+    color: #FFFFFF;
+}
+.account__btn-text_exit{
+    color: #9B38DC;
 }
 
 @media (max-width: 700px) {
@@ -232,17 +256,28 @@
         line-height: 130%;
     }
 
-
-    .account__submit-btn {
-
-        padding: 12px 0;
-       
-        width: 100%;
+    .account__btns {
+        display: flex;
+        flex-direction: column;
         margin: 20px 0 0;
-       
     }
 
-    .account__submit-btn-text {
+    .account__btn {
+
+        padding: 12px 0;
+
+        width: 100%;
+ 
+
+    }
+    .account__btn_submit{
+        margin: 0;
+    }
+    .account__btn_exit{
+        margin: 12px 0 0;
+    }
+
+    .account__btn-text {
         font-style: normal;
         font-weight: normal;
         font-size: 16px;

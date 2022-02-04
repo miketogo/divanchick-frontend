@@ -21,7 +21,7 @@ import Login from '../Login/Login';
 import Recovery from '../Recovery/Recovery';
 import Register from '../Register/Register';
 import ColorPopup from '../ColorPopup/ColorPopup';
-import Preloader from '../Preloader/Preloader';
+// import Preloader from '../Preloader/Preloader';
 import MainPreloader from '../MainPreloader/MainPreloader';
 
 // import useScrollPosition from '../../utils/useScrollPosition';
@@ -395,7 +395,7 @@ function App() {
             </Route>
             <Route path={`/profile/:page`}>
               {loggedIn ?
-                <Profile currentUser={currentUser} />
+                <Profile currentUser={currentUser} setLoggedIn={setLoggedIn} setCurrentUser={setCurrentUser} />
                 :
                 <Redirect to='/login' />
               }

@@ -411,7 +411,7 @@ function Register(props) {
                                     {!surnameValidity.validState && surnameValidity.errorMassage && <p className="register__input-error">{surnameValidity.errorMassage}</p>}
                                 </div>
                             </div>
-                            <p className="register__form-title">Ваши конактные данныея</p>
+                            <p className="register__form-title">Ваши конактные данные</p>
                             <div className="register__inputs">
                                 <div className="register__input-container-box">
                                     <div className={`register__input-container ${!phoneValidity.validState && phoneValidity.errorMassage ? 'register__input-container_error' : ''} ${phoneValidity.validState ? 'register__input-container_valid' : ''}`}>
@@ -428,7 +428,7 @@ function Register(props) {
                                     {!emailValidity.validState && emailValidity.errorMassage && <p className="register__input-error">{emailValidity.errorMassage}</p>}
                                 </div>
                             </div>
-                            <p className="register__form-title">Ваши конактные данныея</p>
+                            <p className="register__form-title">Пароль  <span className="register__form-title-span">(мин. 8 символов)</span></p>
                             <div className="register__inputs">
                                 <div className="register__input-container-box">
                                     <div className={`register__input-container ${!passValidity.validState && passValidity.errorMassage ? 'register__input-container_error' : ''} ${passValidity.validState ? 'register__input-container_valid' : ''}`}>

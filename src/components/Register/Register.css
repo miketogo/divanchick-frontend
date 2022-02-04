@@ -177,6 +177,18 @@
     color: #939393;
 }
 
+.register__form-title-span {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 130%;
+    /* or 18px */
+
+
+    color: rgba(0, 0, 0, 0.4);
+
+}
+
 .register__input-reqiered {
     font-style: normal;
     font-weight: normal;
@@ -387,6 +399,9 @@
         font-weight: bold;
         font-size: 16px;
         line-height: 100%;
+    }
+    .register__form-title-span{
+        font-size: 12px;
     }
 
     .register__input {

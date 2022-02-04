@@ -1,12 +1,14 @@
 import React from 'react'
 import './Account.css';
+
 import validator from 'validator'
+import { useHistory } from 'react-router-dom';
 
 
 
 
 function Account(props) {
-
+    const history = useHistory();
 
     const [nameValue, setNameValue] = React.useState('');
     const [nameValidity, setNameValidity] = React.useState({
@@ -198,6 +200,15 @@ function Account(props) {
         }
     }
 
+    function handleExit() {
+        props.setLoggedIn(false)
+        props.setCurrentUser(undefined)
+        localStorage.removeItem('jwt');
+        // localStorage.removeItem('_id');
+        // localStorage.removeItem('email');
+        history.push('/login');
+    }
+
     return (
         <section className="account">
             <div className="account__inputs">
@@ -237,13 +248,28 @@ function Account(props) {
                 </div>
 
             </div>
-            <div onClick={()=>{
-                if((phoneValue !== props.currentUser.formatedPhoneNumber || emailValue !== props.currentUser.email || surnameValue !== props.currentUser.surname || nameValue !== props.currentUser.firstname) && phoneValidity.validState && emailValidity.validState && nameValidity.validState && surnameValidity.validState){
-                    console.log('change')
-                }
-            }} className={`account__submit-btn ${(phoneValue === props.currentUser.formatedPhoneNumber && emailValue === props.currentUser.email && surnameValue === props.currentUser.surname && nameValue === props.currentUser.firstname) || (!phoneValidity.validState || !emailValidity.validState || !nameValidity.validState || !surnameValidity.validState)? 'account__submit-btn_inactive' : ''}`}>
-                <p className="account__submit-btn-text">Сохранить изменения</p>
+            <div className={`account__btns`}>
+                <div onClick={() => {
+                    if (props.currentUser && ((phoneValue !== props.currentUser.formatedPhoneNumber || emailValue !== props.currentUser.email || surnameValue !== props.currentUser.surname || nameValue !== props.currentUser.firstname) && phoneValidity.validState && emailValidity.validState && nameValidity.validState && surnameValidity.validState)) {
+                        console.log('change')
+                    }
+                }} className={`account__btn  account__btn_submit ${props.currentUser && ((phoneValue !== props.currentUser.formatedPhoneNumber || emailValue !== props.currentUser.email || surnameValue !== props.currentUser.surname || nameValue !== props.currentUser.firstname) && phoneValidity.validState && emailValidity.validState && nameValidity.validState && surnameValidity.validState) ? 'account__btn_submit-active' : 'account__btn_submit-inactive'}`}>
+                    <p className="account__btn-text account__btn-text_submit">Сохранить изменения</p>
+                </div>
+                {/* {props.currentUser && ((phoneValue !== props.currentUser.formatedPhoneNumber || emailValue !== props.currentUser.email || surnameValue !== props.currentUser.surname || nameValue !== props.currentUser.firstname)) ? <></> :
+                    <div onClick={() => {
+                        handleExit()
+                    }} className={`account__btn account__btn_exit`}>
+                        <p className="account__btn-text account__btn-text_exit">Выйти из аккаунта</p>
+                    </div>
+                } */}
+                <div onClick={() => {
+                    handleExit()
+                }} className={`account__btn account__btn_exit`}>
+                    <p className="account__btn-text account__btn-text_exit">Выйти из аккаунта</p>
+                </div>
             </div>
+
         </section>
 
 

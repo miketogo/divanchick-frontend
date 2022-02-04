@@ -197,7 +197,7 @@ class MainApi {
 }
 
 const mainApi = new MainApi({
-  baseUrl: 'http://62.84.114.207/api'
+  baseUrl: 'https://shop-divanchik.ru/api'
   // baseUrl: 'http://localhost:3003'
 });
 export default mainApi
