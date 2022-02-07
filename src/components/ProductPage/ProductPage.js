@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
 import { useParams, useRouteMatch, useHistory } from 'react-router';
-
+import moment from 'moment-timezone';
+import 'moment/locale/ru'
 
 import Crumbs from '../Сrumbs/Сrumbs'
 
 import './ProductPage.css';
 
-
+moment.locale('ru')
 
 
 function ProductPage(props) {
@@ -63,15 +64,30 @@ function ProductPage(props) {
 
   function handleNextFotoClick() {
     var items = document.getElementById("mini-photos");
-    if (selectedPhotoId + 1 > selectedProduct.photos.slice(0, 5).length) {
-      setSelectedPhotoId(1)
+    if (selectedByColorProduct) {
+      if (selectedPhotoId + 1 > selectedByColorProduct.photos.slice(0, 5).length) {
+        setSelectedPhotoId(1)
 
-      items.scrollTo({ left: 0, behavior: 'smooth' });
+        items.scrollTo({ left: 0, behavior: 'smooth' });
+      }
+      else {
+        setSelectedPhotoId(selectedPhotoId + 1)
+        items.scrollTo({ left: ((items.scrollWidth / selectedByColorProduct.photos.slice(0, 5).length) * selectedPhotoId), behavior: 'smooth' });
+      }
+
+
+    } else {
+      if (selectedPhotoId + 1 > selectedProduct.photos.slice(0, 5).length) {
+        setSelectedPhotoId(1)
+
+        items.scrollTo({ left: 0, behavior: 'smooth' });
+      }
+      else {
+        setSelectedPhotoId(selectedPhotoId + 1)
+        items.scrollTo({ left: ((items.scrollWidth / selectedProduct.photos.slice(0, 5).length) * selectedPhotoId), behavior: 'smooth' });
+      }
     }
-    else {
-      setSelectedPhotoId(selectedPhotoId + 1)
-      items.scrollTo({ left: ((items.scrollWidth / selectedProduct.photos.slice(0, 5).length) * selectedPhotoId), behavior: 'smooth' });
-    }
+
   }
 
   function handlePrevFotoClick() {
@@ -120,6 +136,10 @@ function ProductPage(props) {
     }
 
   }
+
+  React.useEffect(() => {
+   setSelectedPhotoId(1)
+  }, [color])
 
   return (
     <div className="product-page">
@@ -201,13 +221,13 @@ function ProductPage(props) {
             <div className="product-page__info-container">
               <div className="product-page__firts-info-row">
                 <div className="product-page__favorite-container product-page__favorite-container_pc" onClick={() => {
-            if (selectedByColorProduct) {
-              props.handleLikeBtn(selectedByColorProduct)
-            }
-            else {
-              props.handleLikeBtn(selectedProduct)
-            }
-          }}>
+                  if (selectedByColorProduct) {
+                    props.handleLikeBtn(selectedByColorProduct)
+                  }
+                  else {
+                    props.handleLikeBtn(selectedProduct)
+                  }
+                }}>
                   <svg className="product-page__favorite-icon" width="23" height="19" viewBox="0 0 23 19" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path className={`product-page__favorite-icon-path ${props.favouritesProducts && props.favouritesProducts.filter((item) => {
                       if (selectedByColorProduct ? item._id === selectedByColorProduct._id : item._id === selectedProduct._id) return true
@@ -265,7 +285,7 @@ function ProductPage(props) {
                 </div>
                 <div className="product-page__delivery-info-container">
                   <p className="product-page__delivery-info">Доставка —  от 1 500 ₽</p>
-                  <p className="product-page__delivery-info-date">20 Октября</p>
+                  <p className="product-page__delivery-info-date">{`${moment().add('days', 7).tz("Europe/Moscow").format('D')} ${moment().add('days', 7).tz("Europe/Moscow").format('DD MMMM').split(' ')[1].slice(0,1).toUpperCase()}${moment().add('days', 7).tz("Europe/Moscow").format('DD MMMM').split(' ')[1].slice(1)}`}</p>
                 </div>
               </div>
               <p className={`product-page__amount ${selectedProduct.amount > 0 ? '' : 'product-page__amount_zero'}`}>{selectedProduct.amount > 0 ? `Доступно ${selectedProduct.amount} шт.` : `Нет в наличии`}</p>
