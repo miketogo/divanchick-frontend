@@ -155,7 +155,9 @@
 }
 
 
-
+.filters__input::placeholder{
+    opacity: 0.3;
+}
 
 .filters__input:hover {
     border-color: #EBB0FB;

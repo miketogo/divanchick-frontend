@@ -451,7 +451,7 @@ export const cities = [
         name: 'Надым'
     },
     {
-        name: 'Новый Оренгой'
+        name: 'Новый Уренгой'
     },
 ]
 

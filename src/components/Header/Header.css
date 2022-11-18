@@ -458,6 +458,15 @@
   margin: 8px 0 0;
 }
 
+.header__input-dropdown-preloader{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+}
+
 
 
 @keyframes fadein {
@@ -538,7 +547,7 @@
   }
 }
 
-@media (max-width: 576px) {
+@media (max-width: 750px) {
   .header__logo-img {
     width: 59px;
     height: 33.35px;

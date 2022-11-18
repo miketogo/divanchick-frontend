@@ -1,7 +1,7 @@
 import React from 'react'
 import Header from '../Header/Header';
 import './App.css';
-import mainApi from '../../utils/MainApi';
+import mainApi from '../../assets/api/MainApi';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import CityPopup from '../CityPopup/CityPopup';
 import Footer from '../Footer/Footer';
@@ -23,6 +23,8 @@ import Register from '../Register/Register';
 import ColorPopup from '../ColorPopup/ColorPopup';
 // import Preloader from '../Preloader/Preloader';
 import MainPreloader from '../MainPreloader/MainPreloader';
+import Main from '../Main/Main';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 // import useScrollPosition from '../../utils/useScrollPosition';
 
@@ -38,7 +40,7 @@ function App() {
 
   const [screenWidth, setScreenWidth] = React.useState(window.innerWidth);
   const [isCityPopupOpen, setCityPopupOpen] = React.useState(false);
-  const [isFilterPopupOpen, setFilterPopupOpen] = React.useState(false);
+
   const [isSubmitActionPopupOpen, setSubmitActionPopupOpen] = React.useState(false);
   const [isCartPopupOpen, setCartPopupOpen] = React.useState(false);
   const [isColorPopupOpen, setColorPopupOpen] = React.useState(false);
@@ -71,24 +73,25 @@ function App() {
 
   }, [])
 
+  const history = useHistory()
+
   React.useEffect(() => {
+    setLoggedIn(false)
+    // mainApi.getUser()
+    //   .then((res) => {
+    //     console.log(res)
 
-    let jwt = localStorage.getItem('jwt');
-    if (jwt) {
-      mainApi.checkJwt({ token: jwt })
-        .then((data) => {
-          console.log(data)
-          setLoggedIn(true)
-          setCurrentUser(data.user)
-
-        })
-        .catch((err) => {
-          setLoggedIn(false)
-          console.log(err)
-        })
-    } else {
-      setLoggedIn(false)
-    }
+    //     setCurrentUser(res)
+    //     if (!res.phone) {
+    //       history.push(`/signup`)
+    //       setLoggedIn(false)
+    //     } else {
+    //       setLoggedIn(true)
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     setLoggedIn(false)
+    //   })
 
   }, [])
 
@@ -115,9 +118,9 @@ function App() {
     setCityPopupOpen(false)
   }
 
-  function handleFilterPopupClose() {
-    setFilterPopupOpen(false)
-  }
+  // function handleFilterPopupClose() {
+  //   setFilterPopupOpen(false)
+  // }
 
   function handleColorPopupClose() {
     setColorPopupOpen(false)
@@ -362,12 +365,15 @@ function App() {
           <ColorPopup selectedColor={selectedColor} availibleColors={availibleColors} isColorPopupOpen={isColorPopupOpen} handleColorPopupClose={handleColorPopupClose} />
           <SubmitActionPopup handleSubmitActionPopupSubmit={handleSubmitActionPopupSubmit} isSubmitActionPopupOpen={isSubmitActionPopupOpen} handleSubmitActionPopupClose={handleSubmitActionPopupClose} />
           <CartPopup handleLikeBtn={handleLikeBtn} favouritesProducts={favouritesProducts} allCartProductsCount={allCartProductsCount} setCart={setCart} cart={cart} isCartPopupOpen={isCartPopupOpen} handleCartPopupClose={handleCartPopupClose} />
-          <FiltersPopup filtersUpd={filtersUpd} setFiltersUpd={setFiltersUpd} filters={filters} handleFilterPopupClose={handleFilterPopupClose} isFilterPopupOpen={isFilterPopupOpen} />
+
           <CityPopup isCityPopupOpen={isCityPopupOpen} handleCityPopupClose={handleCityPopupClose} cityValue={cityValue} setCityValue={setCityValue} cities={cities} />
           <Header currentUser={currentUser} loggedIn={loggedIn} favouritesProducts={favouritesProducts} allCartProductsCount={allCartProductsCount} categories={allCategories} screenWidth={screenWidth} handleCityPopupOpen={handleCityPopupOpen} cityValue={cityValue} products={allProducts} />
           <Switch>
+            <Route exact path={`/`}>
+              <Main />
+            </Route>
             <Route path={`/categories/:category`}>
-              <Category handleColorPopupOpen={handleColorPopupOpen} handleLikeBtn={handleLikeBtn} favouritesProducts={favouritesProducts} handlePreloaderVisible={handlePreloaderVisible} setCartPopupOpen={setCartPopupOpen} cart={cart} handleToCartBtn={handleToCartBtn} subcategoryPreloaderVisible={subcategoryPreloaderVisible} setFilterPopupOpen={setFilterPopupOpen} filtersUpd={filtersUpd} setFiltersUpd={setFiltersUpd} filters={filters} setFilterProducts={setFilterProducts} filterProducts={filterProducts} products={allProducts} categories={allCategories} />
+              <Category handleColorPopupOpen={handleColorPopupOpen} handleLikeBtn={handleLikeBtn} favouritesProducts={favouritesProducts} handlePreloaderVisible={handlePreloaderVisible} setCartPopupOpen={setCartPopupOpen} cart={cart} handleToCartBtn={handleToCartBtn} subcategoryPreloaderVisible={subcategoryPreloaderVisible} setFilterPopupOpen={undefined} filtersUpd={filtersUpd} setFiltersUpd={setFiltersUpd} filters={filters} setFilterProducts={setFilterProducts} filterProducts={filterProducts} products={allProducts} categories={allCategories} />
             </Route>
             <Route path={`/cart`}>
               <CartPage currentUser={currentUser} loggedIn={loggedIn} handleLikeBtn={handleLikeBtn} favouritesProducts={favouritesProducts} setSubmitActionPopupOpen={setSubmitActionPopupOpen} allCartProductsCount={allCartProductsCount} setCart={setCart} cart={cart} />
@@ -388,7 +394,7 @@ function App() {
               <Recovery setLoggedIn={setLoggedIn} setCurrentUser={setCurrentUser} />
             </Route>
             <Route path={`/signup`}>
-              <Register setLoggedIn={setLoggedIn} setCurrentUser={setCurrentUser} />
+              <Register setLoggedIn={setLoggedIn} setCurrentUser={setCurrentUser} currentUser={currentUser} />
             </Route>
             <Route path={`/favourites`}>
               <Favourites handleLikeBtn={handleLikeBtn} favouritesProducts={favouritesProducts} setCartPopupOpen={setCartPopupOpen} cart={cart} handleToCartBtn={handleToCartBtn} />

@@ -1,5 +1,7 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
+import mainApi from '../../../assets/api/MainApi';
+import { MAIN_CATEGORIES, MAIN_URL } from '../../../assets/utils/constants';
 
 import './SelectCategory.css';
 
@@ -8,6 +10,10 @@ import './SelectCategory.css';
 
 
 function SelectCategory(props) {
+
+  const [previewSub, setPreviewSub] = useState(undefined)
+
+
   const ref = React.useRef()
   const [categoryIndexes, setCategoryIndexes] = React.useState({
     categoryIndex: 0,
@@ -61,6 +67,36 @@ function SelectCategory(props) {
     setSubCategoryHoverd({})
   }, [props.selectedCategory])
 
+  const [subCats, setSubCats] = useState([])
+
+  function handleSelectCategoryClick(category) {
+    console.log(category)
+    mainApi.getSubcategoriesByCategory({ category_translit_name: category.translit_name, limit: 9 })
+      .then((res) => {
+        console.log(res.data)
+        setSubCats(res.data)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
+  useEffect(() => {
+    if (props.isSelectCategoryOpened) {
+      mainApi.getRandomSub()
+        .then((res) => {
+          setPreviewSub(res)
+          console.log(res)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    } else{
+      setPreviewSub(undefined)
+      setSubCats([])
+    }
+
+  }, [props.isSelectCategoryOpened])
 
   return (
 
@@ -68,13 +104,16 @@ function SelectCategory(props) {
 
       <div className='select-category_pc'>
         <div className='select-category__categories'>
-          {props.categories && props.categories.map((category, i) => (
-            <p onClick={() => { props.setSelectedCategory(category) }} className={`select-category__category ${props.selectedCategory.name === category.name ? 'select-category__category_active' : ''}`} key={`select-category__category${i}`}>{category.name}</p>
+          {MAIN_CATEGORIES.slice(0, 9).map((category, i) => (
+            <p onClick={() => {
+              props.setSelectedCategory(category)
+              handleSelectCategoryClick(category)
+            }} className={`select-category__category ${props.selectedCategory.name === category.name ? 'select-category__category_active' : ''}`} key={`select-category__category${i}`}>{category.name}</p>
           ))}
         </div>
         <div className='select-category__sub-categories'>
 
-          {props.selectedCategory && props.selectedCategory.sub_catigories ? props.selectedCategory.sub_catigories.map((sub_category, i) => (
+          {subCats && subCats.length > 0 ? subCats.map((sub_category, i) => (
             <Link onClick={() => {
               props.handleSelectCategoryClose()
               setTimeout(() => {
@@ -84,7 +123,7 @@ function SelectCategory(props) {
                 })
                 props.setSelectedCategory({})
               }, 100);
-            }} onMouseEnter={() => { setSubCategoryHoverd(sub_category.sub_category_id) }} to={`/categories/${props.selectedCategory.link}/${sub_category.sub_category_id.link}`} className='select-category__sub-category' key={`select-category__sub-category${i}`}>{sub_category.sub_category_id.name}</Link>
+            }} onMouseEnter={() => { setSubCategoryHoverd(sub_category) }} to={`/categories/${props.selectedCategory.translit_name}/${sub_category.translit_name}`} className='select-category__sub-category' key={`select-category__sub-category${i}`}>{sub_category.name}</Link>
           )) : <p className='select-category__help-text'>Выберите категорию</p>}
         </div>
         {Object.keys(props.selectedCategory).length !== 0 ?
@@ -98,10 +137,10 @@ function SelectCategory(props) {
                 })
                 props.setSelectedCategory({})
               }, 100);
-            }} to={`/categories/${props.selectedCategory.link}/${subCategoryHoverd && subCategoryHoverd.link}`} className="select-category__preview">
+            }} to={`/categories/${props.selectedCategory.translit_name}/${subCategoryHoverd && subCategoryHoverd.translit_name}`} className="select-category__preview">
               <p className="select-category__preview-name">{subCategoryHoverd && subCategoryHoverd.name}</p>
               <div className="select-category__preview-gradient"></div>
-              <img className="select-category__preview-img" src={subCategoryHoverd && subCategoryHoverd.photo} alt={subCategoryHoverd && subCategoryHoverd.name} />
+              <img className="select-category__preview-img" src={subCategoryHoverd && `${MAIN_URL}/get-file/${subCategoryHoverd.photo}`} alt={subCategoryHoverd && subCategoryHoverd.name} key={subCategoryHoverd && subCategoryHoverd._id} />
             </Link>
             :
 
@@ -114,13 +153,13 @@ function SelectCategory(props) {
                 })
                 props.setSelectedCategory({})
               }, 100);
-            }} to={`/categories/${props.selectedCategory.link}/${props.selectedCategory.sub_catigories && props.selectedCategory.sub_catigories[0].sub_category_id.link}`} className="select-category__preview">
-              <p className="select-category__preview-name">{props.selectedCategory && props.selectedCategory.sub_catigories && props.selectedCategory.sub_catigories[0].sub_category_id.name}</p>
+            }} to={`/categories/${subCats && subCats.length > 0 ? subCats[0].category.translit_name : ''}/${subCats && subCats.length > 0 ? subCats[0].translit_name : ''}`} className="select-category__preview">
+              <p className="select-category__preview-name">{subCats && subCats.length > 0 ? subCats[0].name : ''}</p>
               <div className="select-category__preview-gradient"></div>
-              <img className="select-category__preview-img" src={props.selectedCategory && props.selectedCategory.sub_catigories && props.selectedCategory.sub_catigories[0].sub_category_id.photo} alt={props.selectedCategory && props.selectedCategory.sub_catigories && props.selectedCategory.sub_catigories[0].sub_category_id.name} />
+              <img className="select-category__preview-img" src={subCats ? `${MAIN_URL}/get-file/${subCats && subCats.length > 0 ? subCats[0].photo : ''}` : null} alt={subCats && subCats.length > 0 ? subCats[0].name : ''} key={subCats && subCats.length > 0 ? subCats[0]._id : ''} />
             </Link>
           :
-          props.categories && props.categories[categoryIndexes.categoryIndex].sub_catigories && props.categories[categoryIndexes.categoryIndex].sub_catigories[categoryIndexes.subCategoryIndex] &&
+          previewSub &&
           <Link onClick={() => {
             props.handleSelectCategoryClose()
             setTimeout(() => {
@@ -130,10 +169,10 @@ function SelectCategory(props) {
               })
               props.setSelectedCategory({})
             }, 100);
-          }} to={`/categories/${props.categories[categoryIndexes.categoryIndex].link}/${props.categories[categoryIndexes.categoryIndex].sub_catigories && props.categories[categoryIndexes.categoryIndex].sub_catigories[categoryIndexes.subCategoryIndex].sub_category_id.link}`} className="select-category__preview">
-            <p className="select-category__preview-name">{props.categories[categoryIndexes.categoryIndex] && props.categories[categoryIndexes.categoryIndex].sub_catigories && props.categories[categoryIndexes.categoryIndex].sub_catigories[categoryIndexes.subCategoryIndex].sub_category_id.name}</p>
+          }} to={`/categories/${previewSub.category.translit_name}/${previewSub.translit_name}`} className="select-category__preview" key={previewSub && previewSub._id}>
+            <p className="select-category__preview-name">{previewSub.name}</p>
             <div className="select-category__preview-gradient"></div>
-            <img className="select-category__preview-img" src={props.categories[categoryIndexes.categoryIndex] && props.categories[categoryIndexes.categoryIndex].sub_catigories && props.categories[categoryIndexes.categoryIndex].sub_catigories[categoryIndexes.subCategoryIndex].sub_category_id.photo} alt={props.categories[categoryIndexes.categoryIndex] && props.categories[categoryIndexes.categoryIndex].sub_catigories && props.categories[categoryIndexes.categoryIndex].sub_catigories[categoryIndexes.subCategoryIndex].sub_category_id.name} />
+            <img className="select-category__preview-img" src={previewSub ? `${MAIN_URL}/get-file/${previewSub.photo}` : null} alt={previewSub ? previewSub.name : ''} />
           </Link>
         }
 
@@ -143,15 +182,18 @@ function SelectCategory(props) {
       {/* MOBILE */}
       <div className='select-category_mobile'>
         <div className='select-category_container'>
-          {props.selectedCategory && props.selectedCategory.sub_catigories ? <></> : <div className='select-category__categories'>
-            {props.categories && props.categories.map((category, i) => (
-              <p onClick={() => { props.setSelectedCategory(category) }} className={`select-category__category ${props.selectedCategory.name === category.name ? 'select-category__category_active' : ''}`} key={`select-category__category${i}`}>{category.name}</p>
+          {Object.keys(props.selectedCategory).length !== 0 && subCats ? <></> : <div className='select-category__categories'>
+            {MAIN_CATEGORIES.slice(0, 9).map((category, i) => (
+              <p onClick={() => {
+                handleSelectCategoryClick(category)
+                props.setSelectedCategory(category)
+              }} className={`select-category__category ${props.selectedCategory.name === category.name ? 'select-category__category_active' : ''}`} key={`select-category__category${i}`}>{category.name}</p>
             ))}
           </div>}
-          {props.selectedCategory && props.selectedCategory.sub_catigories ?
+          {Object.keys(props.selectedCategory).length !== 0 && subCats ?
             <div className='select-category__sub-categories'>
 
-              {props.selectedCategory && props.selectedCategory.sub_catigories ? props.selectedCategory.sub_catigories.map((sub_category, i) => (
+              {subCats && subCats.length > 0 ? subCats.map((sub_category, i) => (
                 <Link onClick={() => {
                   props.handleSelectCategoryClose()
                   setTimeout(() => {
@@ -161,7 +203,7 @@ function SelectCategory(props) {
                     })
                     props.setSelectedCategory({})
                   }, 100);
-                }} onMouseEnter={() => { setSubCategoryHoverd(sub_category.sub_category_id) }} to={`/categories/${props.selectedCategory.link}/${sub_category.sub_category_id.link}`} className='select-category__sub-category' key={`select-category__sub-category${i}`}>{sub_category.sub_category_id.name}</Link>
+                }} onMouseEnter={() => { setSubCategoryHoverd(sub_category) }} to={`/categories/${props.selectedCategory.translit_name}/${sub_category.translit_name}`} className='select-category__sub-category' key={`select-category__sub-category${i}`}>{sub_category.name}</Link>
               )) : <p className='select-category__help-text'>Выберите категорию</p>}
             </div> : <></>}
           {Object.keys(props.selectedCategory).length !== 0 ?
@@ -175,10 +217,10 @@ function SelectCategory(props) {
                   })
                   props.setSelectedCategory({})
                 }, 100);
-              }} to={`/categories/${props.selectedCategory.link}/${subCategoryHoverd && subCategoryHoverd.link}`} className="select-category__preview">
+              }} to={`/categories/${props.selectedCategory.translit_name}/${subCategoryHoverd && subCategoryHoverd.translit_name}`} className="select-category__preview">
                 <p className="select-category__preview-name">{subCategoryHoverd && subCategoryHoverd.name}</p>
                 <div className="select-category__preview-gradient"></div>
-                <img className="select-category__preview-img" src={subCategoryHoverd && subCategoryHoverd.photo} alt={subCategoryHoverd && subCategoryHoverd.name} />
+                <img className="select-category__preview-img" src={subCategoryHoverd && `${MAIN_URL}/get-file/${subCategoryHoverd.photo}`} alt={subCategoryHoverd && subCategoryHoverd.name} key={subCategoryHoverd && subCategoryHoverd._id} />
               </Link>
               :
 
@@ -191,13 +233,13 @@ function SelectCategory(props) {
                   })
                   props.setSelectedCategory({})
                 }, 100);
-              }} to={`/categories/${props.selectedCategory.link}/${props.selectedCategory.sub_catigories && props.selectedCategory.sub_catigories[0].sub_category_id.link}`} className="select-category__preview">
-                <p className="select-category__preview-name">{props.selectedCategory && props.selectedCategory.sub_catigories && props.selectedCategory.sub_catigories[0].sub_category_id.name}</p>
+              }} to={`/categories/${subCats && subCats.length > 0 ? subCats[0].category.translit_name : ''}/${subCats && subCats.length > 0 ? subCats[0].translit_name : ''}`} className="select-category__preview">
+                <p className="select-category__preview-name">{subCats && subCats.length > 0 ? subCats[0].name : ''}</p>
                 <div className="select-category__preview-gradient"></div>
-                <img className="select-category__preview-img" src={props.selectedCategory && props.selectedCategory.sub_catigories && props.selectedCategory.sub_catigories[0].sub_category_id.photo} alt={props.selectedCategory && props.selectedCategory.sub_catigories && props.selectedCategory.sub_catigories[0].sub_category_id.name} />
+                <img className="select-category__preview-img" src={subCats ? `${MAIN_URL}/get-file/${subCats && subCats.length > 0 ? subCats[0].photo : ''}` : null} alt={subCats && subCats.length > 0 ? subCats[0].name : ''} key={subCats && subCats.length > 0 ? subCats[0]._id : ''} />
               </Link>
             :
-            props.categories && props.categories[categoryIndexes.categoryIndex].sub_catigories && props.categories[categoryIndexes.categoryIndex].sub_catigories[categoryIndexes.subCategoryIndex] &&
+            previewSub &&
             <Link onClick={() => {
               props.handleSelectCategoryClose()
               setTimeout(() => {
@@ -207,15 +249,17 @@ function SelectCategory(props) {
                 })
                 props.setSelectedCategory({})
               }, 100);
-            }} to={`/categories/${props.categories[categoryIndexes.categoryIndex].link}/${props.categories[categoryIndexes.categoryIndex].sub_catigories && props.categories[categoryIndexes.categoryIndex].sub_catigories[categoryIndexes.subCategoryIndex].sub_category_id.link}`} className="select-category__preview">
-              <p className="select-category__preview-name">{props.categories[categoryIndexes.categoryIndex] && props.categories[categoryIndexes.categoryIndex].sub_catigories && props.categories[categoryIndexes.categoryIndex].sub_catigories[categoryIndexes.subCategoryIndex].sub_category_id.name}</p>
+            }} to={`/categories/${previewSub.category.translit_name}/${previewSub.translit_name}`} className="select-category__preview" key={previewSub && previewSub._id}>
+              <p className="select-category__preview-name">{previewSub.name}</p>
               <div className="select-category__preview-gradient"></div>
-              <img className="select-category__preview-img" src={props.categories[categoryIndexes.categoryIndex] && props.categories[categoryIndexes.categoryIndex].sub_catigories && props.categories[categoryIndexes.categoryIndex].sub_catigories[categoryIndexes.subCategoryIndex].sub_category_id.photo} alt={props.categories[categoryIndexes.categoryIndex] && props.categories[categoryIndexes.categoryIndex].sub_catigories && props.categories[categoryIndexes.categoryIndex].sub_catigories[categoryIndexes.subCategoryIndex].sub_category_id.name} />
+              <img className="select-category__preview-img" src={previewSub ? `${MAIN_URL}/get-file/${previewSub.photo}` : null} alt={previewSub ? previewSub.name : ''} />
             </Link>
           }
 
           <svg onClick={() => {
-            if (props.selectedCategory && props.selectedCategory.sub_catigories) {
+            if (Object.keys(props.selectedCategory).length !== 0) {
+              console.log('dsd')
+              console.log(props.selectedCategory)
               props.setSelectedCategory({})
             } else {
               props.handleSelectCategoryClose()
@@ -229,7 +273,7 @@ function SelectCategory(props) {
             }
 
           }} className='select-category__close' width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-            {props.selectedCategory && props.selectedCategory.sub_catigories ?
+            {props.selectedCategory ?
               <>
                 <rect x="22.1416" y="3.55615" width="2.62835" height="14.4601" transform="rotate(45 22.1416 3.55615)" fill="#121212" />
                 <rect x="24" y="22.1414" width="2.62835" height="14.4511" transform="rotate(135 24 22.1414)" fill="#121212" />

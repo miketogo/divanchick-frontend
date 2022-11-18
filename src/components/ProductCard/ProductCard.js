@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
+import { MAIN_URL } from '../../assets/utils/constants';
 
 import './ProductCard.css';
 
@@ -39,7 +40,7 @@ function ProductCard(props) {
       </div>
 
       <Link to={props.link} key={props.link} className='product-card__link'>
-        <img className='product-card__img' src={props.product.photos[0] !== 'Не указано' ? `${props.product.photos[0]}` : ''} alt={props.product.name} />
+        <img className='product-card__img' src={props.product.photos[0] !== 'Не указано' ? `${MAIN_URL}/get-file/${props.product.photos[0]}` : ''} alt={props.product.name} key={props.product._id} />
         <div className='product-card__price'>
           <p className='product-card__main-price'>{props.product.discount && props.product.discount > 0 ? (props.product.price - (props.product.price / 100 * props.product.discount)).toLocaleString('ru') : props.product.price.toLocaleString('ru')}&nbsp;₽</p>
           {props.product.discount && props.product.discount > 0 ?

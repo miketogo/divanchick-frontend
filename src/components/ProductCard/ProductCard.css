@@ -50,7 +50,7 @@
   width: 100%;
   max-width: 450px;
   height: 264px;
-  object-fit: cover;
+  object-fit: scale-down;
 }
 
 .product-card__price {

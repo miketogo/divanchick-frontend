@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import './Cart.css';
 
 import moreIcon from '../../../assets/images/more.svg'
+import { MAIN_URL } from '../../../assets/utils/constants';
 
 
 
@@ -64,12 +65,12 @@ function Cart(props) {
                         <>
 
                             <div className="cart__item cart__item_pc">
-                                <Link className="cart__item-img" to={`/categories/${item.category.link}/${item.sub_category.link}/${item.link}`}>
-                                    <img className="cart__item-img-photo" src={item.photos[0] !== 'Не указано' ? `${item.photos[0]}` : ''} alt={item.name}></img>
+                                <Link className="cart__item-img" to={`/categories/${item.category.translit_name}/${item.sub_category.translit_name}/${item._id}`}>
+                                    <img className="cart__item-img-photo" src={item.photos[0] ? `${MAIN_URL}/get-file/${item.photos[0]}` : ''} alt={item.name}></img>
                                 </Link>
 
                                 <div className="cart__item-column">
-                                    <p className="cart__article">Артикул: {item.article}</p>
+                                    <p className="cart__article">Артикул: {item.firstc_data.barcode}</p>
                                     <div className="cart__item-row cart__item-row_first">
                                         <p className="cart__name">{item.name}</p>
                                         <div className="cart__count-handler">
@@ -120,8 +121,8 @@ function Cart(props) {
                             {/* MOBILE */}
                             <div className="cart__item cart__item_mobile">
                                 <div className="cart__item-row">
-                                    <Link className="cart__item-img" to={`/categories/${item.category.link}/${item.sub_category.link}/${item.link}/${item.specifications.colour}`}>
-                                        <img className="cart__item-img-photo" src={item.photos[0] !== 'Не указано' ? `${item.photos[0]}` : ''} alt={item.name}></img>
+                                    <Link className="cart__item-img" to={`/categories/${item.category.translit_name}/${item.sub_category.translit_name}/${item._id}`}>
+                                        <img className="cart__item-img-photo" src={item.photos[0] ? `${MAIN_URL}/get-file/${item.photos[0]}` : ''} alt={item.name}></img>
                                     </Link>
                                     <div className="cart__item-column">
                                         <div className="cart__icons">
@@ -141,7 +142,7 @@ function Cart(props) {
                                             </svg>
 
                                         </div>
-                                        <p className="cart__article">Артикул: {item.article}</p>
+                                        <p className="cart__article">Артикул: {item.barcode}</p>
                                         <div className="cart__item-row cart__item-row_first">
                                             <p className="cart__name">{item.name}</p>
 

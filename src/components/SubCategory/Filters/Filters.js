@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './Filters.css';
 
 
 
 
-function Filters(props) {
+function Filters({ handleUpdateByFilters, filters, divRef, handleResetFilters }) {
     const [allBrands, setAllBrands] = useState([])
     const [filtersValue, setFiltersValue] = useState({
         inStock: false,
@@ -29,31 +29,34 @@ function Filters(props) {
 
     })
 
-    React.useEffect(() => {
-        if (Object.keys(props.filters).length !== 0) {
-            setFiltersValue({
-                inStock: false,
-                price: {
-                    min: props.filters.price.min,
-                    max: props.filters.price.max,
-                },
-                width: {
-                    min: props.filters.width.min,
-                    max: props.filters.width.max,
-                },
-                height: {
-                    min: props.filters.height.min,
-                    max: props.filters.height.max,
-                },
-                depth: {
-                    min: props.filters.depth.min,
-                    max: props.filters.depth.max,
-                },
-                brands: [],
-            })
-            setAllBrands(props.filters.brands)
-        }
-    }, [props.filters])
+    const [openedFilter, setOpendFilter] = useState(undefined)
+    const [filtersValues, setFiltersValues] = useState(undefined)
+
+    // React.useEffect(() => {
+    //     if (Object.keys( filters).length !== 0) {
+    //         setFiltersValue({
+    //             inStock: false,
+    //             price: {
+    //                 min:  filters.price.min,
+    //                 max:  filters.price.max,
+    //             },
+    //             width: {
+    //                 min:  filters.width.min,
+    //                 max:  filters.width.max,
+    //             },
+    //             height: {
+    //                 min:  filters.height.min,
+    //                 max:  filters.height.max,
+    //             },
+    //             depth: {
+    //                 min:  filters.depth.min,
+    //                 max:  filters.depth.max,
+    //             },
+    //             brands: [],
+    //         })
+    //         setAllBrands( filters.brands)
+    //     }
+    // }, [ filters])
 
 
     function handleStockSelect() {
@@ -252,53 +255,105 @@ function Filters(props) {
 
     function handleReset() {
         window.scrollTo({ top: 0, behavior: 'smooth' })
-        setReseting(true)
-        setTimeout(() => {
-            setReseting(false)
-        }, 501);
-        setBrandsOpen(false)
-        setPriceOpen(false)
-        setWidthOpen(false)
-        setHeightOpen(false)
-        setDepthOpen(false)
-        setFiltersValue({
-            inStock: false,
-            price: {
-                min: props.filters.price.min,
-                max: props.filters.price.max,
-            },
-            width: {
-                min: props.filters.width.min,
-                max: props.filters.width.max,
-            },
-            height: {
-                min: props.filters.height.min,
-                max: props.filters.height.max,
-            },
-            depth: {
-                min: props.filters.depth.min,
-                max: props.filters.depth.max,
-            },
-            brands: [],
-        })
+        handleResetFilters()
+        setFiltersValues(undefined)
+        setOpendFilter(undefined)
+        // setFiltersValue({
+        //     inStock: false,
+        //     price: {
+        //         min:  filters.price.min,
+        //         max:  filters.price.max,
+        //     },
+        //     width: {
+        //         min:  filters.width.min,
+        //         max:  filters.width.max,
+        //     },
+        //     height: {
+        //         min:  filters.height.min,
+        //         max:  filters.height.max,
+        //     },
+        //     depth: {
+        //         min:  filters.depth.min,
+        //         max:  filters.depth.max,
+        //     },
+        //     brands: [],
+        // })
     }
 
-    React.useEffect(() => {
-        // window.scrollTo(0,0)
-        props.setFiltersUpd({})
-        setTimeout(() => {
-            
-            props.setFiltersUpd(filtersValue)
-        }, 300);
-        
-        
-        // props.handlePreloaderVisible()
 
-        // setTimeout(() => {
-        //     props.handlePreloaderVisible()
-        // }, 500);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filtersValue])
+
+
+
+    function handleFilterOpen(item) {
+        if (openedFilter && openedFilter.translit_name === item.translit_name) {
+            setOpendFilter('')
+        } else {
+            setOpendFilter(item)
+        }
+
+    }
+
+    function handleMinChange(e) {
+        let inputValue = e.target.value.replace(/\D/g, '')
+        if (filtersValues && filtersValues[openedFilter.translit_name] && filtersValues[openedFilter.translit_name].max && Number(inputValue) > Number(filtersValues[openedFilter.translit_name].max)) {
+            setFiltersValues({
+                ...filtersValues,
+                [openedFilter.translit_name]: {
+                    min: filtersValues && filtersValues[openedFilter.translit_name] && filtersValues[openedFilter.translit_name].max ? filtersValues[openedFilter.translit_name].max : '',
+                    max: inputValue,
+                    translit_name: filtersValues && filtersValues[openedFilter.translit_name] && filtersValues[openedFilter.translit_name].translit_name ? filtersValues[openedFilter.translit_name].translit_name : openedFilter.translit_name,
+                    type: filtersValues && filtersValues[openedFilter.translit_name] && filtersValues[openedFilter.translit_name].type ? filtersValues[openedFilter.translit_name].type : openedFilter.type,
+                }
+            })
+        } else {
+            setFiltersValues({
+                ...filtersValues,
+                [openedFilter.translit_name]: {
+                    min: inputValue,
+                    max: filtersValues && filtersValues[openedFilter.translit_name] && filtersValues[openedFilter.translit_name].max ? filtersValues[openedFilter.translit_name].max : '',
+                    translit_name: filtersValues && filtersValues[openedFilter.translit_name] && filtersValues[openedFilter.translit_name].translit_name ? filtersValues[openedFilter.translit_name].translit_name : openedFilter.translit_name,
+                    type: filtersValues && filtersValues[openedFilter.translit_name] && filtersValues[openedFilter.translit_name].type ? filtersValues[openedFilter.translit_name].type : openedFilter.type,
+                }
+            })
+        }
+
+    }
+
+    function handleMaxChange(e) {
+        let inputValue = e.target.value.replace(/\D/g, '')
+        if (filtersValues && filtersValues[openedFilter.translit_name] && filtersValues[openedFilter.translit_name].min && Number(inputValue) < Number(filtersValues[openedFilter.translit_name].min)) {
+            setFiltersValues({
+                ...filtersValues,
+                [openedFilter.translit_name]: {
+                    min: inputValue,
+                    max: filtersValues && filtersValues[openedFilter.translit_name] && filtersValues[openedFilter.translit_name].min ? filtersValues[openedFilter.translit_name].min : '',
+                    translit_name: filtersValues && filtersValues[openedFilter.translit_name] && filtersValues[openedFilter.translit_name].translit_name ? filtersValues[openedFilter.translit_name].translit_name : openedFilter.translit_name,
+                    type: filtersValues && filtersValues[openedFilter.translit_name] && filtersValues[openedFilter.translit_name].type ? filtersValues[openedFilter.translit_name].type : openedFilter.type,
+                }
+            })
+        } else {
+            setFiltersValues({
+                ...filtersValues,
+                [openedFilter.translit_name]: {
+                    min: filtersValues && filtersValues[openedFilter.translit_name] && filtersValues[openedFilter.translit_name].min ? filtersValues[openedFilter.translit_name].min : '',
+                    max: inputValue,
+                    translit_name: filtersValues && filtersValues[openedFilter.translit_name] && filtersValues[openedFilter.translit_name].translit_name ? filtersValues[openedFilter.translit_name].translit_name : openedFilter.translit_name,
+                    type: filtersValues && filtersValues[openedFilter.translit_name] && filtersValues[openedFilter.translit_name].type ? filtersValues[openedFilter.translit_name].type : openedFilter.type,
+                }
+            })
+        }
+
+    }
+
+    useEffect(() => {
+        console.log(filtersValues)
+        //  setItems()
+        // //  setItemsCount()
+        if (filtersValues) {
+            handleUpdateByFilters(filtersValues)
+        }
+
+    }, [filtersValues])
 
     return (
         <div className="filters">
@@ -309,79 +364,37 @@ function Filters(props) {
                     <div className={`filters__in-stock-selector-item ${filtersValue.inStock ? 'filters__in-stock-selector-item_active' : ''}`}></div>
                 </div>
             </div>
-            <div className="filters__item">
-                <div className="filters__item-row" onClick={handlePriceOpen}>
-                    <svg className={`filters__arrow ${isPriceOpen ? 'filters__arrow_active' : ''}`} width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M2.5 6.25L9.29289 13.0429C9.68342 13.4334 10.3166 13.4334 10.7071 13.0429L17.5 6.25" stroke="black" strokeLinecap="round" />
-                    </svg>
-                    <p className="filters__item-name">Цена&nbsp;(руб.)</p>
-                </div>
-                {isPriceOpen ?
-                    <div className="filters__item-dropdown">
-                        <p className="filters__item-dropdown-text">от</p>
-                        <input placeholder={filtersValue.price.min} className="filters__input" type="text" value={filtersValue.price.min} onChange={handlePriceMinChange} ></input>
-                        <div className="filters__item-dropdown-line"></div>
-                        <p className="filters__item-dropdown-text">до</p>
-                        <input placeholder={filtersValue.price.max} className="filters__input filters__input_second" type="text" value={filtersValue.price.max} onChange={handlePriceMaxChange} maxLength="50"></input>
-                    </div>
-                    : <></>}
-            </div>
+            {filters && filters.length > 0 && filters.map((item, i) => (
+                <>
+                    {item.type === "min_max" ?
+                        <div className="filters__item">
+                            <div className="filters__item-row" onClick={() => {
+                                handleFilterOpen(item)
+                            }}>
+                                <svg className={`filters__arrow ${isPriceOpen ? 'filters__arrow_active' : ''}`} width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M2.5 6.25L9.29289 13.0429C9.68342 13.4334 10.3166 13.4334 10.7071 13.0429L17.5 6.25" stroke="black" strokeLinecap="round" />
+                                </svg>
+                                <p className="filters__item-name">{item.name}</p>
+                            </div>
+                            {openedFilter && openedFilter.translit_name === item.translit_name ?
+                                <div className="filters__item-dropdown">
+                                    <p className="filters__item-dropdown-text">от</p>
+                                    <input placeholder={item.criterions[0].value} className="filters__input" type="text" value={filtersValues && filtersValues[item.translit_name] ? filtersValues[item.translit_name].min : ''} onChange={handleMinChange} ></input>
+                                    <div className="filters__item-dropdown-line"></div>
+                                    <p className="filters__item-dropdown-text">до</p>
+                                    <input placeholder={item.criterions[1].value} className="filters__input filters__input_second" type="text" value={filtersValues && filtersValues[item.translit_name] ? filtersValues[item.translit_name].max : ''} onChange={handleMaxChange} maxLength="50"></input>
+                                </div>
+                                : <></>}
+                        </div>
+                        : <></>}
+                </>
 
-            <div className="filters__item">
-                <div className="filters__item-row" onClick={handleWidthOpen}>
-                    <svg className={`filters__arrow ${isWidthOpen ? 'filters__arrow_active' : ''}`} width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M2.5 6.25L9.29289 13.0429C9.68342 13.4334 10.3166 13.4334 10.7071 13.0429L17.5 6.25" stroke="black" strokeLinecap="round" />
-                    </svg>
-                    <p className="filters__item-name">Ширина,&nbsp;см</p>
-                </div>
-                {isWidthOpen ?
-                    <div className="filters__item-dropdown">
-                        <p className="filters__item-dropdown-text">от</p>
-                        <input placeholder={filtersValue.width.min} className="filters__input" type="text" value={filtersValue.width.min} onChange={handleWidthMinChange} maxLength="50"></input>
-                        <div className="filters__item-dropdown-line"></div>
-                        <p className="filters__item-dropdown-text">до</p>
-                        <input placeholder={filtersValue.width.max} className="filters__input filters__input_second" type="text" value={filtersValue.width.max} onChange={handleWidthMaxChange} maxLength="50"></input>
-                    </div>
-                    : <></>}
-            </div>
+            ))}
 
-            <div className="filters__item">
-                <div className="filters__item-row" onClick={handleHeightOpen}>
-                    <svg className={`filters__arrow ${isHeightOpen ? 'filters__arrow_active' : ''}`} width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M2.5 6.25L9.29289 13.0429C9.68342 13.4334 10.3166 13.4334 10.7071 13.0429L17.5 6.25" stroke="black" strokeLinecap="round" />
-                    </svg>
-                    <p className="filters__item-name">Высота,&nbsp;см</p>
-                </div>
-                {isHeightOpen ?
-                    <div className="filters__item-dropdown">
-                        <p className="filters__item-dropdown-text">от</p>
-                        <input placeholder={filtersValue.height.min} className="filters__input" type="text" value={filtersValue.height.min} onChange={handleHeightMinChange} maxLength="50"></input>
-                        <div className="filters__item-dropdown-line"></div>
-                        <p className="filters__item-dropdown-text">до</p>
-                        <input placeholder={filtersValue.height.max} className="filters__input filters__input_second" type="text" value={filtersValue.height.max} onChange={handleHeightMaxChange} maxLength="50"></input>
-                    </div>
-                    : <></>}
-            </div>
 
-            <div className="filters__item">
-                <div className="filters__item-row" onClick={handleDepthOpen}>
-                    <svg className={`filters__arrow ${isDepthOpen ? 'filters__arrow_active' : ''}`} width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M2.5 6.25L9.29289 13.0429C9.68342 13.4334 10.3166 13.4334 10.7071 13.0429L17.5 6.25" stroke="black" strokeLinecap="round" />
-                    </svg>
-                    <p className="filters__item-name">Глубина,&nbsp;см</p>
-                </div>
-                {isDepthOpen ?
-                    <div className="filters__item-dropdown">
-                        <p className="filters__item-dropdown-text">от</p>
-                        <input placeholder={filtersValue.depth.min} className="filters__input" type="text" value={filtersValue.depth.min} onChange={handleDepthMinChange} maxLength="50"></input>
-                        <div className="filters__item-dropdown-line"></div>
-                        <p className="filters__item-dropdown-text">до</p>
-                        <input placeholder={filtersValue.depth.max} className="filters__input filters__input_second" type="text" value={filtersValue.depth.max} onChange={handleDepthMaxChange} maxLength="50"></input>
-                    </div>
-                    : <></>}
-            </div>
 
-            <div className="filters__item">
+
+            {/* <div className="filters__item">
                 <div className="filters__item-row" onClick={handleBrandsOpen}>
                     <svg className={`filters__arrow ${isBrandsOpen ? 'filters__arrow_active' : ''}`} width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M2.5 6.25L9.29289 13.0429C9.68342 13.4334 10.3166 13.4334 10.7071 13.0429L17.5 6.25" stroke="black" strokeLinecap="round" />
@@ -430,7 +443,7 @@ function Filters(props) {
                         </div>
                     </div>
                     : <></>}
-            </div>
+            </div> */}
             <div className="filters__reset-btn" onClick={handleReset}>
                 <p className="filters__reset-btn-text">очистить фильтры</p>
                 {/* <svg  width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">

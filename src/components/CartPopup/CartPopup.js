@@ -3,6 +3,7 @@ import React from "react";
 
 import { Link } from 'react-router-dom';
 import moreIcon from '../../assets/images/more.svg'
+import { MAIN_URL } from '../../assets/utils/constants';
 
 
 
@@ -82,12 +83,12 @@ function CartPopup(props) {
             props.cart.map((item, i) => (
               <>
                 <div className="cart-popup__item cart-popup__item_pc">
-                  <Link onClick={props.handleCartPopupClose} className="cart-popup__item-img" to={`/categories/${item.category.link}/${item.sub_category.link}/${item.link}`}>
-                    <img className="cart-popup__item-img-photo" src={item.photos[0] !== 'Не указано' ? `${item.photos[0]}` : ''} alt={item.name}></img>
+                  <Link onClick={props.handleCartPopupClose} className="cart-popup__item-img" to={`/categories/${item.category.translit_name}/${item.sub_category.translit_name}/${item._id}`}>
+                    <img className="cart-popup__item-img-photo" src={item.photos[0] ? `${MAIN_URL}/get-file/${item.photos[0]}` : ''} alt={item.name}></img>
                   </Link>
 
                   <div className="cart-popup__item-column">
-                    <p className="cart-popup__article">Артикул: {item.article}</p>
+                    <p className="cart-popup__article">Артикул: {item.firstc_data.barcode}</p>
                     <div className="cart-popup__item-row cart-popup__item-row_first">
                       <p className="cart-popup__name">{item.name}</p>
                       <div className="cart-popup__count-handler">
@@ -140,8 +141,8 @@ function CartPopup(props) {
                 {/* MOBILE */}
                 <div className="cart-popup__item cart-popup__item_mobile">
                   <div className="cart-popup__item-row">
-                    <Link onClick={props.handleCartPopupClose} className="cart-popup__item-img" to={`/categories/${item.category.link}/${item.sub_category.link}/${item.link}`}>
-                      <img className="cart-popup__item-img-photo" src={item.photos[0] !== 'Не указано' ? `${item.photos[0]}` : ''} alt={item.name}></img>
+                    <Link onClick={props.handleCartPopupClose} className="cart-popup__item-img" to={`/categories/${item.category.translit_name}/${item.sub_category.translit_name}/${item._id}`}>
+                      <img className="cart-popup__item-img-photo" src={item.photos[0] ? `${MAIN_URL}/get-file/${item.photos[0]}` : ''} alt={item.name}></img>
                     </Link>
                     <div className="cart-popup__item-column">
                       <div className="cart-popup__icons">
@@ -161,7 +162,7 @@ function CartPopup(props) {
                         </svg>
 
                       </div>
-                      <p className="cart-popup__article">Артикул: {item.article}</p>
+                      <p className="cart-popup__article">Артикул: {item.firstc_data.barcode}</p>
                       <div className="cart-popup__item-row cart-popup__item-row_first">
                         <p className="cart-popup__name">{item.name}</p>
 

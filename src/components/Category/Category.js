@@ -1,6 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Switch, useParams, useRouteMatch } from 'react-router';
 import { Route, Link } from 'react-router-dom';
+import mainApi from '../../assets/api/MainApi';
+import { MAIN_URL } from '../../assets/utils/constants';
 
 
 import SubCategory from '../SubCategory/SubCategory';
@@ -16,33 +18,38 @@ function Category(props) {
 
   let { category } = useParams();
 
-  const [selectedCategory, setSelectedCategory] = useState({});
+  const [selectedCategory, setSelectedCategory] = useState(undefined);
+  const [subcategories, setSubcategories] = useState(undefined)
 
 
-  React.useEffect(() => {
-    // console.log(props.categories)
-    // console.log(category)
-    if(props.categories.length !== 0){
-      if (props.categories.filter((item) => {
-        if (item.link === category) return true
-        else return false
-      })[0].sub_catigories
-        &&
-        props.categories.filter((item) => {
-          if (item.link === category) return true
-          else return false
-        })[0].sub_catigories.length !== 0) {
-        setSelectedCategory(
-          props.categories.filter((item) => {
-            if (item.link === category) return true
-            else return false
-          })[0]
-        )
-      }
-      else setSelectedCategory({})
+
+  useEffect(() => {
+
+    if (category) {
+      mainApi.getExactCategory({ translit_name: category })
+        .then((res) => {
+          console.log(res)
+          setSelectedCategory(res)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+
+      mainApi.getSubcategoriesByCategory({
+        category_translit_name: category,
+        limit: 25,
+      })
+        .then((res) => {
+          console.log(res.data)
+          setSubcategories(res.data)
+
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     }
-    
-  }, [category, props.categories])
+
+  }, [category])
 
   // React.useEffect(() => {
   //   console.log(url)
@@ -50,39 +57,43 @@ function Category(props) {
 
   return (
     <div className="category">
+      {selectedCategory ?
+        <Switch>
+          <Route exact path={`${url}/`}>
+            <Crumbs links={[
+              {
+                name: 'Главная',
+                to: '/',
+              },
+              {
+                name: selectedCategory.name,
+                to: `${url}`,
+              },
+            ]} />
+            <h2 className="category__name">{selectedCategory.name}</h2>
+            <div className="category__sub-categories">
+              {subcategories ?
+                subcategories.length > 0 ? subcategories.map((sub_category, i) => (
 
-      <Switch>
-        <Route exact path={`${url}/`}>
-          <Crumbs links={[
-            {
-              name: 'Главная',
-              to: '/',
-            },
-            {
-              name: selectedCategory.name,
-              to: `${url}`,
-            },
-          ]} />
-          <h2 className="category__name">{selectedCategory.name}</h2>
-          <div className="category__sub-categories">
-            {selectedCategory && selectedCategory.sub_catigories ? selectedCategory.sub_catigories.map((sub_category, i) => (
+                  <Link className="category__sub-category" to={`${url}/${sub_category.translit_name}`} key={`sub_category.name${i}`}>
+                    <h3 className="category__sub-category-name">{sub_category.name}</h3>
+                    <div className="category__sub-category-gradient"></div>
+                    <img className="category__sub-category-img" src={`${MAIN_URL}/get-file/${sub_category.photo}`} alt={sub_category.photo} key={sub_category._id} />
+                  </Link>
+                ))
 
-              <Link className="category__sub-category" to={`${url}/${sub_category.sub_category_id.link}`} key={`sub_category.name${i}`}>
-                <h3 className="category__sub-category-name">{sub_category.sub_category_id.name}</h3>
-                <div className="category__sub-category-gradient"></div>
-                <img className="category__sub-category-img" src={sub_category.sub_category_id.photo} alt={sub_category.sub_category_id.name} />
-              </Link>
+                  :
+                  <p key={'sub_category_empty'}>Пусто</p>
+                : <></>}
+            </div>
 
+          </Route>
+          <Route path={`${url}/:sub_category`}>
+            <SubCategory handleColorPopupOpen={props.handleColorPopupOpen} handleLikeBtn={props.handleLikeBtn} favouritesProducts={props.favouritesProducts} handlePreloaderVisible={props.handlePreloaderVisible} setCartPopupOpen={props.setCartPopupOpen} cart={props.cart} handleToCartBtn={props.handleToCartBtn} subcategoryPreloaderVisible={props.subcategoryPreloaderVisible} setFilterPopupOpen={props.setFilterPopupOpen} filtersUpd={props.filtersUpd} setFiltersUpd={props.setFiltersUpd} filters={props.filters} setFilterProducts={props.setFilterProducts} filterProducts={props.filterProducts} products={props.products} category={selectedCategory} />
+          </Route>
+        </Switch>
+        : <></>}
 
-
-            )) : <p key={'sub_category_empty'}>Пуста</p>}
-          </div>
-
-        </Route>
-        <Route path={`${url}/:sub_category`}>
-          <SubCategory handleColorPopupOpen={props.handleColorPopupOpen} handleLikeBtn={props.handleLikeBtn} favouritesProducts={props.favouritesProducts} handlePreloaderVisible={props.handlePreloaderVisible} setCartPopupOpen={props.setCartPopupOpen} cart={props.cart} handleToCartBtn={props.handleToCartBtn}  subcategoryPreloaderVisible={props.subcategoryPreloaderVisible} setFilterPopupOpen={props.setFilterPopupOpen} filtersUpd={props.filtersUpd} setFiltersUpd={props.setFiltersUpd} filters={props.filters} setFilterProducts={props.setFilterProducts} filterProducts={props.filterProducts} products={props.products} category={selectedCategory} />
-        </Route>
-      </Switch>
 
     </div>
   );

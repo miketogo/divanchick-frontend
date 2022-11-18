@@ -1,18 +1,21 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import { useHistory } from 'react-router-dom';
 
 import validator from 'validator'
 
-import mainApi from '../../utils/MainApi';
+import mainApi from '../../assets/api/MainApi';
 
 import './Register.css';
+import moment from 'moment-timezone';
 
 
 
 
-function Register(props) {
+function Register({ currentUser, setCurrentUser, setLoggedIn }) {
     const history = useHistory()
+
+
     const [nameValue, setNameValue] = React.useState('');
     const [nameValidity, setNameValidity] = React.useState({
         errorMassage: '',
@@ -230,8 +233,8 @@ function Register(props) {
                         mainApi.checkJwt({ token: res.token })
                             .then((data) => {
                                 console.log(data)
-                                props.setLoggedIn(true)
-                                props.setCurrentUser(data.user)
+                                setLoggedIn(true)
+                                setCurrentUser(data.user)
                                 history.push('/')
                             })
                             .catch((err) => {
@@ -322,14 +325,14 @@ function Register(props) {
 
     function handleSubmit() {
         mainApi.register({
-            email: emailValue,
+            email: emailValue.slice(),
             password: passValue,
             firstname: nameValue,
             surname: surnameValue,
-            phone_number: phoneValue
+            phone_number: phoneValue.replace(/\D/g, '')
         })
             .then((res) => {
-                setRegToken(res.token)
+                setCurrentUser(res)
                 setStep(1)
             })
             .catch((err) => {
@@ -337,45 +340,46 @@ function Register(props) {
             })
     }
 
-    const timerDefValue = 62
-    const [timerValue, setTimerValue] = React.useState(timerDefValue);
-    const [sendCounter, setSendCounter] = React.useState(0);
-    const [sendAgainAvailible, setSendAgainAvailible] = React.useState(false);
+    const [timeLeft, setTimeLeft] = useState(currentUser && currentUser.new_phone && currentUser.new_phone.generated_utc ? Number(moment().format('X')) - Number(moment(`${currentUser.new_phone.generated_utc}+00:00`).format('X')) : 61)
 
 
-    React.useEffect(() => {
 
-        if (step === 1) {
-            if (!sendAgainAvailible) {
-                if (timerValue === 0) {
-                    setSendAgainAvailible(true)
-                    setTimerValue(timerDefValue)
-                } else {
-                    const timer = setInterval(() => {
-                        setTimerValue(timerValue - 1)
-                        clearInterval(timer)
-                    }, 1000);
-                }
 
-            }
+    useEffect(() => {
+        if (currentUser) {
+            const timer = setInterval(() => {
 
+                setTimeLeft(Number(moment().format('X')) - Number(moment(`${currentUser.new_phone.generated_utc}+00:00`).format('X')))
+                clearInterval(timer)
+            }, 1000);
+
+        } else {
+            setTimeLeft(0)
         }
 
-    }, [step, timerValue, sendAgainAvailible])
+    }, [currentUser, timeLeft])
 
     function handleSendCodeAgain() {
-        if (sendCounter < 2) {
-            mainApi.registerGetNewCode({ token: regToken })
-                .then(() => {
-                    setSendCounter(sendCounter + 1)
-                })
-                .catch((err) => {
-                    console.log(err)
-                })
-        }
+        // if (sendCounter < 2) {
+        //     mainApi.registerGetNewCode({ token: regToken })
+        //         .then(() => {
+        //             // setSendCounter(sendCounter + 1)
+        //         })
+        //         .catch((err) => {
+        //             console.log(err)
+        //         })
+        // }
 
 
     }
+
+    useEffect(() => {
+        if (currentUser) {
+            if (!currentUser.phone) {
+                setStep(1)
+            }
+        }
+    }, [currentUser])
 
     return (
         <div className="register">
@@ -389,7 +393,7 @@ function Register(props) {
                     {step === 1 ? <p className="register__form-title">Код из СМС</p> : <></>}
 
 
-                    {step === 1 ? <p className="register__form-subtitle">Мы выслали код на номер<br />{phoneValue}</p> : <></>}
+                    {step === 1 ? <p className="register__form-subtitle">Мы выслали код на номер<br />{currentUser.new_phone.phone}</p> : <></>}
 
 
                     {step === 0 ?
@@ -472,14 +476,13 @@ function Register(props) {
 
                     {step === 1 ?
                         <p onClick={() => {
-                            if (sendAgainAvailible) {
-                                setSendAgainAvailible(false)
+                            if ((61 - Number(timeLeft) >= 0 && currentUser)) {
+                              
                                 handleSendCodeAgain()
                             }
-                        }} className={`register__code-timeout ${sendAgainAvailible ? sendCounter === 2 ? '' : 'register__code-timeout_active' : ''}`}>
-                            {sendAgainAvailible ? sendCounter === 2 ? 'Если смс все еще не пришла, обратитесь в службу поддержки: +7 (919) 940-12-08' :
-                                'Выслать код повторно' : sendCounter === 2 ? 'Если смс все еще не пришла, обратитесь в службу поддержки: +7 (919) 940-12-08' : `Выслать код повторно: ${timerValue}`
-                            }</p>
+                        }} className={`register__code-timeout ${(61 - Number(timeLeft) >= 0 && currentUser) ? " " : 'register__code-timeout_active'}`}>
+
+                            {61 - Number(timeLeft) >= 0 && currentUser ? `${('0' + (~~((61 - timeLeft) / 60))).slice(-2)}:${('0' + (61 - timeLeft) % 60).slice(-2)}` : `Выслать код повторно`}</p>
 
                         : <></>}
 
