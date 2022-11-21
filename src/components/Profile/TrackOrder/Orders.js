@@ -68,7 +68,7 @@ function Orders(props) {
                                 <p className={`order__item-status-text ${item.status.toLowerCase() === 'в работе' ? 'order__item-status-text_type_in-work' : ''} ${item.status.toLowerCase() === 'отмененный' ? 'order__item-status-text_type_cancelled' : ''} ${item.status.toLowerCase() === 'доставлен' ? 'order__item-status-text_type_delivered' : ''}`}>{item.status.toLowerCase()[0].toUpperCase()}{item.status.toLowerCase().slice(1)}</p>
                             </div>
                         </div>
-                        <p className="order__item-fullprice">Стоимость заказа: <span className="order__item-fullprice-value">{item.full_price.toLocaleString('ru')} руб.</span></p>
+                        <p className="order__item-fullprice">Стоимость заказа: <span className="order__item-fullprice-value">{item.full_price.toLocaleString('us')} руб.</span></p>
                         <p className="order__item-address">{item.isDelivery ? `Адрес доставки: ${item.address}` : `Самовывоз: ${item.address}`}</p>
                         {orderNumberOpen === item.order_number ? <></> : <p className="order__item-show-products" onClick={() => { setOrderNumberOpen(item.order_number) }}>Посмотреть состав заказа</p>}
                         {orderNumberOpen === item.order_number ?
@@ -85,7 +85,7 @@ function Orders(props) {
                                         </div>
                                         <div className="order__item-product-info">
                                             <p className="order__item-product-count">{product.count} шт.</p>
-                                            <p className="order__item-product-price">{product.discount && product.discount > 0 ? ((product.price - (product.price / 100 * product.discount)) * product.count).toLocaleString('ru') : (product.count * product.price).toLocaleString('ru')}&nbsp;₽</p>
+                                            <p className="order__item-product-price">{product.discount && product.discount > 0 ? ((product.price - (product.price / 100 * product.discount)) * product.count).toLocaleString('us') : (product.count * product.price).toLocaleString('us')}&nbsp;₽</p>
                                         </div>
                                     </div>
                                 ))}

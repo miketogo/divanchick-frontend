@@ -51,7 +51,7 @@ function App() {
   // const [allProducts, setAllProducts] = React.useState(products);
   // const [allCategories, setAllCategories] = React.useState(categories);
 
-  const [cityValue, setCityValue] = React.useState('');
+  const [cityValue, setCityValue] = React.useState('Тобольск');
   React.useEffect(() => {
     // mainApi.getBarcode(id)
     // mainApi.getCategories()

@@ -103,7 +103,7 @@ function CartPopup(props) {
                         <p className="cart-popup__count-number">{item.count}</p>
                         <img onClick={() => handleAddCounter(item._id)} className="cart-popup__count-more" src={moreIcon} alt="add" />
                       </div>
-                      <p className="cart-popup__price">{item.discount && item.discount > 0 ? ((item.price - (item.price / 100 * item.discount)) * item.count).toLocaleString('ru') : (item.count * item.price).toLocaleString('ru')}&nbsp;₽</p>
+                      <p className="cart-popup__price">{item.discount && item.discount > 0 ? ((item.price - (item.price / 100 * item.discount)) * item.count).toLocaleString('us') : (item.count * item.price).toLocaleString('us')}&nbsp;₽</p>
                     </div>
                     <div className="cart-popup__item-row cart-popup__item-row_second">
                       {item.amount > 0 ?
@@ -183,7 +183,7 @@ function CartPopup(props) {
                       <p className="cart-popup__count-number">{item.count}</p>
                       <img onClick={() => handleAddCounter(item._id)} className="cart-popup__count-more" src={moreIcon} alt="add" />
                     </div>
-                    <p className="cart-popup__price">{item.discount && item.discount > 0 ? ((item.price - (item.price / 100 * item.discount)) * item.count).toLocaleString('ru') : (item.count * item.price).toLocaleString('ru')}&nbsp;₽</p>
+                    <p className="cart-popup__price">{item.discount && item.discount > 0 ? ((item.price - (item.price / 100 * item.discount)) * item.count).toLocaleString('us') : (item.count * item.price).toLocaleString('us')}&nbsp;₽</p>
                   </div>
 
 
@@ -196,7 +196,7 @@ function CartPopup(props) {
 
         </div>
         <div className="cart-popup__lower-btns">
-          <p className="cart-popup__amount">{props.allCartProductsCount.count} {props.allCartProductsCount.count % 10 === 1 && 'товар'}{(props.allCartProductsCount.count % 10 >= 2 && props.allCartProductsCount.count % 10 <= 4) && 'товара'}{((props.allCartProductsCount.count % 10 >= 5 && props.allCartProductsCount.count % 10 <= 9) || props.allCartProductsCount.count % 10 === 0) && 'товаров'} на {props.allCartProductsCount.totalPrice.toLocaleString('ru')}&nbsp;₽</p>
+          <p className="cart-popup__amount">{props.allCartProductsCount.count} {props.allCartProductsCount.count % 10 === 1 && 'товар'}{(props.allCartProductsCount.count % 10 >= 2 && props.allCartProductsCount.count % 10 <= 4) && 'товара'}{((props.allCartProductsCount.count % 10 >= 5 && props.allCartProductsCount.count % 10 <= 9) || props.allCartProductsCount.count % 10 === 0) && 'товаров'} на {props.allCartProductsCount.totalPrice.toLocaleString('us')}&nbsp;₽</p>
           <Link to="/cart" className="cart-popup__order-btn" onClick={props.handleCartPopupClose}>
             <p className="cart-popup__order-btn-text">Оформить заказ</p>
           </Link>

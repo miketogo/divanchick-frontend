@@ -112,7 +112,7 @@ function DeliveryMethod(props) {
                             props.handleDeliveryMethodSelect(item.name.toLowerCase())
                         }
                     }}>
-                        <p className={`delivery-method__btn-text ${props.deliveryMethod.toLowerCase() === item.name.toLowerCase() ? 'delivery-method__btn-text_active' : ''}`}>{item.name}{item.price && item.price > 0 ? ` - ${item.price.toLocaleString('ru')} ₽` : ''}</p>
+                        <p className={`delivery-method__btn-text ${props.deliveryMethod.toLowerCase() === item.name.toLowerCase() ? 'delivery-method__btn-text_active' : ''}`}>{item.name}{item.price && item.price > 0 ? ` - ${item.price.toLocaleString('us')} ₽` : ''}</p>
                     </div>
                 ))}
             </div>

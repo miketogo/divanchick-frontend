@@ -8,12 +8,12 @@ import reportWebVitals from './reportWebVitals';
 import ScrollToTop from './ScrollToTop';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <BrowserRouter>
+
+  <BrowserRouter>
     <ScrollToTop />
-      <App />
-    </BrowserRouter>
-  </React.StrictMode>,
+    <App />
+  </BrowserRouter>
+  ,
   document.getElementById('root')
 );
 

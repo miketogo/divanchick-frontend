@@ -85,7 +85,7 @@ function Cart(props) {
                                             <p className="cart__count-number">{item.count}</p>
                                             <img onClick={() => handleAddCounter(item._id)} className="cart__count-more" src={moreIcon} alt="add" />
                                         </div>
-                                        <p className="cart__price">{item.discount && item.discount > 0 ? ((item.price - (item.price / 100 * item.discount)) * item.count).toLocaleString('ru') : (item.count * item.price).toLocaleString('ru')}&nbsp;₽</p>
+                                        <p className="cart__price">{item.discount && item.discount > 0 ? ((item.price - (item.price / 100 * item.discount)) * item.count).toLocaleString('us') : (item.count * item.price).toLocaleString('us')}&nbsp;₽</p>
                                     </div>
                                     <div className="cart__item-row cart__item-row_second">
                                         {item.amount > 0 ?
@@ -168,7 +168,7 @@ function Cart(props) {
                                         <p className="cart__count-number">{item.count}</p>
                                         <img onClick={() => handleAddCounter(item._id)} className="cart__count-more" src={moreIcon} alt="add" />
                                     </div>
-                                    <p className="cart__price">{item.discount && item.discount > 0 ? ((item.price - (item.price / 100 * item.discount)) * item.count).toLocaleString('ru') : (item.count * item.price).toLocaleString('ru')}&nbsp;₽</p>
+                                    <p className="cart__price">{item.discount && item.discount > 0 ? ((item.price - (item.price / 100 * item.discount)) * item.count).toLocaleString('us') : (item.count * item.price).toLocaleString('us')}&nbsp;₽</p>
                                 </div>
 
 

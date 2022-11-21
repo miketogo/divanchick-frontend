@@ -72,7 +72,7 @@ function CartPage(props) {
             <div className="cart-page__summary-info">
               <p className="cart-page__summary-title">В корзине</p>
               <p className="cart-page__summary-count">{props.allCartProductsCount.count} {props.allCartProductsCount.count % 10 === 1 && 'товар'}{(props.allCartProductsCount.count % 10 >= 2 && props.allCartProductsCount.count % 10 <= 4) && 'товара'}{((props.allCartProductsCount.count % 10 >= 5 && props.allCartProductsCount.count % 10 <= 9) || props.allCartProductsCount.count % 10 === 0) && 'товаров'}</p>
-              <p className="cart-page__summary-total">{props.allCartProductsCount.totalPrice.toLocaleString('ru')}&nbsp;₽</p>
+              <p className="cart-page__summary-total">{props.allCartProductsCount.totalPrice.toLocaleString('us')}&nbsp;₽</p>
               <p className="cart-page__summary-delivery">{deliveryMethod[0].toUpperCase() + deliveryMethod.slice(1)}: <span className="cart-page__summary-delivery-method"></span></p>
               <p className="cart-page__summary-delivery-adress">{deliveryMethod === 'Самовывоз'.toLowerCase() ? 'Магазин Диванчик по адресу: 7-й микрорайон, 2А, Тобольск, Тюменская область' : fullAdressValue ? fullAdressValue : 'Укажите адрес'}</p>
               <p className="cart-page__summary-date">Дата: <span className="cart-page__summary-date-period">{deliveryMethod === 'Самовывоз'.toLowerCase() ? 'Завтра после 17:00' : '2 Октября - 16 Ноября'}</span></p>

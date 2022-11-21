@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Switch, useParams, useRouteMatch, useHistory } from 'react-router';
 import { Route } from 'react-router-dom';
 import mainApi from '../../assets/api/MainApi';
+import { getCityId } from '../../assets/utils/constants';
 import FiltersPopup from '../FiltersPopup/FiltersPopup';
 import Preloader from '../Preloader/Preloader';
 import ProductCard from '../ProductCard/ProductCard';
@@ -9,6 +10,8 @@ import ProductPage from '../ProductPage/ProductPage';
 import Crumbs from '../Сrumbs/Сrumbs'
 import Filters from './Filters/Filters';
 import './SubCategory.css';
+
+const product_limit = 12
 
 
 
@@ -24,9 +27,11 @@ function SubCategory(props) {
     setFilterPopupOpen(false)
   }
 
+
   const [subcategory, setSubcategory] = useState(undefined)
   const [items, setItems] = useState(undefined)
   const [itemsCount, setItemsCount] = useState(undefined)
+
 
   const [isItemPreloaderVisible, setItemPreloaderVisible] = useState(true)
   useEffect(() => {
@@ -35,11 +40,12 @@ function SubCategory(props) {
       console.log(sub_category, props.category.translit_name)
       let data = {}
       data.category_translit_name = props.category.translit_name
+      data.city_id = localStorage.getItem('city') ? getCityId(localStorage.getItem('city')) : '63777e74c505252a8fc59c0b'
       data.sub_category_translit_name = sub_category
-      data.price_sort = false
+      data.price_sort = true
       data.filters = null
       data.last_id = null
-      data.limit = 25
+      data.limit = product_limit
       console.log(data)
       mainApi.getItemsBySubAndCategory({ data: JSON.stringify(data) })
         .then((res) => {
@@ -76,10 +82,11 @@ function SubCategory(props) {
     let data = {}
     data.category_translit_name = props.category.translit_name
     data.sub_category_translit_name = sub_category
-    data.price_sort = false
+    data.price_sort = priceSortByDecrease
     data.filters = null
     data.last_id = null
-    data.limit = 25
+    data.city_id = localStorage.getItem('city') ? getCityId(localStorage.getItem('city')) : '63777e74c505252a8fc59c0b'
+    data.limit = product_limit
     console.log(data)
     mainApi.getItemsBySubAndCategory({ data: JSON.stringify(data) })
       .then((res) => {
@@ -95,31 +102,52 @@ function SubCategory(props) {
       })
   }
 
-
-  function handleUpdateByFilters(filters) {
+  const [filters, setFilters] = useState([])
+  function handleUpdateByFilters({ filters, inStock }) {
     setItemPreloaderVisible(true)
     const defMaxValue = '999999999'
     const defMinValue = '0'
     let array = Object.values(filters)
     array = array.map((item) => {
+
       if (item.type === 'min_max') {
         return {
           translit_name: item.translit_name,
           type: item.type,
           translit_value: item.max ? item.min ? `${item.min}-${item.max}` : `${defMinValue}-${item.max}` : item.min ? `${item.min}-${defMaxValue}` : `${defMinValue}-${defMaxValue}`
         }
-      } else return
+      }
+      else if (item.type === 'array_choose' && item.criterions.length > 0) {
+        return {
+          translit_name: item.translit_name,
+          type: item.type,
+          translit_value: item.criterions.map((item) => item.translit_value).join(',')
+        }
+      }
+      else return null
 
     })
+    array = array.filter((item) => item !== null)
+    array = [...array, {
+      translit_name: 'ROOT.amount',
+      type: 'slider_bool',
+      translit_value: inStock ? '1' : '0'
+    }]
     console.log(array)
-
+    setFilters(array)
     let data = {}
     data.category_translit_name = props.category.translit_name
+    data.city_id = localStorage.getItem('city') ? getCityId(localStorage.getItem('city')) : '63777e74c505252a8fc59c0b'
     data.sub_category_translit_name = sub_category
-    data.price_sort = false
+    data.price_sort = priceSortByDecrease
     data.filters = array
     data.last_id = null
-    data.limit = 25
+    data.limit = product_limit
+
+    setItems(undefined)
+    setPageValue(0)
+    setPrevScrollPosition(0)
+    setScrollPosition(0)
 
     mainApi.getItemsBySubAndCategory({ data: JSON.stringify(data) })
       .then((res) => {
@@ -134,7 +162,114 @@ function SubCategory(props) {
         setItemPreloaderVisible(false)
       })
 
+
   }
+
+
+  function handleSortChange(value) {
+    setPriceSortByDecrease(value)
+    setItemPreloaderVisible(true)
+    let data = {}
+    data.category_translit_name = props.category.translit_name
+    data.sub_category_translit_name = sub_category
+    data.city_id = localStorage.getItem('city') ? getCityId(localStorage.getItem('city')) : '63777e74c505252a8fc59c0b'
+    data.price_sort = priceSortByDecrease
+    data.filters = filters.length > 0 ? filters : null
+    data.last_id = null
+    data.limit = product_limit
+
+    setItems(undefined)
+    setPageValue(0)
+    setPrevScrollPosition(0)
+    setScrollPosition(0)
+
+    mainApi.getItemsBySubAndCategory({ data: JSON.stringify(data) })
+      .then((res) => {
+        console.log(res)
+        setItemsCount(res.count)
+        setItems(res.data)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+      .finally(() => {
+        setItemPreloaderVisible(false)
+      })
+  }
+
+
+  const listRef = useRef()
+  const [pageValue, setPageValue] = useState(0);
+  const [prevScrollPosition, setPrevScrollPosition] = useState(-1);
+  const [scrollPosition, setScrollPosition] = useState(0);
+
+  const [scrollTraking, setScrollTraking] = useState(true);
+
+
+
+  const handleScroll = () => {
+    const position = window.pageYOffset;
+
+    setScrollPosition(position);
+  };
+
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    // console.log(scrollPosition, prevScrollPosition)
+    if (listRef.current && scrollTraking && scrollPosition > prevScrollPosition && items && items.length > 0) {
+      // console.log(listRef.current)
+      setPrevScrollPosition(scrollPosition)
+      const { scrollHeight } = listRef.current;
+      if (scrollHeight < scrollPosition + 1000) {
+        setScrollTraking(false)
+        setPageValue(pageValue + 1)
+        setTimeout(() => {
+          setScrollTraking(true)
+        }, 500);
+      }
+    }
+  }, [scrollPosition, scrollTraking, prevScrollPosition, pageValue, items]);
+
+  useEffect(() => {
+
+    if (pageValue > 0 && items && items.length === product_limit * pageValue) {
+      let last_id = items[items.length - 1]._id
+
+      console.log(last_id)
+      console.log('ss')
+
+      let data = {}
+      data.category_translit_name = props.category.translit_name
+      data.city_id = localStorage.getItem('city') ? getCityId(localStorage.getItem('city')) : '63777e74c505252a8fc59c0b'
+      data.sub_category_translit_name = sub_category
+      data.price_sort = priceSortByDecrease
+      data.filters = filters.length > 0 ? filters : null
+      data.last_id = last_id
+      data.limit = product_limit
+      console.log(data)
+      mainApi.getItemsBySubAndCategory({ data: JSON.stringify(data) })
+        .then((res) => {
+          console.log(res)
+          setItems(prevList => prevList.concat(res.data))
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+        .finally(() => {
+          // setItemPreloaderVisible(false)
+        })
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pageValue, items])
 
   return (
     <div className="sub-category" ref={divRef}>
@@ -181,7 +316,7 @@ function SubCategory(props) {
                       : <></>} */}
 
                   </div>
-                  <div className="sub-category__price-btn" onClick={() => { setPriceSortByDecrease(!priceSortByDecrease) }}>
+                  <div className="sub-category__price-btn" onClick={() => { handleSortChange(!priceSortByDecrease) }}>
                     <svg className={`sub-category__price-btn-icon ${priceSortByDecrease ? 'sub-category__price-btn-icon_decrease' : ''}`} width="14" height="20" viewBox="0 0 14 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path fillRule="evenodd" clipRule="evenodd" d="M14 18.1232C14 18.6226 13.594 19.0273 13.0995 19.0273L1.33791 19.0273C0.840677 19.0273 0.437604 18.6261 0.437605 18.1232C0.437605 17.6239 0.843428 17.2191 1.33791 17.2191L13.0995 17.2191C13.5969 17.2191 14 17.6204 14 18.1232ZM14 12.6983C14 13.1977 13.5954 13.6024 13.0971 13.6024L3.14895 13.6024C2.65036 13.6024 2.24605 13.2012 2.24605 12.6983C2.24605 12.1989 2.65063 11.7942 3.14895 11.7942L13.0971 11.7942C13.5957 11.7942 14 12.1955 14 12.6983ZM14 7.27339C14 7.77275 13.5978 8.17749 13.0999 8.17749L4.95432 8.17749C4.45724 8.17749 4.05417 7.77624 4.05417 7.27338C4.05417 6.77402 4.45635 6.36928 4.95432 6.36928L13.0999 6.36928C13.5969 6.36928 14 6.77053 14 7.27339ZM14 1.84846C14 2.34782 13.5955 2.75256 13.0985 2.75256L7.6681 2.75256C7.1701 2.75256 6.76656 2.35131 6.76656 1.84846C6.76656 1.34909 7.17103 0.944355 7.6681 0.944355L13.0985 0.944355C13.5963 0.944355 14 1.34561 14 1.84846Z" fill="#686868" />
                     </svg>
@@ -192,7 +327,7 @@ function SubCategory(props) {
                 {isItemPreloaderVisible ?
                   <Preloader />
                   :
-                  <div className="sub-category__products">
+                  <div className="sub-category__products" ref={listRef}>
                     {items && items.length > 0 ? items.map((product, i) => (
                       <ProductCard handleLikeBtn={props.handleLikeBtn} favouritesProducts={props.favouritesProducts} setCartPopupOpen={props.setCartPopupOpen} cart={props.cart} handleToCartBtn={props.handleToCartBtn} link={`${url}/${product._id}`} product={product} key={`ProductCard${i}`} />
                     )) : <></>}

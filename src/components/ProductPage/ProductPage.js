@@ -7,7 +7,7 @@ import Crumbs from '../Сrumbs/Сrumbs'
 
 import './ProductPage.css';
 import mainApi from '../../assets/api/MainApi';
-import { MAIN_URL } from '../../assets/utils/constants';
+import { getAmountByCity, MAIN_URL } from '../../assets/utils/constants';
 
 function parseFeatureKey(item) {
   switch (item.key) {
@@ -75,7 +75,10 @@ function ProductPage(props) {
       })
         .then((res) => {
           console.log(res)
-          setSelectedProduct(res)
+          setSelectedProduct({
+            ...res,
+            amount: getAmountByCity(res.seller_cities)
+          })
         })
         .catch((err) => {
           console.log(err)
@@ -165,6 +168,8 @@ function ProductPage(props) {
   React.useEffect(() => {
     setSelectedPhotoId(1)
   }, [color])
+
+
 
   return (
     <div className="product-page">
@@ -276,10 +281,10 @@ function ProductPage(props) {
                 <a href={url + '#specifications'} className="product-page__specifications-link">Все характеристики</a>
               </div>
               <div className="product-page__second-info-row">
-                <p className="product-page__price">{selectedByColorProduct ? selectedByColorProduct && selectedByColorProduct.price ? selectedByColorProduct.discount && selectedByColorProduct.discount > 0 ? (selectedByColorProduct.price - (selectedByColorProduct.price / 100 * selectedByColorProduct.discount)).toLocaleString('ru') : selectedByColorProduct.price.toLocaleString('ru') : '' : selectedProduct && selectedProduct.price ? selectedProduct.discount && selectedProduct.discount > 0 ? (selectedProduct.price - (selectedProduct.price / 100 * selectedProduct.discount)).toLocaleString('ru') : selectedProduct.price.toLocaleString('ru') : ''}&nbsp;₽</p>
-                {selectedProduct && selectedProduct.price && selectedProduct.discount > 0 ?
+                <p className="product-page__price">{selectedByColorProduct ? selectedByColorProduct && selectedByColorProduct.price ? selectedByColorProduct.discount && selectedByColorProduct.discount > 0 ? (selectedByColorProduct.price - (selectedByColorProduct.price / 100 * selectedByColorProduct.discount)).toLocaleString('us') : selectedByColorProduct.price.toLocaleString('us') : '' : selectedProduct && Number(selectedProduct.firstc_data.price) ? selectedProduct.discount && selectedProduct.discount > 0 ? (Number(selectedProduct.firstc_data.price) - (Number(selectedProduct.firstc_data.price) / 100 * selectedProduct.discount)).toLocaleString('us') : Number(selectedProduct.firstc_data.price).toLocaleString('us') : '0'}&nbsp;₽</p>
+                {selectedProduct && Number(selectedProduct.firstc_data.price) && selectedProduct.discount > 0 ?
                   <div className="product-page__discount-container">
-                    <p className="product-page__discount">-{selectedProduct.discount}% <span className="product-page__discount-last-price">{selectedProduct.price.toLocaleString('ru')}&nbsp;₽</span></p>
+                    <p className="product-page__discount">-{selectedProduct.discount}% <span className="product-page__discount-last-price">{Number(selectedProduct.firstc_data.price).toLocaleString('us')}&nbsp;₽</span></p>
                   </div>
                   : <></>}
                 <div className={`product-page__buy-btn ${props.cart && props.cart.filter((item) => {
@@ -330,14 +335,14 @@ function ProductPage(props) {
 
             <div className="product-page__specification-items">
 
-              {selectedProduct && selectedProduct.firstc_data.manufacturer_name ?
+              {selectedProduct && selectedProduct.firstc_data.brand_name ?
                 <div className="product-page__specification-item">
                   <p className="product-page__specification-name">Бренд</p>
                   <div className="product-page__specification-line"></div>
-                  <p className={`product-page__specification-value ${selectedProduct.firstc_data.manufacturer_name.length <= 36 ? 'product-page__specification-value_nowrap' : ''}`}>{selectedProduct.firstc_data.manufacturer_name}</p>
+                  <p className={`product-page__specification-value ${selectedProduct.firstc_data.brand_name.length <= 36 ? 'product-page__specification-value_nowrap' : ''}`}>{selectedProduct.firstc_data.brand_name}</p>
                 </div>
                 : <></>}
-              {/*               
+              {/*
               {selectedProduct && selectedProduct.specifications && selectedProduct.specifications.width && selectedProduct.specifications.width !== 'Не указано' ?
                 <div className="product-page__specification-item">
                   <p className="product-page__specification-name">Ширина</p>
