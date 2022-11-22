@@ -27,6 +27,12 @@ function SubCategory(props) {
     setFilterPopupOpen(false)
   }
 
+  const listRef = useRef()
+  const [pageValue, setPageValue] = useState(0);
+  const [prevScrollPosition, setPrevScrollPosition] = useState(-1);
+  const [scrollPosition, setScrollPosition] = useState(0);
+
+  const [scrollTraking, setScrollTraking] = useState(true);
 
   const [subcategory, setSubcategory] = useState(undefined)
   const [items, setItems] = useState(undefined)
@@ -48,6 +54,12 @@ function SubCategory(props) {
       data.last_price = null
       data.limit = product_limit
       console.log(data)
+
+      setItems(undefined)
+      setPageValue(0)
+      setPrevScrollPosition(0)
+      setScrollPosition(0)
+
       mainApi.getItemsBySubAndCategory({ data: JSON.stringify(data) })
         .then((res) => {
           console.log(res)
@@ -90,6 +102,12 @@ function SubCategory(props) {
     data.city_id = localStorage.getItem('city') ? getCityId(localStorage.getItem('city')) : '63777e74c505252a8fc59c0b'
     data.limit = product_limit
     console.log(data)
+
+    setItems(undefined)
+    setPageValue(0)
+    setPrevScrollPosition(0)
+    setScrollPosition(0)
+
     mainApi.getItemsBySubAndCategory({ data: JSON.stringify(data) })
       .then((res) => {
         console.log(res)
@@ -202,12 +220,7 @@ function SubCategory(props) {
   }
 
 
-  const listRef = useRef()
-  const [pageValue, setPageValue] = useState(0);
-  const [prevScrollPosition, setPrevScrollPosition] = useState(-1);
-  const [scrollPosition, setScrollPosition] = useState(0);
 
-  const [scrollTraking, setScrollTraking] = useState(true);
 
 
 
