@@ -45,6 +45,7 @@ function SubCategory(props) {
       data.price_sort = true
       data.filters = null
       data.last_id = null
+      data.last_price = null
       data.limit = product_limit
       console.log(data)
       mainApi.getItemsBySubAndCategory({ data: JSON.stringify(data) })
@@ -85,6 +86,7 @@ function SubCategory(props) {
     data.price_sort = priceSortByDecrease
     data.filters = null
     data.last_id = null
+    data.last_price = null
     data.city_id = localStorage.getItem('city') ? getCityId(localStorage.getItem('city')) : '63777e74c505252a8fc59c0b'
     data.limit = product_limit
     console.log(data)
@@ -142,6 +144,7 @@ function SubCategory(props) {
     data.price_sort = priceSortByDecrease
     data.filters = array
     data.last_id = null
+    data.last_price = null
     data.limit = product_limit
 
     setItems(undefined)
@@ -176,6 +179,7 @@ function SubCategory(props) {
     data.price_sort = priceSortByDecrease
     data.filters = filters.length > 0 ? filters : null
     data.last_id = null
+    data.last_price = null
     data.limit = product_limit
 
     setItems(undefined)
@@ -242,6 +246,7 @@ function SubCategory(props) {
 
     if (pageValue > 0 && items && items.length === product_limit * pageValue) {
       let last_id = items[items.length - 1]._id
+      let last_price = items[items.length - 1].firstc_data.price
 
       console.log(last_id)
       console.log('ss')
@@ -253,6 +258,7 @@ function SubCategory(props) {
       data.price_sort = priceSortByDecrease
       data.filters = filters.length > 0 ? filters : null
       data.last_id = last_id
+      data.last_price = last_price
       data.limit = product_limit
       console.log(data)
       mainApi.getItemsBySubAndCategory({ data: JSON.stringify(data) })
