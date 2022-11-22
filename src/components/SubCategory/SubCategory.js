@@ -75,7 +75,7 @@ function SubCategory(props) {
     }
   }, [sub_category, props.category])
 
-  const [priceSortByDecrease, setPriceSortByDecrease] = useState(false);
+  const [priceSortByDecrease, setPriceSortByDecrease] = useState(true);
 
   function handleResetFilters() {
     setItemPreloaderVisible(true)
@@ -176,7 +176,7 @@ function SubCategory(props) {
     data.category_translit_name = props.category.translit_name
     data.sub_category_translit_name = sub_category
     data.city_id = localStorage.getItem('city') ? getCityId(localStorage.getItem('city')) : '63777e74c505252a8fc59c0b'
-    data.price_sort = priceSortByDecrease
+    data.price_sort = value
     data.filters = filters.length > 0 ? filters : null
     data.last_id = null
     data.last_price = null
@@ -323,10 +323,10 @@ function SubCategory(props) {
 
                   </div>
                   <div className="sub-category__price-btn" onClick={() => { handleSortChange(!priceSortByDecrease) }}>
-                    <svg className={`sub-category__price-btn-icon ${priceSortByDecrease ? 'sub-category__price-btn-icon_decrease' : ''}`} width="14" height="20" viewBox="0 0 14 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg className={`sub-category__price-btn-icon ${!priceSortByDecrease ? 'sub-category__price-btn-icon_decrease' : ''}`} width="14" height="20" viewBox="0 0 14 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path fillRule="evenodd" clipRule="evenodd" d="M14 18.1232C14 18.6226 13.594 19.0273 13.0995 19.0273L1.33791 19.0273C0.840677 19.0273 0.437604 18.6261 0.437605 18.1232C0.437605 17.6239 0.843428 17.2191 1.33791 17.2191L13.0995 17.2191C13.5969 17.2191 14 17.6204 14 18.1232ZM14 12.6983C14 13.1977 13.5954 13.6024 13.0971 13.6024L3.14895 13.6024C2.65036 13.6024 2.24605 13.2012 2.24605 12.6983C2.24605 12.1989 2.65063 11.7942 3.14895 11.7942L13.0971 11.7942C13.5957 11.7942 14 12.1955 14 12.6983ZM14 7.27339C14 7.77275 13.5978 8.17749 13.0999 8.17749L4.95432 8.17749C4.45724 8.17749 4.05417 7.77624 4.05417 7.27338C4.05417 6.77402 4.45635 6.36928 4.95432 6.36928L13.0999 6.36928C13.5969 6.36928 14 6.77053 14 7.27339ZM14 1.84846C14 2.34782 13.5955 2.75256 13.0985 2.75256L7.6681 2.75256C7.1701 2.75256 6.76656 2.35131 6.76656 1.84846C6.76656 1.34909 7.17103 0.944355 7.6681 0.944355L13.0985 0.944355C13.5963 0.944355 14 1.34561 14 1.84846Z" fill="#686868" />
                     </svg>
-                    <p className="sub-category__price-btn-text">{priceSortByDecrease ? 'Убыванию цены' : 'Увеличению цены'}</p>
+                    <p className="sub-category__price-btn-text">{!priceSortByDecrease ? 'Убыванию цены' : 'Увеличению цены'}</p>
                   </div>
                 </div>
                 {isItemPreloaderVisible ? <></> : items && items.length > 0 ? <></> : <p className='sub-category__no-products-text'>Товары по указанным фильтрам не найдены</p>}
