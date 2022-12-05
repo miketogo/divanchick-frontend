@@ -49,7 +49,13 @@ function SubCategory(props) {
       data.city_id = localStorage.getItem('city') ? getCityId(localStorage.getItem('city')) : '63777e74c505252a8fc59c0b'
       data.sub_category_translit_name = sub_category
       data.price_sort = true
-      data.filters = null
+      data.filters = [
+        {
+          translit_name: 'ROOT.amount',
+          type: 'slider_bool',
+          translit_value: '1'
+        }
+      ]
       data.last_id = null
       data.last_price = null
       data.limit = product_limit
@@ -96,7 +102,13 @@ function SubCategory(props) {
     data.category_translit_name = props.category.translit_name
     data.sub_category_translit_name = sub_category
     data.price_sort = priceSortByDecrease
-    data.filters = null
+    data.filters = [
+      {
+        translit_name: 'ROOT.amount',
+        type: 'slider_bool',
+        translit_value: '1'
+      }
+    ]
     data.last_id = null
     data.last_price = null
     data.city_id = localStorage.getItem('city') ? getCityId(localStorage.getItem('city')) : '63777e74c505252a8fc59c0b'
@@ -195,7 +207,13 @@ function SubCategory(props) {
     data.sub_category_translit_name = sub_category
     data.city_id = localStorage.getItem('city') ? getCityId(localStorage.getItem('city')) : '63777e74c505252a8fc59c0b'
     data.price_sort = value
-    data.filters = filters.length > 0 ? filters : null
+    data.filters = filters.length > 0 ? filters : [
+      {
+        translit_name: 'ROOT.amount',
+        type: 'slider_bool',
+        translit_value: '1'
+      }
+    ]
     data.last_id = null
     data.last_price = null
     data.limit = product_limit
@@ -259,7 +277,15 @@ function SubCategory(props) {
 
     if (pageValue > 0 && items && items.length === product_limit * pageValue) {
       let last_id = items[items.length - 1]._id
-      let last_price = items[items.length - 1].firstc_data.price
+
+      const name = localStorage.getItem('city') ? localStorage.getItem('city') : 'Тобольск'
+      let cityMap = {
+        "Новый Уренгой": "63777e52c505252a8fc59c09",
+        "Надым": "63777e62c505252a8fc59c0a",
+        "Тобольск": "63777e74c505252a8fc59c0b",
+      }
+      let id = cityMap[name] ? cityMap[name] : "63777e74c505252a8fc59c0b"
+      let last_price = items[items.length - 1].firstc_data.price[id]
 
       console.log(last_id)
       console.log('ss')
@@ -269,7 +295,13 @@ function SubCategory(props) {
       data.city_id = localStorage.getItem('city') ? getCityId(localStorage.getItem('city')) : '63777e74c505252a8fc59c0b'
       data.sub_category_translit_name = sub_category
       data.price_sort = priceSortByDecrease
-      data.filters = filters.length > 0 ? filters : null
+      data.filters = filters.length > 0 ? filters : [
+        {
+          translit_name: 'ROOT.amount',
+          type: 'slider_bool',
+          translit_value: '1'
+        }
+      ]
       data.last_id = last_id
       data.last_price = last_price
       data.limit = product_limit

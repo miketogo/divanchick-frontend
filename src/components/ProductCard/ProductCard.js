@@ -23,6 +23,18 @@ function ProductCard(props) {
 
   const amount = getAmountByCity(props.product.seller_cities)
 
+  const price = () => {
+
+    const name = localStorage.getItem('city') ? localStorage.getItem('city') : 'Тобольск'
+    let cityMap = {
+      "Новый Уренгой": "63777e52c505252a8fc59c09",
+      "Надым": "63777e62c505252a8fc59c0a",
+      "Тобольск": "63777e74c505252a8fc59c0b",
+    }
+    let id = cityMap[name] ? cityMap[name] : "63777e74c505252a8fc59c0b"
+    let value = props.product.firstc_data.price[id]
+    return Number(value).toLocaleString('us')
+  }
 
   return (
 
@@ -45,14 +57,14 @@ function ProductCard(props) {
       <Link to={props.link} key={props.link} className='product-card__link'>
         <img className='product-card__img' src={props.product.photos[0] !== 'Не указано' ? `${MAIN_URL}/get-file/${props.product.photos[0]}` : ''} alt={props.product.name} key={props.product._id} />
         <div className='product-card__price'>
-          <p className='product-card__main-price'>{props.product.discount && props.product.discount > 0 ? (props.product.price - (props.product.price / 100 * props.product.discount)).toLocaleString('us') : Number(props.product.firstc_data.price).toLocaleString('us')}&nbsp;₽</p>
-          {props.product.discount && props.product.discount > 0 ?
+          <p className='product-card__main-price'>{price()}&nbsp;₽</p>
+          {/* {props.product.discount && props.product.discount > 0 ?
             <>
               <div className='product-card__discount'>
                 <p className='product-card__discount-percent'>-{props.product.discount}%</p>
               </div>
               <p className='product-card__last-price'>{props.product.firstc_data.price.toLocaleString('us')}р</p>
-            </> : <></>}
+            </> : <></>} */}
         </div>
         <p className='product-card__name'>{props.product.name}</p>
         <p className={`product-card__amount ${amount > 0 ? '' : 'product-card__amount_zero'}`}>{amount > 0 ? `Доступно ${amount} шт.` : `Нет в наличии`}</p>

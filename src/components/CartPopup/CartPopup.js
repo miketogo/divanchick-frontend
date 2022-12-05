@@ -66,6 +66,19 @@ function CartPopup(props) {
 
   }
 
+  const getPrice = (item) => {
+
+    const name = localStorage.getItem('city') ? localStorage.getItem('city') : 'Тобольск'
+    let cityMap = {
+      "Новый Уренгой": "63777e52c505252a8fc59c09",
+      "Надым": "63777e62c505252a8fc59c0a",
+      "Тобольск": "63777e74c505252a8fc59c0b",
+    }
+    let id = cityMap[name] ? cityMap[name] : "63777e74c505252a8fc59c0b"
+    let value = item.firstc_data.price[id]
+    return Number(value)
+  }
+
   return (
     <div className={`cart-popup ${props.isCartPopupOpen ? 'cart-popup_active' : ''}`}>
       <div className={`cart-popup__container ${props.isCartPopupOpen ? 'cart-popup__container_active' : ''}`}>
@@ -103,7 +116,7 @@ function CartPopup(props) {
                         <p className="cart-popup__count-number">{item.count}</p>
                         <img onClick={() => handleAddCounter(item._id)} className="cart-popup__count-more" src={moreIcon} alt="add" />
                       </div>
-                      <p className="cart-popup__price">{item.discount && item.discount > 0 ? ((item.price - (item.price / 100 * item.discount)) * item.count).toLocaleString('us') : (item.count * item.price).toLocaleString('us')}&nbsp;₽</p>
+                      <p className="cart-popup__price">{(item.count * getPrice(item)).toLocaleString('us')}&nbsp;₽</p>
                     </div>
                     <div className="cart-popup__item-row cart-popup__item-row_second">
                       {item.amount > 0 ?
@@ -183,7 +196,7 @@ function CartPopup(props) {
                       <p className="cart-popup__count-number">{item.count}</p>
                       <img onClick={() => handleAddCounter(item._id)} className="cart-popup__count-more" src={moreIcon} alt="add" />
                     </div>
-                    <p className="cart-popup__price">{item.discount && item.discount > 0 ? ((item.price - (item.price / 100 * item.discount)) * item.count).toLocaleString('us') : (item.count * item.price).toLocaleString('us')}&nbsp;₽</p>
+                    <p className="cart-popup__price">{(item.count * getPrice(item)).toLocaleString('us')}&nbsp;₽</p>
                   </div>
 
 

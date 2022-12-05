@@ -7,7 +7,7 @@ import './Filters.css';
 function Filters({ handleUpdateByFilters, filters, divRef, handleResetFilters }) {
   const [allBrands, setAllBrands] = useState([])
   const [filtersValue, setFiltersValue] = useState({
-    inStock: false,
+    inStock: true,
     price: {
       min: '',
       max: '',

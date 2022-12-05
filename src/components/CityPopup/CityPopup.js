@@ -16,6 +16,7 @@ function CityPopup(props) {
     localStorage.setItem('city', city.name);
     console.log(city.name)
     props.handleCityPopupClose()
+    window.location.reload()
   }
   function handleClose() {
     props.handleCityPopupClose()

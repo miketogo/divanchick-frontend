@@ -78,7 +78,7 @@ function Category(props) {
                   <Link className="category__sub-category" to={`${url}/${sub_category.translit_name}`} key={`sub_category.name${i}`}>
                     <h3 className="category__sub-category-name">{sub_category.name}</h3>
                     <div className="category__sub-category-gradient"></div>
-                    <img className="category__sub-category-img" src={`${MAIN_URL}/get-file/${sub_category.photo}`} alt={sub_category.photo} key={sub_category._id} />
+                    <img className="category__sub-category-img" src={`${MAIN_URL}/get-file/${sub_category.photo}`} alt={sub_category.name} key={sub_category._id} />
                   </Link>
                 ))
 

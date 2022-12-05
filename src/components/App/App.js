@@ -238,6 +238,20 @@ function App() {
     totalPrice: 0
   });
 
+  const getPrice = (item) => {
+
+    const name = localStorage.getItem('city') ? localStorage.getItem('city') : 'Тобольск'
+    let cityMap = {
+      "Новый Уренгой": "63777e52c505252a8fc59c09",
+      "Надым": "63777e62c505252a8fc59c0a",
+      "Тобольск": "63777e74c505252a8fc59c0b",
+    }
+    let id = cityMap[name] ? cityMap[name] : "63777e74c505252a8fc59c0b"
+    let value = item.firstc_data.price[id]
+    return Number(value)
+  }
+
+
   React.useEffect(() => {
     let counter = {
       count: 0,
@@ -247,9 +261,9 @@ function App() {
       cart.forEach(item => {
         counter.count = counter.count + item.count
         if (item.discount && item.discount > 0) {
-          counter.totalPrice = counter.totalPrice + ((item.price - (item.price / 100 * item.discount)) * item.count)
+          counter.totalPrice = counter.totalPrice + ((getPrice(item) - (item.price / 100 * item.discount)) * item.count)
         } else {
-          counter.totalPrice = counter.totalPrice + (item.price * item.count)
+          counter.totalPrice = counter.totalPrice + (getPrice(item) * item.count)
         }
 
 

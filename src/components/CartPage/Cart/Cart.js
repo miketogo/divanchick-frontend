@@ -56,6 +56,20 @@ function Cart(props) {
 
     }
 
+    const getPrice = (item) => {
+
+      const name = localStorage.getItem('city') ? localStorage.getItem('city') : 'Тобольск'
+      let cityMap = {
+        "Новый Уренгой": "63777e52c505252a8fc59c09",
+        "Надым": "63777e62c505252a8fc59c0a",
+        "Тобольск": "63777e74c505252a8fc59c0b",
+      }
+      let id = cityMap[name] ? cityMap[name] : "63777e74c505252a8fc59c0b"
+      let value = item.firstc_data.price[id]
+      return Number(value)
+    }
+
+
     return (
 
         <section className="cart">
@@ -85,7 +99,7 @@ function Cart(props) {
                                             <p className="cart__count-number">{item.count}</p>
                                             <img onClick={() => handleAddCounter(item._id)} className="cart__count-more" src={moreIcon} alt="add" />
                                         </div>
-                                        <p className="cart__price">{item.discount && item.discount > 0 ? ((item.price - (item.price / 100 * item.discount)) * item.count).toLocaleString('us') : (item.count * item.price).toLocaleString('us')}&nbsp;₽</p>
+                                        <p className="cart__price">{(item.count * getPrice(item)).toLocaleString('us')}&nbsp;₽</p>
                                     </div>
                                     <div className="cart__item-row cart__item-row_second">
                                         {item.amount > 0 ?

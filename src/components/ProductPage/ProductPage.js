@@ -169,6 +169,18 @@ function ProductPage(props) {
     setSelectedPhotoId(1)
   }, [color])
 
+  const price = () => {
+
+    const name = localStorage.getItem('city') ? localStorage.getItem('city') : 'Тобольск'
+    let cityMap = {
+      "Новый Уренгой": "63777e52c505252a8fc59c09",
+      "Надым": "63777e62c505252a8fc59c0a",
+      "Тобольск": "63777e74c505252a8fc59c0b",
+    }
+    let id = cityMap[name] ? cityMap[name] : "63777e74c505252a8fc59c0b"
+    let value = selectedProduct.firstc_data.price[id]
+    return Number(value).toLocaleString('us')
+  }
 
 
   return (
@@ -250,7 +262,7 @@ function ProductPage(props) {
                 </div>
 
 
-                <img className="product-page__big-photo-img" src={selectedProduct.photos && `${MAIN_URL}/get-file/${selectedProduct.photos[selectedPhotoId - 1]}`} alt={`${selectedProduct.name} фото №${selectedPhotoId}`}></img>
+                <img className="product-page__big-photo-img" src={selectedProduct.photos && `${MAIN_URL}/get-file/${selectedProduct.photos[selectedPhotoId - 1]}`} key={`${selectedProduct._id}${selectedPhotoId}`} alt={`${selectedProduct.name} фото №${selectedPhotoId}`}></img>
               </div>
             </div>
             <div className="product-page__info-container">
@@ -281,12 +293,12 @@ function ProductPage(props) {
                 <a href={url + '#specifications'} className="product-page__specifications-link">Все характеристики</a>
               </div>
               <div className="product-page__second-info-row">
-                <p className="product-page__price">{selectedByColorProduct ? selectedByColorProduct && selectedByColorProduct.price ? selectedByColorProduct.discount && selectedByColorProduct.discount > 0 ? (selectedByColorProduct.price - (selectedByColorProduct.price / 100 * selectedByColorProduct.discount)).toLocaleString('us') : selectedByColorProduct.price.toLocaleString('us') : '' : selectedProduct && Number(selectedProduct.firstc_data.price) ? selectedProduct.discount && selectedProduct.discount > 0 ? (Number(selectedProduct.firstc_data.price) - (Number(selectedProduct.firstc_data.price) / 100 * selectedProduct.discount)).toLocaleString('us') : Number(selectedProduct.firstc_data.price).toLocaleString('us') : '0'}&nbsp;₽</p>
-                {selectedProduct && Number(selectedProduct.firstc_data.price) && selectedProduct.discount > 0 ?
+                <p className="product-page__price">{price()}&nbsp;₽</p>
+                {/* {selectedProduct && Number(selectedProduct.firstc_data.price) && selectedProduct.discount > 0 ?
                   <div className="product-page__discount-container">
                     <p className="product-page__discount">-{selectedProduct.discount}% <span className="product-page__discount-last-price">{Number(selectedProduct.firstc_data.price).toLocaleString('us')}&nbsp;₽</span></p>
                   </div>
-                  : <></>}
+                  : <></>} */}
                 <div className={`product-page__buy-btn ${props.cart && props.cart.filter((item) => {
                   if (selectedByColorProduct ? item._id === selectedByColorProduct._id : selectedProduct._id === item._id) return true
                   else return false
