@@ -52,7 +52,7 @@
     margin: 0;
     display: flex;
     width: 100%;
-    border: 2px solid #9B38DC;
+    border: 2px solid var(--contrast-color);
     box-sizing: border-box;
     border-radius: 8px;
     justify-content: space-between;

@@ -153,7 +153,7 @@
     align-items: center;
     justify-content: center;
     padding: 20px 28px;
-   
+
     border-radius: 40px;
     width: fit-content;
 
@@ -162,12 +162,12 @@
 }
 
 .account__btn_submit{
-    background: #9B38DC;
+    background: var(--contrast-color);
     margin: 0 20px 0 0;
 }
 
 .account__btn_exit {
-    border: 2px solid #9B38DC;
+    border: 2px solid var(--contrast-color);
     background: transparent;
 }
 
@@ -184,7 +184,7 @@
     /* identical to box height, or 20px */
 
 
-   
+
     margin: 0;
 }
 
@@ -192,7 +192,7 @@
     color: #FFFFFF;
 }
 .account__btn-text_exit{
-    color: #9B38DC;
+    color: var(--contrast-color);
 }
 
 @media (max-width: 700px) {
@@ -267,7 +267,7 @@
         padding: 12px 0;
 
         width: 100%;
- 
+
 
     }
     .account__btn_submit{

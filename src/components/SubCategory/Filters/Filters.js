@@ -411,7 +411,7 @@ function Filters({ handleUpdateByFilters, filters, divRef, handleResetFilters })
                 <svg className={`filters__arrow ${isBrandsOpen ? 'filters__arrow_active' : ''}`} width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M2.5 6.25L9.29289 13.0429C9.68342 13.4334 10.3166 13.4334 10.7071 13.0429L17.5 6.25" stroke="black" strokeLinecap="round" />
                 </svg>
-                <p className="filters__item-name">Бренд</p>
+                <p className="filters__item-name">Производитель</p>
               </div>
               {openedFilter && openedFilter.translit_name === item.translit_name ?
                 <div className="filters__item-dropdown filters__item-dropdown_brand">
@@ -419,8 +419,8 @@ function Filters({ handleUpdateByFilters, filters, divRef, handleResetFilters })
                     <input placeholder='поиск' className="filters__input filters__input_brands" type="text" value={brandsValue} onChange={handleBrandsChange} maxLength="50"></input>
                     <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <g clipPath="url(#clip0_885_15307)">
-                        <path fillRule="evenodd" clipRule="evenodd" d="M8 15.0412C11.6819 15.0412 14.6667 12.082 14.6667 8.43156C14.6667 4.78116 11.6819 1.82193 8 1.82193C4.3181 1.82193 1.33333 4.78116 1.33333 8.43156C1.33333 12.082 4.3181 15.0412 8 15.0412ZM8 16.3631C12.4183 16.3631 16 12.812 16 8.43156C16 4.05108 12.4183 0.5 8 0.5C3.58172 0.5 0 4.05108 0 8.43156C0 12.812 3.58172 16.3631 8 16.3631Z" fill="#9B38DC" />
-                        <path fillRule="evenodd" clipRule="evenodd" d="M0.195272 15.5653L2.52861 13.2519L3.47141 14.1866L1.13808 16.5L0.195272 15.5653Z" fill="#9B38DC" />
+                        <path fillRule="evenodd" clipRule="evenodd" d="M8 15.0412C11.6819 15.0412 14.6667 12.082 14.6667 8.43156C14.6667 4.78116 11.6819 1.82193 8 1.82193C4.3181 1.82193 1.33333 4.78116 1.33333 8.43156C1.33333 12.082 4.3181 15.0412 8 15.0412ZM8 16.3631C12.4183 16.3631 16 12.812 16 8.43156C16 4.05108 12.4183 0.5 8 0.5C3.58172 0.5 0 4.05108 0 8.43156C0 12.812 3.58172 16.3631 8 16.3631Z" fill="var(--contrast-color)" />
+                        <path fillRule="evenodd" clipRule="evenodd" d="M0.195272 15.5653L2.52861 13.2519L3.47141 14.1866L1.13808 16.5L0.195272 15.5653Z" fill="var(--contrast-color)" />
                       </g>
                       <defs>
                         <clipPath id="clip0_885_15307">
@@ -443,7 +443,7 @@ function Filters({ handleUpdateByFilters, filters, divRef, handleResetFilters })
                           <div key={`filters__dropdown-hint${i}`} className="filters__dropdown-hint" onClick={() => handleBrandSelect(criteriy)}>
                             <div className={`filters__dropdown-hint-checkbox ${filtersValues && filtersValues[item.translit_name] ? filtersValues[item.translit_name].criterions.indexOf(criteriy) !== -1 ? 'filters__dropdown-hint-checkbox_active' : '' : ''}`}>
                               <svg className={`filters__dropdown-hint-checkbox-tick ${filtersValues && filtersValues[item.translit_name] ? filtersValues[item.translit_name].criterions.indexOf(criteriy) !== -1 ? 'filters__dropdown-hint-checkbox-tick_active' : '' : ''}`} width="11" height="9" viewBox="0 0 11 9" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M3.66447 7.01968L4.0314 7.4161L4.39834 7.01968L9.74191 1.2468L9.83514 1.32639L4.0314 7.59641L1.27619 4.61983L1.36942 4.54024L3.66447 7.01968Z" stroke="#9B38DC" />
+                                <path d="M3.66447 7.01968L4.0314 7.4161L4.39834 7.01968L9.74191 1.2468L9.83514 1.32639L4.0314 7.59641L1.27619 4.61983L1.36942 4.54024L3.66447 7.01968Z" stroke="var(--contrast-color)" />
                               </svg>
                             </div>
                             <p className="filters__dropdown-hint-text">{criteriy.name}</p>
@@ -477,8 +477,8 @@ function Filters({ handleUpdateByFilters, filters, divRef, handleResetFilters })
                             <input placeholder='поиск' className="filters__input filters__input_brands" type="text" value={brandsValue} onChange={handleBrandsChange} maxLength="50"></input>
                             <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g clipPath="url(#clip0_885_15307)">
-                                    <path fillRule="evenodd" clipRule="evenodd" d="M8 15.0412C11.6819 15.0412 14.6667 12.082 14.6667 8.43156C14.6667 4.78116 11.6819 1.82193 8 1.82193C4.3181 1.82193 1.33333 4.78116 1.33333 8.43156C1.33333 12.082 4.3181 15.0412 8 15.0412ZM8 16.3631C12.4183 16.3631 16 12.812 16 8.43156C16 4.05108 12.4183 0.5 8 0.5C3.58172 0.5 0 4.05108 0 8.43156C0 12.812 3.58172 16.3631 8 16.3631Z" fill="#9B38DC" />
-                                    <path fillRule="evenodd" clipRule="evenodd" d="M0.195272 15.5653L2.52861 13.2519L3.47141 14.1866L1.13808 16.5L0.195272 15.5653Z" fill="#9B38DC" />
+                                    <path fillRule="evenodd" clipRule="evenodd" d="M8 15.0412C11.6819 15.0412 14.6667 12.082 14.6667 8.43156C14.6667 4.78116 11.6819 1.82193 8 1.82193C4.3181 1.82193 1.33333 4.78116 1.33333 8.43156C1.33333 12.082 4.3181 15.0412 8 15.0412ZM8 16.3631C12.4183 16.3631 16 12.812 16 8.43156C16 4.05108 12.4183 0.5 8 0.5C3.58172 0.5 0 4.05108 0 8.43156C0 12.812 3.58172 16.3631 8 16.3631Z" fill="var(--contrast-color)" />
+                                    <path fillRule="evenodd" clipRule="evenodd" d="M0.195272 15.5653L2.52861 13.2519L3.47141 14.1866L1.13808 16.5L0.195272 15.5653Z" fill="var(--contrast-color)" />
                                 </g>
                                 <defs>
                                     <clipPath id="clip0_885_15307">
@@ -501,7 +501,7 @@ function Filters({ handleUpdateByFilters, filters, divRef, handleResetFilters })
                                         <div key={`filters__dropdown-hint${i}`} className="filters__dropdown-hint" onClick={() => handleBrandSelect(item)}>
                                             <div className={`filters__dropdown-hint-checkbox ${filtersValue.brands.indexOf(item) !== -1 ? 'filters__dropdown-hint-checkbox_active' : ''}`}>
                                                 <svg className={`filters__dropdown-hint-checkbox-tick ${filtersValue.brands.indexOf(item) !== -1 ? 'filters__dropdown-hint-checkbox-tick_active' : ''}`} width="11" height="9" viewBox="0 0 11 9" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M3.66447 7.01968L4.0314 7.4161L4.39834 7.01968L9.74191 1.2468L9.83514 1.32639L4.0314 7.59641L1.27619 4.61983L1.36942 4.54024L3.66447 7.01968Z" stroke="#9B38DC" />
+                                                    <path d="M3.66447 7.01968L4.0314 7.4161L4.39834 7.01968L9.74191 1.2468L9.83514 1.32639L4.0314 7.59641L1.27619 4.61983L1.36942 4.54024L3.66447 7.01968Z" stroke="var(--contrast-color)" />
                                                 </svg>
                                             </div>
                                             <p className="filters__dropdown-hint-text">{item}</p>
@@ -515,7 +515,7 @@ function Filters({ handleUpdateByFilters, filters, divRef, handleResetFilters })
                     : <></>}
             </div> */}
       <div className="filters__reset-btn" onClick={handleReset}>
-        <p className="filters__reset-btn-text">очистить фильтры</p>
+        <p className="filters__reset-btn-text">Сбросить фильтры</p>
         {/* <svg  width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M28.615 8.27501C28.5919 8.45484 28.504 8.62008 28.3678 8.73974C28.2315 8.8594 28.0563 8.92527 27.875 8.92501H27.775L25.45 8.62001C27.1188 10.7597 28.0132 13.4017 27.9871 16.1151C27.9611 18.8284 27.0162 21.4529 25.3067 23.5601C23.5972 25.6674 21.224 27.133 18.5743 27.7179C15.9246 28.3028 13.1549 27.9724 10.7172 26.7806C8.27942 25.5888 6.31756 23.606 5.15172 21.1558C3.98588 18.7055 3.6849 15.9325 4.29789 13.2891C4.91089 10.6458 6.40166 8.28825 8.52694 6.60121C10.6522 4.91416 13.2865 3.99722 16 4.00001C16.1989 4.00001 16.3897 4.07902 16.5303 4.21968C16.671 4.36033 16.75 4.55109 16.75 4.75001C16.75 4.94892 16.671 5.13968 16.5303 5.28034C16.3897 5.42099 16.1989 5.50001 16 5.50001C13.6174 5.49904 11.3053 6.30846 9.44346 7.7953C7.58166 9.28213 6.2809 11.358 5.75487 13.6818C5.22883 16.0057 5.50878 18.4393 6.54875 20.583C7.58872 22.7267 9.32685 24.453 11.4776 25.4782C13.6284 26.5035 16.0639 26.7667 18.3841 26.2248C20.7043 25.6828 22.7712 24.3679 24.2452 22.4959C25.7192 20.624 26.5128 18.3064 26.4955 15.9238C26.4782 13.5412 25.6511 11.2354 24.15 9.38501L24.025 12.285C24.016 12.4769 23.9338 12.6581 23.7952 12.7911C23.6565 12.9242 23.4721 12.9989 23.28 13H23.245C23.1465 12.9968 23.0496 12.974 22.96 12.9329C22.8705 12.8917 22.79 12.8331 22.7234 12.7604C22.6568 12.6878 22.6054 12.6025 22.5722 12.5097C22.539 12.4169 22.5246 12.3184 22.53 12.22L22.73 7.56501C22.7273 7.5535 22.7273 7.54151 22.73 7.53001C22.7276 7.50507 22.7276 7.47995 22.73 7.45501V7.38001V7.35001C22.7278 7.34012 22.7278 7.32989 22.73 7.32001C22.743 7.28904 22.758 7.25897 22.775 7.23001C22.7955 7.19633 22.8189 7.16454 22.845 7.13501C22.89 7.08287 22.9422 7.03742 23 7.00001C23.0333 6.97708 23.0684 6.95701 23.105 6.94001L23.205 6.90501H23.235H23.32H23.5L27.895 7.49001C27.994 7.49386 28.0912 7.51727 28.181 7.55888C28.2709 7.6005 28.3516 7.6595 28.4186 7.73249C28.4855 7.80547 28.5373 7.89099 28.5711 7.9841C28.6048 8.07722 28.6197 8.17609 28.615 8.27501Z" fill="#DB2A70" />
                 </svg> */}

@@ -39,7 +39,7 @@
 
 .payment-method__selector-inside-circle {
     border-radius: 50%;
-    background: #9B38DC;
+    background: var(--contrast-color);
     width: 20px;
     height: 20px;
     opacity: 0;
@@ -47,11 +47,11 @@
 }
 
 .payment-method__selector:hover .payment-method__selector-circle {
-    border: 2px solid #9B38DC;
+    border: 2px solid var(--contrast-color);
 }
 
 .payment-method__selector-circle_active {
-    border: 2px solid #9B38DC;
+    border: 2px solid var(--contrast-color);
 }
 
 .payment-method__selector-inside-circle_active {

@@ -1,3 +1,10 @@
 
 @import url(./assets/normalize.css);
 @import url(./assets/fonts/stylesheet.css);
+
+
+
+:root {
+    --text-color: #000000;
+    --contrast-color: #E11C23;
+}

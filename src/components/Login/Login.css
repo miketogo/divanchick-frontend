@@ -47,7 +47,7 @@
     display: flex;
     flex-direction: column;
     padding: 36px 20px 20px;
-    border: 1px solid #9B38DC;
+    border: 1px solid var(--contrast-color);
     box-sizing: border-box;
     border-radius: 12px;
     width: 400px;
@@ -247,7 +247,7 @@
 }
 
 .login__btn_login {
-    background: #9B38DC;
+    background: var(--contrast-color);
     margin: 40px 0 0;
 }
 
@@ -259,12 +259,12 @@
 .login__btn_signup {
     text-decoration: none;
     outline: none;
-    border: 2px solid #9B38DC;
+    border: 2px solid var(--contrast-color);
     margin: 20px 0 0;
 }
 
 .login__btn-text_signup {
-    color: #9B38DC;
+    color: var(--contrast-color);
 
 }
 

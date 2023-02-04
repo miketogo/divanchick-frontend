@@ -126,7 +126,7 @@
 .color-popup__items::-webkit-scrollbar-thumb {
   border-radius: 8px;
 
-  background-color: #9B38DC;
+  background-color: var(--contrast-color);
   border: none;
 }
 
@@ -145,7 +145,7 @@
 }
 
 .color-popup__item_active {
-  border-color: #9B38DC;
+  border-color: var(--contrast-color);
 }
 
 .color-popup__item:first-of-type {
@@ -169,7 +169,7 @@
 }
 
 .color-popup__item-text_active{
-  color: #9B38DC;
+  color: var(--contrast-color);
 }
 
 

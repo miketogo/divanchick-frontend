@@ -55,7 +55,7 @@
 .filters__item {
     display: flex;
     flex-direction: column;
-    margin: 28px 0 0;
+    margin: 20px 0 0;
 }
 
 .filters__item:first-of-type {
@@ -81,7 +81,7 @@
 .filters__item-name {
     font-style: normal;
     font-weight: normal;
-    font-size: 20px;
+    font-size: 16px;
     line-height: 130%;
     /* identical to box height, or 26px */
 
@@ -102,7 +102,7 @@
 .filters__item-dropdown_brand {
     flex-direction: column;
     align-items: flex-start;
-    margin: 26px 0 0;
+    margin: 16px 0 0;
 }
 
 .filters__item-dropdown-text {
@@ -165,7 +165,7 @@
 
 .filters__input:focus {
     outline: none;
-    border-color: #9B38DC !important;
+    border-color: var(--contrast-color) !important;
 }
 
 .filters__input_brands {
@@ -175,14 +175,15 @@
 
 
 .filters__input-container {
-    width: 297px;
-    border: 1px solid #9B38DC;
+    box-sizing: border-box;
+    border: 1px solid var(--contrast-color);
     box-sizing: border-box;
     border-radius: 8px;
     display: flex;
     flex-direction: row;
     align-items: center;
     padding: 0 8px 0 0;
+    width: 100%;
 }
 
 
@@ -204,13 +205,14 @@
 }
 
 .filters__dropdown-hints {
+    width: 100%;
     height: 87px;
-    width: 297px;
+    box-sizing: border-box;
     overflow-y: scroll;
     display: flex;
     flex-direction: column;
-    margin: 24px 0 0;
-    
+    margin: 12px 0 0;
+
 }
 
 .filters__dropdown-hints::-webkit-scrollbar-track {
@@ -226,7 +228,7 @@
 .filters__dropdown-hints::-webkit-scrollbar-thumb {
     border-radius: 2px;
 
-    background-color: #9B38DC;
+    background-color: var(--contrast-color);
     border: none;
 }
 
@@ -256,12 +258,12 @@
 }
 
 .filters__dropdown-hint:hover .filters__dropdown-hint-checkbox {
-    border-color: #9B38DC;
+    border-color: var(--contrast-color);
 }
 
 .filters__dropdown-hint-checkbox_active {
     background: #F5EAFD;
-    border-color: #9B38DC;
+    border-color: var(--contrast-color);
 }
 
 .filters__dropdown-hint-checkbox-tick {
@@ -301,7 +303,7 @@
 .filters__reset-btn-text {
     font-style: normal;
     font-weight: normal;
-    font-size: 20px;
+    font-size: 14px;
     line-height: 130%;
     /* identical to box height, or 26px */
 
@@ -314,6 +316,10 @@
 
 .filters__reset-btn-icon {
     margin: 4px 0;
+
+
+    width: 16px;
+    height: 16px;
 
 }
 

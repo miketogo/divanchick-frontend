@@ -47,7 +47,7 @@
 
     /* primary/500 */
 
-    color: #9B38DC;
+    color: var(--contrast-color);
 
 }
 
@@ -72,7 +72,7 @@
     justify-content: center;
     align-items: center;
     padding: 20px 28px;
-    background: #9B38DC;
+    background: var(--contrast-color);
     border-radius: 40px;
     cursor: pointer;
     width: fit-content;
@@ -126,14 +126,14 @@
 }
 
 .addresses__delivery-cheekbox:hover .addresses__delivery-cheekbox-selector {
-    border: 1px solid #9B38DC;
+    border: 1px solid var(--contrast-color);
 }
 
 .addresses__delivery-cheekbox-selector_active {
     background: #F5EAFD;
     /* primary/500 */
 
-    border: 1px solid #9B38DC;
+    border: 1px solid var(--contrast-color);
 }
 
 .addresses__delivery-cheekbox-selector-tick_active {
@@ -365,16 +365,16 @@
 }
 
 .addresses__btn_return {
-    border: 1px solid #9B38DC;
+    border: 1px solid var(--contrast-color);
     margin: 0 16px 0 0;
 }
 
 .addresses__btn-txt_return {
-    color: #9B38DC;
+    color: var(--contrast-color);
 }
 
 .addresses__btn_save {
-    background: #9B38DC;
+    background: var(--contrast-color);
 }
 
 .addresses__btn-txt_save {
@@ -419,7 +419,7 @@
 
     .addresses__delivery-adress-inputs {
         width: 100%;
-        
+
         grid-template-columns: repeat(4, 1fr);
         grid-template-rows: repeat(2, 64px);
         grid-template-areas:

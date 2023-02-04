@@ -27,7 +27,7 @@
     background: rgba(155, 56, 220, 0.12);
     /* primary/500 */
 
-    border: 2px solid #9B38DC;
+    border: 2px solid var(--contrast-color);
 }
 
 
@@ -50,7 +50,7 @@
 }
 
 .delivery-method__btn-text_active {
-    color: #9B38DC;
+    color: var(--contrast-color);
 }
 
 .delivery-method__to-go {
@@ -82,7 +82,7 @@
 
     /* primary/500 */
 
-    color: #9B38DC;
+    color: var(--contrast-color);
     margin: 16px 0 0;
 }
 
@@ -180,14 +180,14 @@
 }
 
 .delivery-method__delivery-cheekbox:hover .delivery-method__delivery-cheekbox-selector {
-    border: 1px solid #9B38DC;
+    border: 1px solid var(--contrast-color);
 }
 
 .delivery-method__delivery-cheekbox-selector_active {
     background: #F5EAFD;
     /* primary/500 */
 
-    border: 1px solid #9B38DC;
+    border: 1px solid var(--contrast-color);
 }
 
 .delivery-method__delivery-cheekbox-selector-tick_active {

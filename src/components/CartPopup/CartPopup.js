@@ -131,7 +131,7 @@ function CartPopup(props) {
                           <path className={`cart-popup__icon-like-bg ${props.favouritesProducts && props.favouritesProducts.filter((filt_item) => {
                             if (filt_item._id === item._id) return true
                             else return false
-                          }).length > 0 ? 'cart-popup__icon-like-bg_active' : ''}`} d="M3.34327 17.0933L19 32.75L34.6567 17.0933C36.3972 15.3528 37.375 12.9922 37.375 10.5308C37.375 5.40514 33.2199 1.25 28.0942 1.25C25.6328 1.25 23.2722 2.22779 21.5317 3.96828L19 6.5L16.4683 3.96828C14.7278 2.22779 12.3672 1.25 9.90578 1.25C4.78014 1.25 0.625 5.40515 0.625 10.5308C0.625 12.9922 1.60279 15.3528 3.34327 17.0933Z" fill="#9B38DC" />
+                          }).length > 0 ? 'cart-popup__icon-like-bg_active' : ''}`} d="M3.34327 17.0933L19 32.75L34.6567 17.0933C36.3972 15.3528 37.375 12.9922 37.375 10.5308C37.375 5.40514 33.2199 1.25 28.0942 1.25C25.6328 1.25 23.2722 2.22779 21.5317 3.96828L19 6.5L16.4683 3.96828C14.7278 2.22779 12.3672 1.25 9.90578 1.25C4.78014 1.25 0.625 5.40515 0.625 10.5308C0.625 12.9922 1.60279 15.3528 3.34327 17.0933Z" fill="var(--contrast-color)" />
                           <path className={`cart-popup__icon-like-stroke ${props.favouritesProducts && props.favouritesProducts.filter((filt_item) => {
                             if (filt_item._id === item._id) return true
                             else return false
@@ -140,7 +140,7 @@ function CartPopup(props) {
 
 
                         <svg onClick={() => handleRemoveFromCart(item._id)} className="cart-popup__icon-trash" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M6.5 4.375V2.5C6.5 1.80964 7.02233 1.25 7.66667 1.25H12.3333C12.9777 1.25 13.5 1.80964 13.5 2.5V4.375M1.25 5H3M3 5H17M3 5V17.5C3 18.1904 3.52233 18.75 4.16667 18.75H15.8333C16.4777 18.75 17 18.1904 17 17.5V5M17 5H18.75M10 9.375V15.625M6.5 11.875V15.625M13.5 11.875V15.625" stroke="#9B38DC" />
+                          <path d="M6.5 4.375V2.5C6.5 1.80964 7.02233 1.25 7.66667 1.25H12.3333C12.9777 1.25 13.5 1.80964 13.5 2.5V4.375M1.25 5H3M3 5H17M3 5V17.5C3 18.1904 3.52233 18.75 4.16667 18.75H15.8333C16.4777 18.75 17 18.1904 17 17.5V5M17 5H18.75M10 9.375V15.625M6.5 11.875V15.625M13.5 11.875V15.625" stroke="var(--contrast-color)" />
                         </svg>
 
                       </div>
@@ -163,7 +163,7 @@ function CartPopup(props) {
                           <path className={`cart-popup__icon-like-bg ${props.favouritesProducts && props.favouritesProducts.filter((filt_item) => {
                             if (filt_item._id === item._id) return true
                             else return false
-                          }).length > 0 ? 'cart-popup__icon-like-bg_active' : ''}`} d="M3.34327 17.0933L19 32.75L34.6567 17.0933C36.3972 15.3528 37.375 12.9922 37.375 10.5308C37.375 5.40514 33.2199 1.25 28.0942 1.25C25.6328 1.25 23.2722 2.22779 21.5317 3.96828L19 6.5L16.4683 3.96828C14.7278 2.22779 12.3672 1.25 9.90578 1.25C4.78014 1.25 0.625 5.40515 0.625 10.5308C0.625 12.9922 1.60279 15.3528 3.34327 17.0933Z" fill="#9B38DC" />
+                          }).length > 0 ? 'cart-popup__icon-like-bg_active' : ''}`} d="M3.34327 17.0933L19 32.75L34.6567 17.0933C36.3972 15.3528 37.375 12.9922 37.375 10.5308C37.375 5.40514 33.2199 1.25 28.0942 1.25C25.6328 1.25 23.2722 2.22779 21.5317 3.96828L19 6.5L16.4683 3.96828C14.7278 2.22779 12.3672 1.25 9.90578 1.25C4.78014 1.25 0.625 5.40515 0.625 10.5308C0.625 12.9922 1.60279 15.3528 3.34327 17.0933Z" fill="var(--contrast-color)" />
                           <path className={`cart-popup__icon-like-stroke ${props.favouritesProducts && props.favouritesProducts.filter((filt_item) => {
                             if (filt_item._id === item._id) return true
                             else return false
@@ -171,7 +171,7 @@ function CartPopup(props) {
                         </svg>
 
                         <svg onClick={() => handleRemoveFromCart(item._id)} className="cart-popup__icon-trash" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M6.5 4.375V2.5C6.5 1.80964 7.02233 1.25 7.66667 1.25H12.3333C12.9777 1.25 13.5 1.80964 13.5 2.5V4.375M1.25 5H3M3 5H17M3 5V17.5C3 18.1904 3.52233 18.75 4.16667 18.75H15.8333C16.4777 18.75 17 18.1904 17 17.5V5M17 5H18.75M10 9.375V15.625M6.5 11.875V15.625M13.5 11.875V15.625" stroke="#9B38DC" />
+                          <path d="M6.5 4.375V2.5C6.5 1.80964 7.02233 1.25 7.66667 1.25H12.3333C12.9777 1.25 13.5 1.80964 13.5 2.5V4.375M1.25 5H3M3 5H17M3 5V17.5C3 18.1904 3.52233 18.75 4.16667 18.75H15.8333C16.4777 18.75 17 18.1904 17 17.5V5M17 5H18.75M10 9.375V15.625M6.5 11.875V15.625M13.5 11.875V15.625" stroke="var(--contrast-color)" />
                         </svg>
 
                       </div>

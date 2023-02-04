@@ -30,7 +30,7 @@
   flex-direction: column;
   opacity: 0;
   transition: opacity 0.2s linear;
-  border: 1px solid #9B38DC;
+  border: 1px solid var(--contrast-color);
   box-sizing: border-box;
   border-radius: 20px;
 }
@@ -112,7 +112,7 @@
 }
 
 .submit-act-popup__btn_agree {
-  background: #9B38DC;
+  background: var(--contrast-color);
 }
 
 .submit-act-popup__btn-text_agree {
@@ -120,12 +120,12 @@
 }
 
 .submit-act-popup__btn_disagree {
-  border: 1px solid #9B38DC;
+  border: 1px solid var(--contrast-color);
   margin: 8px 0 0;
 }
 
 .submit-act-popup__btn-text_disagree {
-  color: #9B38DC;
+  color: var(--contrast-color);
 }
 
 @media (max-width: 448px) {

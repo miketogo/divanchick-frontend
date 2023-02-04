@@ -9,7 +9,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin: 0 10px 0 0;
+  margin: 0 6px 0 0;
 }
 .crumbs__link-container:last-of-type{
   margin: 0;
@@ -18,13 +18,13 @@
 .crumbs__link {
   font-style: normal;
   font-weight: 500;
-  font-size: 16px;
+  font-size: 12px;
   line-height: 130%;
   /* identical to box height, or 21px */
   /* colour/text/secondary */
   color: #323232;
   text-decoration: none;
-  margin: 0 10px 0 0;
+  margin: 0 6px 0 0;
   transition: color 0.3s ease-in-out;
   width: max-content;
   max-width: 200px;
@@ -50,7 +50,7 @@
 
 .crumbs__link-container:last-of-type .crumbs__link{
   margin: 0;
-  /* color: #9B38DC; */
+  /* color: var(--contrast-color); */
 }
 
 @media (max-width: 700px) {

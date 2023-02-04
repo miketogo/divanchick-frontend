@@ -174,7 +174,7 @@ function Addresses(props) {
                             <div className="addresses__delivery-cheekbox" onClick={() => setPrivateHouseSelected(!privateHouseSelected)}>
                                 <div className={`addresses__delivery-cheekbox-selector ${privateHouseSelected ? 'addresses__delivery-cheekbox-selector_active' : ''}`} >
                                     <svg className={`addresses__delivery-cheekbox-selector-tick ${privateHouseSelected ? 'addresses__delivery-cheekbox-selector-tick_active' : ''}`} width="11" height="9" viewBox="0 0 11 9" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M4.39821 7.01968L9.74179 1.2468L9.83502 1.32639L4.03128 7.59641L1.27606 4.61983L1.3693 4.54024L3.66435 7.01968L4.03128 7.4161L4.39821 7.01968Z" stroke="#9B38DC" />
+                                        <path d="M4.39821 7.01968L9.74179 1.2468L9.83502 1.32639L4.03128 7.59641L1.27606 4.61983L1.3693 4.54024L3.66435 7.01968L4.03128 7.4161L4.39821 7.01968Z" stroke="var(--contrast-color)" />
                                     </svg>
                                 </div>
                                 <p className="addresses__delivery-cheekbox-text">Частный дом</p>
@@ -222,7 +222,7 @@ function Addresses(props) {
                     <div className="addresses__delivery-cheekbox" onClick={() => setPrivateHouseSelected(!privateHouseSelected)}>
                         <div className={`addresses__delivery-cheekbox-selector ${privateHouseSelected ? 'addresses__delivery-cheekbox-selector_active' : ''}`} >
                             <svg className={`addresses__delivery-cheekbox-selector-tick ${privateHouseSelected ? 'addresses__delivery-cheekbox-selector-tick_active' : ''}`} width="11" height="9" viewBox="0 0 11 9" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M4.39821 7.01968L9.74179 1.2468L9.83502 1.32639L4.03128 7.59641L1.27606 4.61983L1.3693 4.54024L3.66435 7.01968L4.03128 7.4161L4.39821 7.01968Z" stroke="#9B38DC" />
+                                <path d="M4.39821 7.01968L9.74179 1.2468L9.83502 1.32639L4.03128 7.59641L1.27606 4.61983L1.3693 4.54024L3.66435 7.01968L4.03128 7.4161L4.39821 7.01968Z" stroke="var(--contrast-color)" />
                             </svg>
                         </div>
                         <p className="addresses__delivery-cheekbox-text">Частный дом</p>

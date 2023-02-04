@@ -105,7 +105,7 @@
   max-width: 1158px;
   width: calc(100% - 381px * 2);
   margin: 7px auto 0;
-  border: 2px solid #9B38DC;
+  border: 2px solid var(--contrast-color);
   box-sizing: border-box;
   border-radius: 8px;
   justify-content: space-between;
