@@ -1,3 +1,12 @@
+import divanImg from '../images/main/divany.png'
+import kuhniaImg from '../images/main/kuhnia.png'
+import spalniaImg from '../images/main/spalnia.png'
+import livingroomImg from '../images/main/livingroom.png'
+import officeImg from '../images/main/office.png'
+
+
+
+
 export const MAIN_URL = 'https://divanchik-backend.cabatest.ru'
 
 
@@ -95,4 +104,116 @@ export function getAmountByCity(seller_cities) {
   let result = seller_cities.filter((item) => item._id === id)[0]
 
   return Number(result.amount)
+}
+
+
+
+
+export const promotedCardsLinks = {
+  sofa: {
+    title: `Диваны и кресла
+в каждый дом`,
+    path: `/categories/divany`,
+    type: 'divani-kresla',
+    img: divanImg,
+    items: [
+      {
+        name: 'Прямые диваны',
+        path: `/sub-category/divany/divany-prjamye`,
+      },
+      // {
+      //   name: 'Диваны п-образной формы',
+      //   path: `/sub-category/divany/divany-p-obraznoj-formy`,
+      // },
+      {
+        name: 'Угловые диваны',
+        path: `/sub-category/divany/divany-uglovye`,
+      },
+      {
+        name: 'Кресла',
+        path: `/sub-category/kresla-i-stulja/kresla`,
+      },
+      {
+        name: 'Стулья',
+        path: `/sub-category/kresla-i-stulja/stulja`,
+      },
+    ],
+  },
+  kitchen: {
+    title: `Кухонная
+зона`,
+    path: `/categories/kuhni`,
+    type: 'kuhnia',
+    img: kuhniaImg,
+    items: [
+      {
+        name: 'Фартуки',
+        path: `/sub-category/kuhni/fartuki`,
+      },
+      {
+        name: 'Кухонные гарнитуры',
+        path: `/sub-category/kuhni/kuhonnye-garnitury`,
+      },
+      {
+        name: 'Скамьи',
+        path: `/sub-category/kuhni/kuhonnye-skami`,
+      },
+      {
+        name: 'Столешницы',
+        path: `/sub-category/kuhni/stoleshnitsy`,
+      },
+    ],
+  },
+  bedroom: {
+    title: `Спальня`,
+    path: `/categories/krovati`,
+    type: 'spalnia',
+    img: spalniaImg,
+    items: [
+      {
+        name: 'Односпальные',
+        path: `/sub-category/krovati/odnospalnye-shirina-ot-80-sm`,
+      },
+      {
+        name: 'Двуспальные',
+        path: `/sub-category/krovati/dvuspalnye-shirina-ot-160-sm`,
+      },
+    ],
+  },
+  livingroom: {
+    title: `Гостиная`,
+    path: `/categories/tumby-i-komody`,
+    type: 'livingroom',
+    img: livingroomImg,
+    items: [
+      {
+        name: 'Журнальные столы',
+        path: `/sub-category/stoly/zhurnalnye-stoly`,
+      },
+      {
+        name: 'Ковры',
+        path: `/sub-category/dekor-dlja-doma/kovry`,
+      },
+      {
+        name: 'Стеллажи',
+        path: `/sub-category/shkafy/stellazhi`,
+      },
+    ],
+  },
+  office: {
+    title: `Офис`,
+    path: `/categories/kresla-i-stulja`,
+    type: 'office',
+    img: officeImg,
+    items: [
+      {
+        name: 'Офисные кресла',
+        path: `/sub-category/kresla-i-stulja/ofisnye-kresla`,
+      },
+      {
+        name: 'Столы для работы',
+        path: `/sub-category/stoly/stoly-dlja-raboty`,
+      },
+    ],
+  }
 }

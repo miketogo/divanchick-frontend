@@ -1,5 +1,5 @@
 .cart-user-data {
-    margin: 32px 0 0;
+    margin: 24px 0 0;
     display: flex;
     flex-direction: column;
 }
@@ -13,7 +13,7 @@
     /* primary/500 */
 
     background: var(--contrast-color);
-    border-radius: 40px;
+    border-radius: 8px;
     width: fit-content;
     margin: 0 0 24px 0;
     text-decoration: none;
@@ -24,7 +24,7 @@
     margin: 0;
     font-style: normal;
     font-weight: normal;
-    font-size: 20px;
+    font-size: 16px;
     line-height: 100%;
     /* identical to box height, or 20px */
 
@@ -99,7 +99,7 @@
     font-style: normal;
     font-weight: normal;
     padding: 0;
-    font-size: 20px;
+    font-size: 16px;
     line-height: 130%;
     /* identical to box height, or 26px */
     border: none;
@@ -128,7 +128,7 @@
     margin: 6px 0 0;
     font-style: normal;
     font-weight: normal;
-    font-size: 16px;
+    font-size: 14px;
     line-height: 130%;
     /* identical to box height, or 21px */
 
@@ -162,7 +162,7 @@
 .cart-user-data__input-error {
     font-style: normal;
     font-weight: normal;
-    font-size: 16px;
+    font-size: 12px;
     line-height: 130%;
     /* identical to box height, or 21px */
 

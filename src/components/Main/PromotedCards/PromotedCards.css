@@ -1,0 +1,70 @@
+.promoted-cards {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: 80px 0 0;
+
+}
+
+
+.promoted-cards__title {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 28px;
+    line-height: 140%;
+    margin: 0;
+}
+
+.promoted-cards__cards {
+    margin: 24px 0 0;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 258px;
+    grid-auto-rows: 190px;
+    row-gap: 20px;
+    column-gap: 20px;
+    grid-template-areas: 'divani-kresla divani-kresla divani-kresla divani-kresla divani-kresla kuhnya  kuhnya kuhnya kuhnya'
+        'spalnia spalnia spalnia livingroom livingroom livingroom office office office'
+    ;
+
+}
+
+
+
+
+
+@media (max-width: 1115px) {
+    .promoted-cards__cards {
+        grid-template-columns: 1fr;
+        grid-template-rows: 258px;
+        grid-auto-rows: 258px;
+        row-gap: 20px;
+        column-gap: 20px;
+        grid-template-areas: 'divani-kresla'
+            'kuhnya'
+            'spalnia'
+            'livingroom'
+            'office'
+        ;
+    }
+
+    .promoted-cards__title {
+        font-style: normal;
+        font-weight: 500;
+        font-size: 24px;
+        line-height: 140%;
+        margin: 0;
+    }
+}
+
+
+@media (max-width: 700px) {
+    .promoted-cards__title {
+        font-style: normal;
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 140%;
+        margin: 0;
+    }
+}

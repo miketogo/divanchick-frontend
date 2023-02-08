@@ -5,6 +5,7 @@ import React from "react";
 import { Link } from 'react-router-dom';
 import moreIcon from '../../assets/images/more.svg'
 import { MAIN_URL } from '../../assets/utils/constants';
+import { getCorrectWordForm } from '../../assets/utils/utils';
 
 
 
@@ -88,6 +89,8 @@ function CartPopup({
     return Number(value)
   }
 
+  console.log(cart)
+
   return (
     <div className={`cart-popup ${isCartPopupOpen ? 'cart-popup_active' : ''}`}>
       <div className={`cart-popup__container ${isCartPopupOpen ? 'cart-popup__container_active' : ''}`}>
@@ -128,11 +131,7 @@ function CartPopup({
                       <p className="cart-popup__price">{(item.count * getPrice(item)).toLocaleString('us')}&nbsp;₽</p>
                     </div>
                     <div className="cart-popup__item-row cart-popup__item-row_second">
-                      {item.amount > 0 ?
-                        <p className="cart-popup__take-from-showroom">Забрать сегодня <span className='cart-popup__take-from-showroom_span'>в шоуруме</span></p>
-                        :
-                        <p className="cart-popup__take-from-showroom">Доступно для предзаказа</p>
-                      }
+
 
                       <div className="cart-popup__icons">
 
@@ -218,7 +217,7 @@ function CartPopup({
 
         </div>
         <div className="cart-popup__lower-btns">
-          <p className="cart-popup__amount">{allCartProductsCount.count} {allCartProductsCount.count % 10 === 1 && 'товар'}{(allCartProductsCount.count % 10 >= 2 && allCartProductsCount.count % 10 <= 4) && 'товара'}{((allCartProductsCount.count % 10 >= 5 && allCartProductsCount.count % 10 <= 9) || allCartProductsCount.count % 10 === 0) && 'товаров'} на {allCartProductsCount.totalPrice.toLocaleString('us')}&nbsp;₽</p>
+          <p className="cart-popup__amount">{allCartProductsCount.count} {getCorrectWordForm(allCartProductsCount.count)} на {allCartProductsCount.totalPrice.toLocaleString('us')}&nbsp;₽</p>
           <Link to="/cart" className="cart-popup__order-btn" onClick={handleCartPopupClose}>
             <p className="cart-popup__order-btn-text">Оформить заказ</p>
           </Link>

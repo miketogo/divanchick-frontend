@@ -30,3 +30,21 @@ export function copyText({ text, setCopied }) {
 
     document.body.removeChild(textArea);
 }
+
+
+export function getCorrectWordForm(count) {
+    let lastDigit = count % 10;
+    if (count >= 11 && count <= 19) {
+      return 'товаров';
+    }
+    switch (lastDigit) {
+      case 1:
+        return 'товар';
+      case 2:
+      case 3:
+      case 4:
+        return 'товара';
+      default:
+        return 'товаров';
+    }
+  }

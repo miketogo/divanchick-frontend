@@ -386,45 +386,25 @@ function App() {
           <Header currentUser={currentUser} loggedIn={loggedIn} favouritesProducts={favouritesProducts} allCartProductsCount={allCartProductsCount} categories={allCategories} screenWidth={screenWidth} handleCityPopupOpen={handleCityPopupOpen} cityValue={cityValue} products={allProducts} />
           <Switch>
             <Route exact path={`/`}>
-              <Main />
+              <Main
+                handleLikeBtn={handleLikeBtn}
+                favouritesProducts={favouritesProducts}
+                setCartPopupOpen={setCartPopupOpen}
+                cart={cart}
+                handleToCartBtn={handleToCartBtn}
+              />
             </Route>
             <Route path={`/categories/:category`}>
-              <Category
-                handleColorPopupOpen={handleColorPopupOpen}
-                handleLikeBtn={handleLikeBtn}
-                favouritesProducts={favouritesProducts}
-                handlePreloaderVisible={handlePreloaderVisible}
-                setCartPopupOpen={setCartPopupOpen}
-                cart={cart}
-                handleToCartBtn={handleToCartBtn}
-                subcategoryPreloaderVisible={subcategoryPreloaderVisible}
-
-                filtersUpd={filtersUpd}
-                setFiltersUpd={setFiltersUpd}
-                filters={filters}
-                setFilterProducts={setFilterProducts}
-                filterProducts={filterProducts}
-                products={allProducts}
-                categories={allCategories} />
+              <Category />
             </Route>
             <Route path={`/sub-category/:category/:sub_category`}>
-
               <SubCategory
-                handleColorPopupOpen={handleColorPopupOpen}
+                setFiltersUpd={setFiltersUpd}
                 handleLikeBtn={handleLikeBtn}
                 favouritesProducts={favouritesProducts}
-                handlePreloaderVisible={handlePreloaderVisible}
                 setCartPopupOpen={setCartPopupOpen}
                 cart={cart}
                 handleToCartBtn={handleToCartBtn}
-                subcategoryPreloaderVisible={subcategoryPreloaderVisible}
-
-                filtersUpd={filtersUpd}
-                setFiltersUpd={setFiltersUpd}
-                filters={filters}
-                setFilterProducts={setFilterProducts}
-                filterProducts={filterProducts}
-                products={products}
               />
             </Route>
 
@@ -436,7 +416,7 @@ function App() {
                 handleToCartBtn={handleToCartBtn}
                 handleLikeBtn={handleLikeBtn}
                 favouritesProducts={favouritesProducts}
-                 />
+              />
             </Route>
             <Route path={`/cart`}>
               <CartPage currentUser={currentUser} loggedIn={loggedIn} handleLikeBtn={handleLikeBtn} favouritesProducts={favouritesProducts} setSubmitActionPopupOpen={setSubmitActionPopupOpen} allCartProductsCount={allCartProductsCount} setCart={setCart} cart={cart} />

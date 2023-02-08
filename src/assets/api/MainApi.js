@@ -210,6 +210,54 @@ class MainApi {
     }))
   }
 
+  createOrder({ data, city_id, first_name, last_name, phone, email }) {
+    return fetch(`${MAIN_URL}/orders/create`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        data: data,
+        city_id: city_id,
+        first_name: first_name,
+        last_name: last_name,
+        phone: phone,
+        email: email,
+      }
+      )
+    }).then(this._checkResponse)
+  };
+
+  getHitsOrNews({ type}) {
+    let params = {}
+    if (type) params.type = type
+
+
+    return fetch(`${MAIN_URL}/items/hits-or-new-items?` + new URLSearchParams(params), {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+
+    }).then(this._checkResponse);
+  }
+
+  getBanners() {
+    return fetch(`${MAIN_URL}/banners/get`, {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+
+    }).then(this._checkResponse);
+  }
+
 }
 
 

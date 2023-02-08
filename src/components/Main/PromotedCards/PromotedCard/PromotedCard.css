@@ -1,0 +1,395 @@
+.promoted-card {
+    width: 100%;
+    height: 100%;
+    border-radius: 16px;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    padding: 20px 20px;
+    box-sizing: border-box;
+    text-decoration: none;
+    overflow: hidden;
+}
+
+.promoted-card_divani-kresla {
+    background: rgba(187, 148, 107, 0.12);
+    ;
+    grid-area: divani-kresla;
+}
+
+.promoted-card_kuhnia {
+    background: rgba(44, 89, 200, 0.12);
+    grid-area: kuhnya;
+}
+
+.promoted-card_spalnia {
+    background: rgba(179, 152, 133, 0.12);
+    ;
+    grid-area: spalnia;
+}
+
+.promoted-card_livingroom {
+    background: rgba(36, 183, 163, 0.12);
+    ;
+    grid-area: livingroom;
+}
+
+.promoted-card_office {
+    background: rgba(10, 10, 13, 0.12);
+    ;
+    grid-area: office;
+}
+
+.promoted-card__texts {
+    display: flex;
+    flex-direction: column;
+    max-width: 374px;
+    position: relative;
+    z-index: 1;
+
+}
+
+.promoted-card__title {
+
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 120%;
+    /* or 62px */
+
+
+    color: var(--text-color);
+    margin: 0;
+
+    white-space: pre-line;
+}
+
+.promoted-card__links {
+    /* display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min-content, auto));
+    grid-template-rows: 40px;
+    grid-auto-rows: 40px;
+    row-gap: 8px;
+    column-gap: 8px; */
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    row-gap: 8px;
+    column-gap: 8px;
+
+    margin: 16px 0 0;
+    width: 100%;
+    max-width: 230px;
+}
+
+.promoted-card__link {
+    border-radius: 40px;
+    padding: 10px;
+    box-sizing: border-box;
+    width: fit-content;
+    margin: 0;
+
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 100%;
+    /* identical to box height, or 16px */
+
+
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+.promoted-card_divani-kresla .promoted-card__link {
+    background: rgba(184, 102, 0, 0.04);
+}
+
+.promoted-card_kuhnia .promoted-card__link {
+    background: rgba(45, 109, 248, 0.04);
+}
+
+.promoted-card_spalnia .promoted-card__link {
+    background: rgba(87, 39, 13, 0.04);
+}
+
+.promoted-card_livingroom .promoted-card__link {
+    background: rgba(78, 245, 227, 0.04);
+}
+
+.promoted-card_office .promoted-card__link {
+    background: rgba(18, 18, 18, 0.02);
+}
+
+.promoted-card__img {
+    position: absolute;
+    z-index: 0;
+}
+
+.promoted-card__img_divani-kresla {
+    width: 601px;
+    height: 214px;
+
+    top: 65px;
+    right: -100px;
+}
+
+.promoted-card__img_kuhnia {
+    width: 447.45px;
+    height: 275px;
+    top: -4px;
+    right: -100px;
+}
+
+.promoted-card__img_spalnia {
+    width: 215px;
+    height: 159px;
+
+    top: 43px;
+    right: -10px;
+}
+
+.promoted-card__img_livingroom {
+
+    width: 255px;
+    height: 159px;
+
+    top: 55px;
+    right: 0px;
+}
+
+.promoted-card__img_office {
+
+    width: 131px;
+    height: 195px;
+
+    top: 21px;
+    right: 30px;
+}
+
+
+@media (max-width: 1540px) {
+
+    .promoted-card__img_divani-kresla {
+        width: 601px;
+        height: 214px;
+
+        top: 65px;
+        left: 385px;
+    }
+
+    .promoted-card__img_kuhnia {
+        width: 447.45px;
+        height: 275px;
+        top: -4px;
+        left: 306px;
+    }
+
+    .promoted-card__img_spalnia {
+        width: 215px;
+        height: 159px;
+
+        top: 43px;
+        left: 250px;
+    }
+
+    .promoted-card__img_livingroom {
+
+        width: 255px;
+        height: 159px;
+
+        top: 55px;
+        left: 260px;
+    }
+
+    .promoted-card__img_office {
+
+        width: 131px;
+        height: 195px;
+
+        top: 21px;
+        left: 320px;
+    }
+}
+
+@media (max-width: 1350px) {
+    .promoted-card__img_office {
+        left: 220px;
+
+    }
+}
+
+@media (max-width: 1115px) {
+
+
+    .promoted-card__title {
+        font-style: normal;
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 120%;
+    }
+
+    .promoted-card__links {
+        margin: 16px 0 0;
+        max-width: 310px;
+    }
+
+
+
+    .promoted-card__img_divani-kresla {
+        width: 592px;
+        height: 211px;
+
+        top: 66px;
+        left: unset;
+        right: -200px;
+    }
+
+    .promoted-card__img_kuhnia {
+        width: 447.45px;
+        height: 275px;
+        top: -1px;
+        left: unset;
+        right: -10px;
+    }
+
+    .promoted-card__img_spalnia {
+        width: 421px;
+        height: 312.43px;
+
+        top: 35px;
+        left: unset;
+        right: -10px;
+    }
+
+    .promoted-card__img_livingroom {
+        width: 453.87px;
+        height: 283px;
+
+        top: 32px;
+        left: unset;
+        right: -10px;
+    }
+
+    .promoted-card__img_office {
+
+        width: 322px;
+        height: 481px;
+
+        top: -14px;
+        left: unset;
+        right: -10px;
+    }
+}
+
+
+@media (max-width: 800px) {
+    .promoted-card__img_divani-kresla {
+        width: 592px;
+        height: 211px;
+
+        top: 66px;
+        left: 385px;
+
+    }
+
+    .promoted-card__img_kuhnia {
+        width: 447.45px;
+        height: 275px;
+        top: -1px;
+        left: 406px;
+
+    }
+
+    .promoted-card__img_spalnia {
+        width: 421px;
+        height: 312.43px;
+
+        top: 35px;
+        left: 420px;
+
+    }
+
+    .promoted-card__img_livingroom {
+        width: 453.87px;
+        height: 283px;
+
+        top: 32px;
+        left: 432px;
+
+    }
+
+    .promoted-card__img_office {
+
+        width: 322px;
+        height: 481px;
+
+        top: -14px;
+        left: 382px;
+
+    }
+}
+
+@media (max-width: 620px) {
+
+    .promoted-card__link {
+        font-style: normal;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 100%;
+    }
+    .promoted-card__title{
+        font-style: normal;
+font-weight: 700;
+font-size: 20px;
+line-height: 120%;
+    }
+
+    .promoted-card__img_divani-kresla {
+        width: 304px;
+        height: 108px;
+
+        top: 150px;
+        left: unset;
+        right: -174px;
+    }
+
+    .promoted-card__img_kuhnia {
+        width: 269px;
+        height: 165.32px;
+        top: 91px;
+        left: unset;
+        right: -174px;
+    }
+
+    .promoted-card__img_spalnia {
+        width: 326.67px;
+        height: 242.43px;
+
+        top: 115px;
+        left: unset;
+        right: -144px;
+    }
+
+    .promoted-card__img_livingroom {
+        width: 301px;
+        height: 187.68px;
+
+
+        top: 110px;
+        left: unset;
+        right: -167px;
+    }
+
+    .promoted-card__img_office {
+        width: 233px;
+        height: 348px;
+
+        top: 52px;
+        left: unset;
+        right: -88px;
+    }
+
+    .promoted-card_office .promoted-card__links{
+max-width: 150px;
+    }
+}

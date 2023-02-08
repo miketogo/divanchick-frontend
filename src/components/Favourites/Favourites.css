@@ -113,7 +113,7 @@
 }
 
 
-@media (max-width: 850px) {
+@media (max-width: 970px) {
     .favourites__products {
         margin: 12px 0 0;
         grid-template-columns: repeat(3, minmax(0, 1fr));

@@ -51,7 +51,7 @@
 .cart-page__section-reset-cart {
   border: 2px solid var(--contrast-color);
   box-sizing: border-box;
-  border-radius: 40px;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -128,17 +128,17 @@
   margin: 0;
   font-style: normal;
   font-weight: 600;
-  font-size: 32px;
+  font-size: 28px;
   line-height: 130%;
   /* identical to box height, or 42px */
   color: #000000;
 }
 
 .cart-page__summary-count {
-  margin: 20px 0 0;
+  margin: 12px 0 0;
   font-style: normal;
   font-weight: normal;
-  font-size: 20px;
+  font-size: 16px;
   line-height: 130%;
   /* identical to box height, or 26px */
 
@@ -265,13 +265,14 @@
   background: var(--contrast-color);
   transition: opacity 0.3s ease-in-out;
   width: 100%;
-  border-radius: 40px;
+  border-radius: 8px;
   cursor: pointer;
 }
 
 .cart-page__summary-pay-btn_inactive {
   opacity: 0.3;
   cursor: no-drop;
+  pointer-events: none;
 }
 
 .cart-page__summary-pay-btn-text {
@@ -318,7 +319,7 @@
 .cart-page__empty-title {
   font-style: normal;
   font-weight: 600;
-  font-size: 50px;
+  font-size: 28px;
   line-height: 130%;
   /* identical to box height, or 65px */
 

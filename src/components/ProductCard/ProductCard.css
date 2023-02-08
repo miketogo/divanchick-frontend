@@ -63,8 +63,8 @@
   object-fit: scale-down;
   aspect-ratio: 1.72 / 1;
 
-  /* width: calc(100% + 24px);
-  object-fit: scale-down;
+  /* width: calc(100% + 24px); */
+  /* object-fit: scale-down;
   aspect-ratio: 1 / 1; */
 }
 

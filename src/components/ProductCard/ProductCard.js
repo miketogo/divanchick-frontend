@@ -9,7 +9,15 @@ import './ProductCard.css';
 
 
 
-function ProductCard({ product, cart, handleToCartBtn, setCartPopupOpen, link, handleLikeBtn, favouritesProducts }) {
+function ProductCard({
+  product,
+  cart,
+  handleToCartBtn,
+  setCartPopupOpen,
+  link,
+  handleLikeBtn,
+  favouritesProducts
+}) {
 
   function addToCart() {
     handleToCartBtn(product)
@@ -74,7 +82,7 @@ function ProductCard({ product, cart, handleToCartBtn, setCartPopupOpen, link, h
 
         </div>
         <p className='product-card__name' >{product.name}</p>
-        <p className={`product-card__amount ${amount > 0 ? '' : 'product-card__amount_zero'}`}>{amount > 0 ? `Доступно ${amount} шт.` : `Нет в наличии`}</p>
+        <p className={`product-card__amount ${amount > 0 ? '' : 'product-card__amount_zero'}`}>{amount > 0 ? `На складе ${amount} шт.` : `Нет в наличии`}</p>
       </div>
       {amount === 0 ?
         <a className={`product-card__cart-btn`} href="tel:+79199401208" onClick={(e) => {

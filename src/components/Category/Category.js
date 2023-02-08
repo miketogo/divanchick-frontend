@@ -15,23 +15,7 @@ import CategoryCard from './CategoryCard/CategoryCard';
 
 
 
-function Category({
-  handleColorPopupOpen,
-  handleLikeBtn,
-  favouritesProducts,
-  handlePreloaderVisible,
-  setCartPopupOpen,
-  cart,
-  handleToCartBtn,
-  subcategoryPreloaderVisible,
-
-  filtersUpd,
-  setFiltersUpd,
-  filters,
-  setFilterProducts,
-  filterProducts,
-  products,
-}) {
+function Category() {
   const { url } = useRouteMatch();
 
   let { category } = useParams();
@@ -45,28 +29,19 @@ function Category({
 
     if (category) {
       setPreloaderVisible(true)
-      mainApi.getExactCategory({ translit_name: category })
-        .then((res) => {
-          console.log(res)
-          setSelectedCategory(res)
-          mainApi.getSubcategoriesByCategory({
-            category_translit_name: category,
-            limit: 25,
-          })
-            .then((res2) => {
-              console.log(res2.data)
-              setSubcategories(res2.data)
-
-            })
-            .catch((err) => {
-              console.log(err)
-            })
-            .finally(() => {
-              setPreloaderVisible(false)
-            })
+      mainApi.getSubcategoriesByCategory({
+        category_translit_name: category,
+        limit: 25,
+      })
+        .then((res2) => {
+          console.log(res2.data)
+          setSubcategories(res2.data)
+          setSelectedCategory(res2.category)
         })
         .catch((err) => {
           console.log(err)
+        })
+        .finally(() => {
           setPreloaderVisible(false)
         })
 
@@ -75,9 +50,7 @@ function Category({
 
   }, [category])
 
-  // React.useEffect(() => {
-  //   console.log(url)
-  // }, [url])
+
 
   return (
     <>

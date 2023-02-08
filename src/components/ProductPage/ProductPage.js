@@ -103,7 +103,7 @@ function BuyInfo({ selectedByColorProduct, handleLikeBtn, isInFavorite, isInCart
         : <></>}
 
 
-      <p className={`product-page__amount ${selectedProduct.amount > 0 ? '' : 'product-page__amount_zero'}`}>{selectedProduct.amount > 0 ? `Доступно ${selectedProduct.amount} шт.` : `Нет в наличии`}</p>
+      <p className={`product-page__amount ${selectedProduct.amount > 0 ? '' : 'product-page__amount_zero'}`}>{selectedProduct.amount > 0 ? `На складе ${selectedProduct.amount} шт.` : `Нет в наличии`}</p>
     </div>
   )
 }
