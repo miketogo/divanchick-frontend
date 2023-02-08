@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../Header/Header';
 import './App.css';
 import mainApi from '../../assets/api/MainApi';
@@ -25,6 +25,8 @@ import ColorPopup from '../ColorPopup/ColorPopup';
 import MainPreloader from '../MainPreloader/MainPreloader';
 import Main from '../Main/Main';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import SubCategory from '../SubCategory/SubCategory';
+import ProductPage from '../ProductPage/ProductPage';
 
 // import useScrollPosition from '../../utils/useScrollPosition';
 
@@ -35,24 +37,24 @@ import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 function App() {
   // const scrollPosition = useScrollPosition();
 
-  const [loggedIn, setLoggedIn] = React.useState(undefined);
-  const [currentUser, setCurrentUser] = React.useState(undefined);
+  const [loggedIn, setLoggedIn] = useState(undefined);
+  const [currentUser, setCurrentUser] = useState(undefined);
 
-  const [screenWidth, setScreenWidth] = React.useState(window.innerWidth);
-  const [isCityPopupOpen, setCityPopupOpen] = React.useState(false);
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  const [isCityPopupOpen, setCityPopupOpen] = useState(false);
 
-  const [isSubmitActionPopupOpen, setSubmitActionPopupOpen] = React.useState(false);
-  const [isCartPopupOpen, setCartPopupOpen] = React.useState(false);
-  const [isColorPopupOpen, setColorPopupOpen] = React.useState(false);
+  const [isSubmitActionPopupOpen, setSubmitActionPopupOpen] = useState(false);
+  const [isCartPopupOpen, setCartPopupOpen] = useState(false);
+  const [isColorPopupOpen, setColorPopupOpen] = useState(false);
 
-  const [allProducts,] = React.useState(products);
-  const [allCategories,] = React.useState(categories);
+  const [allProducts,] = useState(products);
+  const [allCategories,] = useState(categories);
 
-  // const [allProducts, setAllProducts] = React.useState(products);
-  // const [allCategories, setAllCategories] = React.useState(categories);
+  // const [allProducts, setAllProducts] =  useState(products);
+  // const [allCategories, setAllCategories] =  useState(categories);
 
-  const [cityValue, setCityValue] = React.useState('Тобольск');
-  React.useEffect(() => {
+  const [cityValue, setCityValue] = useState('Тобольск');
+  useEffect(() => {
     // mainApi.getBarcode(id)
     // mainApi.getCategories()
     //   .then((res) => {
@@ -75,7 +77,7 @@ function App() {
 
   const history = useHistory()
 
-  React.useEffect(() => {
+  useEffect(() => {
     setLoggedIn(false)
     // mainApi.getUser()
     //   .then((res) => {
@@ -95,7 +97,7 @@ function App() {
 
   }, [])
 
-  React.useEffect(() => {
+  useEffect(() => {
     let city = localStorage.getItem('city')
     if (city) setCityValue(city)
   }, [isCityPopupOpen]);
@@ -104,7 +106,7 @@ function App() {
     setScreenWidth(window.innerWidth)
     window.removeEventListener('resize', handleResize);
   }
-  React.useEffect(() => {
+  useEffect(() => {
     window.addEventListener('resize', handleResize);
     return () => {
       window.removeEventListener('resize', handleResize);
@@ -142,8 +144,8 @@ function App() {
     setCartPopupOpen(false)
   }
 
-  const [filterProducts, setFilterProducts] = React.useState([]);
-  const [subcategoryPreloaderVisible, setSubcategoryPreloaderVisible] = React.useState(false);
+  const [filterProducts, setFilterProducts] = useState([]);
+  const [subcategoryPreloaderVisible, setSubcategoryPreloaderVisible] = useState(false);
   function handlePreloaderVisible() {
     setSubcategoryPreloaderVisible(true)
     setTimeout(() => {
@@ -152,10 +154,10 @@ function App() {
     }, 1000);
   }
 
-  const [filters, setFilters] = React.useState({});
-  const [filtersUpd, setFiltersUpd] = React.useState({});
+  const [filters, setFilters] = useState({});
+  const [filtersUpd, setFiltersUpd] = useState({});
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (Object.keys(filtersUpd).length !== 0 && filterProducts.length > 0) {
       handlePreloaderVisible()
     }
@@ -163,7 +165,7 @@ function App() {
 
   }, [filtersUpd, filterProducts]);
 
-  React.useEffect(() => {
+  useEffect(() => {
 
     if (filterProducts && filterProducts.length > 0) {
       let filters = {
@@ -219,9 +221,9 @@ function App() {
 
   }, [filterProducts]);
 
-  const [cart, setCart] = React.useState([]);
+  const [cart, setCart] = useState([]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     let cartArray = JSON.parse(localStorage.getItem("cart"));
     if (!cartArray || cartArray === []) {
       cartArray = []
@@ -233,7 +235,7 @@ function App() {
 
   }, []);
 
-  const [allCartProductsCount, setCartAllProductsCount] = React.useState({
+  const [allCartProductsCount, setCartAllProductsCount] = useState({
     count: 0,
     totalPrice: 0
   });
@@ -252,7 +254,7 @@ function App() {
   }
 
 
-  React.useEffect(() => {
+  useEffect(() => {
     let counter = {
       count: 0,
       totalPrice: 0
@@ -273,7 +275,7 @@ function App() {
 
   }, [cart]);
 
-  // React.useEffect(() => {
+  //  useEffect(() => {
   //   console.log(cart)
 
   // }, [cart]);
@@ -308,9 +310,9 @@ function App() {
   }
 
 
-  const [favouritesProducts, setFavouritesProducts] = React.useState([]);
+  const [favouritesProducts, setFavouritesProducts] = useState([]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     let liked = JSON.parse(localStorage.getItem("favourites"));
     if (!liked || liked === []) {
       liked = []
@@ -351,8 +353,8 @@ function App() {
   }
 
 
-  const [selectedColor, setSelectedColor] = React.useState('');
-  const [availibleColors, setAvailibleColors] = React.useState([]);
+  const [selectedColor, setSelectedColor] = useState('');
+  const [availibleColors, setAvailibleColors] = useState([]);
 
   function handleColorPopupOpen({ product, active_color }) {
     console.log(product, active_color)
@@ -387,7 +389,54 @@ function App() {
               <Main />
             </Route>
             <Route path={`/categories/:category`}>
-              <Category handleColorPopupOpen={handleColorPopupOpen} handleLikeBtn={handleLikeBtn} favouritesProducts={favouritesProducts} handlePreloaderVisible={handlePreloaderVisible} setCartPopupOpen={setCartPopupOpen} cart={cart} handleToCartBtn={handleToCartBtn} subcategoryPreloaderVisible={subcategoryPreloaderVisible} setFilterPopupOpen={undefined} filtersUpd={filtersUpd} setFiltersUpd={setFiltersUpd} filters={filters} setFilterProducts={setFilterProducts} filterProducts={filterProducts} products={allProducts} categories={allCategories} />
+              <Category
+                handleColorPopupOpen={handleColorPopupOpen}
+                handleLikeBtn={handleLikeBtn}
+                favouritesProducts={favouritesProducts}
+                handlePreloaderVisible={handlePreloaderVisible}
+                setCartPopupOpen={setCartPopupOpen}
+                cart={cart}
+                handleToCartBtn={handleToCartBtn}
+                subcategoryPreloaderVisible={subcategoryPreloaderVisible}
+
+                filtersUpd={filtersUpd}
+                setFiltersUpd={setFiltersUpd}
+                filters={filters}
+                setFilterProducts={setFilterProducts}
+                filterProducts={filterProducts}
+                products={allProducts}
+                categories={allCategories} />
+            </Route>
+            <Route path={`/sub-category/:category/:sub_category`}>
+
+              <SubCategory
+                handleColorPopupOpen={handleColorPopupOpen}
+                handleLikeBtn={handleLikeBtn}
+                favouritesProducts={favouritesProducts}
+                handlePreloaderVisible={handlePreloaderVisible}
+                setCartPopupOpen={setCartPopupOpen}
+                cart={cart}
+                handleToCartBtn={handleToCartBtn}
+                subcategoryPreloaderVisible={subcategoryPreloaderVisible}
+
+                filtersUpd={filtersUpd}
+                setFiltersUpd={setFiltersUpd}
+                filters={filters}
+                setFilterProducts={setFilterProducts}
+                filterProducts={filterProducts}
+                products={products}
+              />
+            </Route>
+
+            <Route path={`/item/:category/:sub_category/:id`}>
+              <ProductPage
+                handleColorPopupOpen={handleColorPopupOpen}
+                setCartPopupOpen={setCartPopupOpen}
+                cart={cart}
+                handleToCartBtn={handleToCartBtn}
+                handleLikeBtn={handleLikeBtn}
+                favouritesProducts={favouritesProducts}
+                 />
             </Route>
             <Route path={`/cart`}>
               <CartPage currentUser={currentUser} loggedIn={loggedIn} handleLikeBtn={handleLikeBtn} favouritesProducts={favouritesProducts} setSubmitActionPopupOpen={setSubmitActionPopupOpen} allCartProductsCount={allCartProductsCount} setCart={setCart} cart={cart} />

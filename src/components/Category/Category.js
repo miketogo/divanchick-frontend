@@ -3,17 +3,35 @@ import { Switch, useParams, useRouteMatch } from 'react-router';
 import { Route, Link } from 'react-router-dom';
 import mainApi from '../../assets/api/MainApi';
 import { MAIN_URL } from '../../assets/utils/constants';
+import SofaPreloader from '../SofaPreloader/SofaPreloader';
 
 
 import SubCategory from '../SubCategory/SubCategory';
 import Crumbs from '../Сrumbs/Сrumbs'
 import './Category.css';
+import CategoryCard from './CategoryCard/CategoryCard';
 
 
 
 
 
-function Category(props) {
+function Category({
+  handleColorPopupOpen,
+  handleLikeBtn,
+  favouritesProducts,
+  handlePreloaderVisible,
+  setCartPopupOpen,
+  cart,
+  handleToCartBtn,
+  subcategoryPreloaderVisible,
+
+  filtersUpd,
+  setFiltersUpd,
+  filters,
+  setFilterProducts,
+  filterProducts,
+  products,
+}) {
   const { url } = useRouteMatch();
 
   let { category } = useParams();
@@ -22,31 +40,37 @@ function Category(props) {
   const [subcategories, setSubcategories] = useState(undefined)
 
 
-
+  const [isPreloaderVisible, setPreloaderVisible] = useState(true)
   useEffect(() => {
 
     if (category) {
+      setPreloaderVisible(true)
       mainApi.getExactCategory({ translit_name: category })
         .then((res) => {
           console.log(res)
           setSelectedCategory(res)
+          mainApi.getSubcategoriesByCategory({
+            category_translit_name: category,
+            limit: 25,
+          })
+            .then((res2) => {
+              console.log(res2.data)
+              setSubcategories(res2.data)
+
+            })
+            .catch((err) => {
+              console.log(err)
+            })
+            .finally(() => {
+              setPreloaderVisible(false)
+            })
         })
         .catch((err) => {
           console.log(err)
+          setPreloaderVisible(false)
         })
 
-      mainApi.getSubcategoriesByCategory({
-        category_translit_name: category,
-        limit: 25,
-      })
-        .then((res) => {
-          console.log(res.data)
-          setSubcategories(res.data)
 
-        })
-        .catch((err) => {
-          console.log(err)
-        })
     }
 
   }, [category])
@@ -56,46 +80,45 @@ function Category(props) {
   // }, [url])
 
   return (
-    <div className="category">
-      {selectedCategory ?
-        <Switch>
-          <Route exact path={`${url}/`}>
-            <Crumbs links={[
-              {
-                name: 'Главная',
-                to: '/',
-              },
-              {
-                name: selectedCategory.name,
-                to: `${url}`,
-              },
-            ]} />
-            <h2 className="category__name">{selectedCategory.name}</h2>
-            <div className="category__sub-categories">
-              {subcategories ?
-                subcategories.length > 0 ? subcategories.map((sub_category, i) => (
+    <>
+      {isPreloaderVisible ?
+        <div className='category__preloader'>
+          <SofaPreloader />
 
-                  <Link className="category__sub-category" to={`${url}/${sub_category.translit_name}`} key={`sub_category.name${i}`}>
-                    <h3 className="category__sub-category-name">{sub_category.name}</h3>
-                    <div className="category__sub-category-gradient"></div>
-                    <img className="category__sub-category-img" src={`${MAIN_URL}/get-file/${sub_category.photo}`} alt={sub_category.name} key={sub_category._id} />
-                  </Link>
-                ))
+        </div>
+        :
+        <div className="category" key={category}>
+          {selectedCategory ?
+            <>
+              <Crumbs links={[
+                {
+                  name: 'Главная',
+                  to: '/',
+                },
+                {
+                  name: selectedCategory.name,
+                  to: `${url}`,
+                },
+              ]} />
+              <h2 className="category__name">{selectedCategory.name}</h2>
+              <div className="category__sub-categories">
+                {subcategories ?
+                  subcategories.length > 0 ? subcategories.map((item, i) => (
+                    <CategoryCard item={item} key={`${item._id}${i}`} url={url} category={selectedCategory.translit_name} />
+                  ))
 
-                  :
-                  <p key={'sub_category_empty'}>Пусто</p>
-                : <></>}
-            </div>
-
-          </Route>
-          <Route path={`${url}/:sub_category`}>
-            <SubCategory handleColorPopupOpen={props.handleColorPopupOpen} handleLikeBtn={props.handleLikeBtn} favouritesProducts={props.favouritesProducts} handlePreloaderVisible={props.handlePreloaderVisible} setCartPopupOpen={props.setCartPopupOpen} cart={props.cart} handleToCartBtn={props.handleToCartBtn} subcategoryPreloaderVisible={props.subcategoryPreloaderVisible} setFilterPopupOpen={props.setFilterPopupOpen} filtersUpd={props.filtersUpd} setFiltersUpd={props.setFiltersUpd} filters={props.filters} setFilterProducts={props.setFilterProducts} filterProducts={props.filterProducts} products={props.products} category={selectedCategory} />
-          </Route>
-        </Switch>
-        : <></>}
+                    :
+                    <p key={'sub_category_empty'}>Пусто</p>
+                  : <></>}
+              </div>
+            </>
+            : <></>}
 
 
-    </div>
+        </div>
+      }
+    </>
+
   );
 }
 

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 // import { Route, Link } from 'react-router-dom';
 import Cart from './Cart/Cart';
 import { useHistory } from 'react-router-dom';
@@ -13,34 +13,49 @@ import UserData from './UserData/UserData';
 
 
 import emptyIcon from '../../assets/images/empry-cart.png'
+// import { copyText } from '../../assets/utils/utils';
 
 
 
-function CartPage(props) {
+function CartPage({
+  allCartProductsCount,
+  setSubmitActionPopupOpen,
+  handleLikeBtn,
+  favouritesProducts,
+  setCart,
+  cart,
+  currentUser,
+  loggedIn,
+
+}) {
 
   const history = useHistory();
 
-  const [deliveryMethod, setDeliveryMethod] = React.useState(deliveryMethods[0].name.toLowerCase());
+  const [deliveryMethod, setDeliveryMethod] = useState(deliveryMethods[0].name.toLowerCase());
 
-  const [fullAdressValue, setFullAdressValue] = React.useState('');
-  const [paymentMethod, setPaymentMethod] = React.useState('Наличными или картой (переводом) при получении');
+  const [fullAdressValue, setFullAdressValue] = useState('');
+  const [paymentMethod, setPaymentMethod] = useState('Наличными или картой (переводом) при получении');
 
-  const [userDataValid, setUserDataValid] = React.useState(false);
-  const [deliveryMethodValid, setDeliveryMethodValid] = React.useState(false);
+  const [userDataValid, setUserDataValid] = useState(false);
+  const [deliveryMethodValid, setDeliveryMethodValid] = useState(false);
 
   function handleDeliveryMethodSelect(method) {
     setDeliveryMethod(method.toLowerCase())
   }
 
+  const [isCartCopied, setCartCopied] = useState('')
+
+
+
   return (
     <div className="cart-page">
-      {props.allCartProductsCount.count && props.allCartProductsCount.count > 0 ?
+      {allCartProductsCount.count && allCartProductsCount.count > 0 ?
         <>
           <div className="cart-page__main">
             <div className="cart-page__section-heading">
-              <h2 className="cart-page__section-heading-numeral">1</h2>
+
               <h2 className="cart-page__section-heading-title">Корзина</h2>
-              <div className="cart-page__section-reset-cart" onClick={() => { props.setSubmitActionPopupOpen(true) }}>
+              <div className="cart-page__section-reset-cart" onClick={() => { setSubmitActionPopupOpen(true) }}>
                 <p className="cart-page__section-reset-cart-text">очистить корзину</p>
               </div>
               <div className="cart-page__section-go-back" onClick={() => history.goBack()}>
@@ -51,37 +66,56 @@ function CartPage(props) {
                 <p className="cart-page__section-go-back-text">Вернуться к покупкам</p>
               </div>
             </div>
-            <Cart handleLikeBtn={props.handleLikeBtn} favouritesProducts={props.favouritesProducts} allCartProductsCount={props.allCartProductsCount} setCart={props.setCart} cart={props.cart} />
-            <div className="cart-page__section-heading">
-              <h2 className="cart-page__section-heading-numeral">2</h2>
-              <h2 className="cart-page__section-heading-title">Способ и дата получения</h2>
+            <Cart
+              handleLikeBtn={handleLikeBtn}
+              favouritesProducts={favouritesProducts}
+              allCartProductsCount={allCartProductsCount}
+              setCart={setCart}
+              cart={cart}
+            />
+            {/* <div className="cart-page__section-heading">
+              <h2 className="cart-page__section-heading-title">2 Способ и дата получения</h2>
             </div>
-            <DeliveryMethod setDeliveryMethodValid={setDeliveryMethodValid} setFullAdressValue={setFullAdressValue} handleDeliveryMethodSelect={handleDeliveryMethodSelect} deliveryMethod={deliveryMethod} />
+            <DeliveryMethod
+              setDeliveryMethodValid={setDeliveryMethodValid}
+              setFullAdressValue={setFullAdressValue}
+              handleDeliveryMethodSelect={handleDeliveryMethodSelect}
+              deliveryMethod={deliveryMethod}
+            />
             <div className="cart-page__section-heading">
-              <h2 className="cart-page__section-heading-numeral">3</h2>
-              <h2 className="cart-page__section-heading-title">Способ Оплаты</h2>
+              <h2 className="cart-page__section-heading-title">3 Способ Оплаты</h2>
             </div>
-            <PaymentMethod paymentMethod={paymentMethod} setPaymentMethod={setPaymentMethod} />
+            <PaymentMethod
+              paymentMethod={paymentMethod}
+              setPaymentMethod={setPaymentMethod}
+            /> */}
             <div className="cart-page__section-heading">
-              <h2 className="cart-page__section-heading-numeral">4</h2>
               <h2 className="cart-page__section-heading-title">Ваши данные</h2>
             </div>
-            <UserData setUserDataValid={setUserDataValid} currentUser={props.currentUser} loggedIn={props.loggedIn} />
+            <UserData
+              setUserDataValid={setUserDataValid}
+              currentUser={currentUser}
+              loggedIn={loggedIn} />
           </div>
           <div className="cart-page__summary">
             <div className="cart-page__summary-info">
               <p className="cart-page__summary-title">В корзине</p>
-              <p className="cart-page__summary-count">{props.allCartProductsCount.count} {props.allCartProductsCount.count % 10 === 1 && 'товар'}{(props.allCartProductsCount.count % 10 >= 2 && props.allCartProductsCount.count % 10 <= 4) && 'товара'}{((props.allCartProductsCount.count % 10 >= 5 && props.allCartProductsCount.count % 10 <= 9) || props.allCartProductsCount.count % 10 === 0) && 'товаров'}</p>
-              <p className="cart-page__summary-total">{props.allCartProductsCount.totalPrice.toLocaleString('us')}&nbsp;₽</p>
-              <p className="cart-page__summary-delivery">{deliveryMethod[0].toUpperCase() + deliveryMethod.slice(1)}: <span className="cart-page__summary-delivery-method"></span></p>
-              <p className="cart-page__summary-delivery-adress">{deliveryMethod === 'Самовывоз'.toLowerCase() ? 'Магазин Диванчик по адресу: 7-й микрорайон, 2А, Тобольск, Тюменская область' : fullAdressValue ? fullAdressValue : 'Укажите адрес'}</p>
-              <p className="cart-page__summary-date">Дата: <span className="cart-page__summary-date-period">{deliveryMethod === 'Самовывоз'.toLowerCase() ? 'Завтра после 17:00' : '2 Октября - 16 Ноября'}</span></p>
-              <p className="cart-page__summary-payment">Оплата: <span className="cart-page__summary-payment-method">{paymentMethod}</span></p>
+              <p className="cart-page__summary-count">{allCartProductsCount.count} {allCartProductsCount.count % 10 === 1 && 'товар'}{(allCartProductsCount.count % 10 >= 2 && allCartProductsCount.count % 10 <= 4) && 'товара'}{((allCartProductsCount.count % 10 >= 5 && allCartProductsCount.count % 10 <= 9) || allCartProductsCount.count % 10 === 0) && 'товаров'}</p>
+              <p className="cart-page__summary-total">{allCartProductsCount.totalPrice.toLocaleString('us')}&nbsp;₽</p>
+              {/* <p className="cart-page__summary-delivery">{deliveryMethod[0].toUpperCase() + deliveryMethod.slice(1)}: <span className="cart-page__summary-delivery-method"></span></p> */}
+              {/* <p className="cart-page__summary-delivery-adress">{deliveryMethod === 'Самовывоз'.toLowerCase() ? 'Магазин Диванчик по адресу: 7-й микрорайон, 2А, Тобольск, Тюменская область' : fullAdressValue ? fullAdressValue : 'Укажите адрес'}</p> */}
+              {/* <p className="cart-page__summary-date">Дата: <span className="cart-page__summary-date-period">{deliveryMethod === 'Самовывоз'.toLowerCase() ? 'Завтра после 17:00' : '2 Октября - 16 Ноября'}</span></p> */}
+              {/* <p className="cart-page__summary-payment">Оплата: <span className="cart-page__summary-payment-method">{paymentMethod}</span></p> */}
               <div className={`cart-page__summary-pay-btn ${userDataValid && deliveryMethodValid ? '' : 'cart-page__summary-pay-btn_inactive'}`}>
                 <p className="cart-page__summary-pay-btn-text">{deliveryMethod === 'Самовывоз'.toLowerCase() ? 'Оформить заказ' : 'Оформить заказ'}</p>
               </div>
             </div>
-            <p className="cart-page__summary-share">Поделиться корзиной</p>
+            {/* <button type='button' className="cart-page__summary-share" onClick={() => {
+              let parms = {
+                cart: JSON.stringify(cart)
+              }
+              copyText({ text: `${window.location.protocol}//${window.location.host}/share-cart?` + new URLSearchParams(parms), setCopied: setCartCopied })
+            }}>{isCartCopied? 'Ссылка скопирована' : 'Поделиться корзиной'}</button> */}
           </div>
         </>
         :

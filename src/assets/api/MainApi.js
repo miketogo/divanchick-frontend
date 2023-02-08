@@ -64,7 +64,8 @@ class MainApi {
     let params = {
       translit_name: translit_name
     }
-    return fetch(`${MAIN_URL}/categories/get-exact-category?` + new URLSearchParams(params), {
+
+    return fetch(`${MAIN_URL}/categories/get-exact?` + new URLSearchParams(params), {
       method: "GET",
       credentials: "include",
       headers: {
@@ -81,7 +82,7 @@ class MainApi {
     if (last_id) params.last_id = last_id
     if (limit) params.limit = limit
 
-    return fetch(`${MAIN_URL}/sub-categories/all-by-category-id?` + new URLSearchParams(params), {
+    return fetch(`${MAIN_URL}/sub-categories/get-all?` + new URLSearchParams(params), {
       method: "GET",
       credentials: "include",
       headers: {
@@ -97,8 +98,7 @@ class MainApi {
     let params = {}
     if (data) params.data = data
 
-
-    return fetch(`${MAIN_URL}/items/all-by-sub-category-id?` + new URLSearchParams(params), {
+    return fetch(`${MAIN_URL}/items/get-all?` + new URLSearchParams(params), {
       method: "GET",
       credentials: "include",
       headers: {
@@ -114,7 +114,7 @@ class MainApi {
     if (category_translit_name) params.category_translit_name = category_translit_name
     if (translit_name) params.translit_name = translit_name
 
-    return fetch(`${MAIN_URL}/sub-categories/get-exact-sub-category?` + new URLSearchParams(params), {
+    return fetch(`${MAIN_URL}/sub-categories/get-exact?` + new URLSearchParams(params), {
       method: "GET",
       credentials: "include",
       headers: {
@@ -131,7 +131,7 @@ class MainApi {
     if (sub_category_translit_name) params.sub_category_translit_name = sub_category_translit_name
     if (_id) params._id = _id
 
-    return fetch(`${MAIN_URL}/items/get-exact-item?` + new URLSearchParams(params), {
+    return fetch(`${MAIN_URL}/items/get-exact?` + new URLSearchParams(params), {
       method: "GET",
       credentials: "include",
       headers: {
@@ -149,7 +149,6 @@ class MainApi {
     if (text) params.text = text
     if (limit) params.limit = limit
 
-
     return fetch(`${MAIN_URL}/search/items?` + new URLSearchParams(params), {
       method: "GET",
       credentials: "include",
@@ -165,10 +164,7 @@ class MainApi {
 
 
   getRandomSub() {
-
-
-
-    return fetch(`${MAIN_URL}/sub-categories/get-random-sub-category`, {
+    return fetch(`${MAIN_URL}/sub-categories/get-random`, {
       method: "GET",
       credentials: "include",
       headers: {

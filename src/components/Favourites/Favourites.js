@@ -9,17 +9,31 @@ import './Favourites.css';
 
 
 
-function Favourites(props) {
+function Favourites({
+    favouritesProducts,
+    handleLikeBtn,
+    setCartPopupOpen,
+    cart,
+    handleToCartBtn,
+}) {
 
     const history = useHistory();
     return (
         <div className="favourites">
             <h2 className="favourites__title">Избранное</h2>
-            {props.favouritesProducts && props.favouritesProducts.length > 0 ?
+            {favouritesProducts && favouritesProducts.length > 0 ?
                 <div className="favourites__products">
                     {
-                        props.favouritesProducts.map((product, i) => (
-                            <ProductCard handleLikeBtn={props.handleLikeBtn} favouritesProducts={props.favouritesProducts} setCartPopupOpen={props.setCartPopupOpen} cart={props.cart} handleToCartBtn={props.handleToCartBtn} link={`/categories/${product.category.link}/${product.sub_category.link}/${product.link}`} product={product} key={`FavoriteProductCard${i}`} />
+                        favouritesProducts.map((product, i) => (
+                            <ProductCard
+                                handleLikeBtn={handleLikeBtn}
+                                favouritesProducts={favouritesProducts}
+                                setCartPopupOpen={setCartPopupOpen}
+                                cart={cart}
+                                handleToCartBtn={handleToCartBtn}
+                                link={`/item/${product.category.translit_name}/${product.sub_category.translit_name}/${product._id}`}
+                                product={product}
+                                key={`FavoriteProductCard${i}`} />
                         ))
 
                     }

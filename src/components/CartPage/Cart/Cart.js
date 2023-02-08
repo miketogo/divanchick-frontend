@@ -79,7 +79,7 @@ function Cart(props) {
                         <>
 
                             <div className="cart__item cart__item_pc">
-                                <Link className="cart__item-img" to={`/categories/${item.category.translit_name}/${item.sub_category.translit_name}/${item._id}`}>
+                                <Link className="cart__item-img" to={`/item/${item.category.translit_name}/${item.sub_category.translit_name}/${item._id}`}>
                                     <img className="cart__item-img-photo" src={item.photos[0] ? `${MAIN_URL}/get-file/${item.photos[0]}` : ''} alt={item.name}></img>
                                 </Link>
 
@@ -135,7 +135,7 @@ function Cart(props) {
                             {/* MOBILE */}
                             <div className="cart__item cart__item_mobile">
                                 <div className="cart__item-row">
-                                    <Link className="cart__item-img" to={`/categories/${item.category.translit_name}/${item.sub_category.translit_name}/${item._id}`}>
+                                    <Link className="cart__item-img" to={`/item/${item.category.translit_name}/${item.sub_category.translit_name}/${item._id}`}>
                                         <img className="cart__item-img-photo" src={item.photos[0] ? `${MAIN_URL}/get-file/${item.photos[0]}` : ''} alt={item.name}></img>
                                     </Link>
                                     <div className="cart__item-column">

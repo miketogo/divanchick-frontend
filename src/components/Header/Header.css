@@ -490,7 +490,7 @@
   }
 }
 
-@media (max-width: 1750px) {
+@media (max-width: 1505px) {
   .header {
     padding: 20px 20px 28px;
     width: calc(100% - 20px * 2);

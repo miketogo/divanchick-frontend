@@ -26,21 +26,21 @@
 
 .cart-page__section-heading-numeral {
   font-style: normal;
-  font-weight: 600;
-  font-size: 44px;
-  line-height: 130%;
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 140%;
   /* or 57px */
 
 
   color: #000000;
-  margin: 0 20px 0 0;
+  margin: 0 12px 0 0;
 }
 
 .cart-page__section-heading-title {
   font-style: normal;
-  font-weight: 600;
-  font-size: 44px;
-  line-height: 130%;
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 140%;
   /* or 57px */
 
 
@@ -392,7 +392,7 @@
 
 
 
-@media (max-width: 1750px) {
+@media (max-width: 1505px) {
   .cart-page {
     padding: 0 20px 0 20px;
   }

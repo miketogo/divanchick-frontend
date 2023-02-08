@@ -71,7 +71,7 @@
 .filters-popup__title {
   font-style: normal;
   font-weight: 600;
-  font-size: 24px;
+  font-size: 20px;
   line-height: 130%;
   /* or 31px */
 
@@ -82,6 +82,7 @@
 
 .filters-popup__filters {
   margin: 32px 0 0 16px;
+
 }
 
 @media (max-width: 700px) {
@@ -95,10 +96,13 @@
   }
 
   .filters-popup__filters {
+    height: calc(100vh - 24px - 26px - 20px - 32px - 44px - 20px );
+    overflow: auto;
     width: calc(100% - 16px * 2);
-    margin: 32px auto 0;
+    margin: 24px auto 0;
   }
   .filters-popup__title{
+
     width: calc(100% - 16px * 2);
     margin: 20px auto 0;
   }

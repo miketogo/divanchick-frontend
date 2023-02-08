@@ -59,8 +59,13 @@
   margin: 8px auto 0;
   width: 100%;
   max-width: 450px;
-  height: 126px;
+  /* height: 126px; */
   object-fit: scale-down;
+  aspect-ratio: 1.72 / 1;
+
+  /* width: calc(100% + 24px);
+  object-fit: scale-down;
+  aspect-ratio: 1 / 1; */
 }
 
 .product-card__price {
@@ -422,6 +427,6 @@
   }
 
   .product-card__cart-btn_selected {
-    background: #7928BD !important;
+    background: #D4171E !important;
   }
 }

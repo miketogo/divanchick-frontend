@@ -34,7 +34,7 @@ function ProductCard({ product, cart, handleToCartBtn, setCartPopupOpen, link, h
     }
     let id = cityMap[name] ? cityMap[name] : "63777e74c505252a8fc59c0b"
     let value = product.firstc_data.price[id]
-    return Number(value).toLocaleString('us')
+    return Number(value)
   }
 
   const isInFavorite = favouritesProducts && favouritesProducts.filter((item) => {
@@ -48,9 +48,11 @@ function ProductCard({ product, cart, handleToCartBtn, setCartPopupOpen, link, h
     else return false
   }).length > 0
 
+  const priceValue = price()
+
   return (
 
-    <Link to={link} key={link} className='product-card'>
+    <Link to={link} key={link} className='product-card' title={product.name}>
       <div className='product-card__like-container' onClick={(e) => {
         e.stopPropagation();
         e.preventDefault();
@@ -68,22 +70,20 @@ function ProductCard({ product, cart, handleToCartBtn, setCartPopupOpen, link, h
       <div className='product-card__link'>
         <img className='product-card__img' src={product.photos[0] !== 'Не указано' ? `${MAIN_URL}/get-file/${product.photos[0]}` : ''} alt={product.name} key={product._id} />
         <div className='product-card__price'>
-          <p className='product-card__main-price'>{price()}&nbsp;₽</p>
+          <p className='product-card__main-price'>{Number(priceValue) > 0 ? `${priceValue.toLocaleString('us')} ₽` : ""}</p>
 
         </div>
-        <p className='product-card__name'>{product.name}</p>
+        <p className='product-card__name' >{product.name}</p>
         <p className={`product-card__amount ${amount > 0 ? '' : 'product-card__amount_zero'}`}>{amount > 0 ? `Доступно ${amount} шт.` : `Нет в наличии`}</p>
       </div>
       {amount === 0 ?
-        <div className={`product-card__cart-btn`} onClick={(e) => {
+        <a className={`product-card__cart-btn`} href="tel:+79199401208" onClick={(e) => {
           e.stopPropagation();
-          e.preventDefault();
-          addToCart()
         }}>
           <p className='product-card__cart-btn-text'>Звонок менеджеру</p>
           {PhoneIcon({ mainClassName: 'product-card__cart-btn-icon', fillClassName: 'product-card__cart-btn-icon-fill' })}
 
-        </div>
+        </a>
         :
         <div className={`product-card__cart-btn ${isInCart ? 'product-card__cart-btn_selected' : ''}`} onClick={(e) => {
           e.stopPropagation();

@@ -1,5 +1,5 @@
 .favourites {
-    padding: 52px 60px 110px 60px;
+    padding: 0 60px 110px 60px;
     display: flex;
     flex-direction: column;
 }
@@ -7,22 +7,22 @@
 .favourites__title {
     margin: 0;
     font-style: normal;
-    font-weight: 600;
-    font-size: 40px;
-    line-height: 130%;
+    font-weight: 500;
+    font-size: 28px;
+    line-height: 140%;
     /* identical to box height, or 52px */
 
 
-    color: #000000;
+    color: var(--text-color);
 
 }
 
 .favourites__products {
-    margin: 40px 0 0 0;
+    margin: 24px 0 0 0;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(435px,  1fr));
-    grid-template-rows: 599px;
-    grid-auto-rows: 599px;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-rows: max-content;
+    grid-auto-rows: max-content;
     row-gap: 20px;
     column-gap: 20px;
     width: 100%;
@@ -97,36 +97,40 @@
 
 }
 
-@media (max-width: 1750px) {
+@media (max-width: 1505px) {
     .favourites {
-        padding: 52px 20px 110px 20px;
+        padding: 0 20px 110px 20px;
     }
 
+
+}
+
+
+@media (max-width: 1300px) {
     .favourites__products {
-        grid-template-columns: repeat(auto-fit, minmax(296px,  1fr));
-        grid-template-rows: 487px;
-        grid-auto-rows: 487px;
-        row-gap: 16px;
-        column-gap: 16px;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}
+
+
+@media (max-width: 850px) {
+    .favourites__products {
+        margin: 12px 0 0;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        row-gap: 12px;
+        column-gap: 8px;
     }
 }
 
 @media (max-width: 700px) {
     .favourites__title {
         font-style: normal;
-        font-weight: 600;
-        font-size: 24px;
-        line-height: 130%;
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 140%;
     }
 
-    .favourites__products {
-        margin: 20px 0 0;
-        grid-template-columns: repeat(auto-fit, minmax(144px, 1fr));
-        grid-template-rows: 292px;
-        grid-auto-rows: 292px;
-        row-gap: 12px;
-        column-gap: 8px;
-    }
+
 
     .favourites__empty {
         margin: 20px 0 0;
@@ -147,7 +151,8 @@
         margin: 18px 0 0;
         text-align: center;
     }
-    .favourites__empty-icon{
+
+    .favourites__empty-icon {
         width: 60px;
         height: 60px;
     }
@@ -155,6 +160,12 @@
 
 @media (max-width: 580px) {
     .favourites {
-        padding: 12px 12px 60px 12px;
+        padding: 0 12px 60px 12px;
+    }
+}
+
+@media (max-width: 550px) {
+    .favourites__products {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }

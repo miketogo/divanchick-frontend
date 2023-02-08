@@ -14,13 +14,14 @@
 }
 
 .mini-preloader__loader {
-animation: rotate 0.5s infinite linear;
+    animation: rotate 0.5s infinite linear;
 }
-.mini-preloader__loader-color{
+
+.mini-preloader__loader-color {
     stop-color: #D5171E;
 }
 
-.mini-preloader__loader-color_link{
+.mini-preloader__loader-color_link {
     stop-color: #fff;
 }
 

@@ -8,6 +8,7 @@ import Crumbs from '../Сrumbs/Сrumbs'
 import './ProductPage.css';
 import mainApi from '../../assets/api/MainApi';
 import { getAmountByCity, MAIN_URL } from '../../assets/utils/constants';
+import SofaPreloader from '../SofaPreloader/SofaPreloader';
 
 function parseFeatureKey(item) {
   switch (item.key) {
@@ -76,11 +77,18 @@ function BuyInfo({ selectedByColorProduct, handleLikeBtn, isInFavorite, isInCart
       </div>
 
       <div className="product-page__second-info-row">
-        <p className="product-page__price">{price()}&nbsp;₽</p>
+        {price > 0 ? <p className="product-page__price">{price.toLocaleString('us')}&nbsp;₽</p> : null}
 
-        <div className={`product-page__buy-btn ${isInCart ? 'product-page__buy-btn_in-cart' : ''}`} onClick={addToCart}>
-          <p className={`product-page__buy-btn-text ${isInCart ? 'product-page__buy-btn-text_in-cart' : ''}`}>{isInCart ? 'Убрать из корзины' : selectedByColorProduct ? selectedByColorProduct.amount > 0 ? 'Купить' : 'Предзаказ' : selectedProduct.amount > 0 ? 'Купить' : 'Предзаказ'}</p>
-        </div>
+        {selectedProduct.amount > 0 ?
+          <div className={`product-page__buy-btn ${isInCart ? 'product-page__buy-btn_in-cart' : ''}`} onClick={addToCart}>
+            <p className={`product-page__buy-btn-text ${isInCart ? 'product-page__buy-btn-text_in-cart' : ''}`}>{isInCart ? 'Убрать из корзины' : 'Купить'}</p>
+          </div>
+          :
+          <a className={`product-page__buy-btn`} href="tel:+79199401208">
+            <p className={`product-page__buy-btn-text`}>Звонок менеджеру</p>
+          </a>
+        }
+
       </div>
       {selectedProduct.variations && selectedProduct.variations.length > 0 ?
         <div className="product-page__change-color-btn" onClick={handleColorOpen}>
@@ -100,23 +108,23 @@ function BuyInfo({ selectedByColorProduct, handleLikeBtn, isInFavorite, isInCart
   )
 }
 
-function ProductPage({ category, sub_category, handleToCartBtn, cart, handleColorPopupOpen, handleLikeBtn, favouritesProducts }) {
+function ProductPage({ handleToCartBtn, cart, handleColorPopupOpen, handleLikeBtn, favouritesProducts }) {
   const { url } = useRouteMatch();
   const history = useHistory();
-  let { product_name, color } = useParams();
+  let { id, color, category, sub_category } = useParams();
 
-
+  const [isPreloaderVisible, setPreloaderVisible] = useState(true)
   const [selectedProduct, setSelectedProduct] = useState(undefined);
   const [selectedByColorProduct, setSelectedByColorProduct] = useState(null);
 
   useEffect(() => {
-    if (category && sub_category && product_name) {
-
-      console.log(category, sub_category, product_name)
+    if (category && sub_category && id) {
+      setPreloaderVisible(true)
+      console.log(category, sub_category, id)
       mainApi.getExactItem({
-        category_translit_name: category.translit_name,
-        sub_category_translit_name: sub_category.translit_name,
-        _id: product_name
+        category_translit_name: category,
+        sub_category_translit_name: sub_category,
+        _id: id
       })
         .then((res) => {
           console.log(res)
@@ -128,10 +136,13 @@ function ProductPage({ category, sub_category, handleToCartBtn, cart, handleColo
         .catch((err) => {
           console.log(err)
         })
+        .finally(() => {
+          setPreloaderVisible(false)
+        })
 
 
     }
-  }, [category, sub_category, product_name])
+  }, [category, sub_category, id])
 
   const [selectedPhotoId, setSelectedPhotoId] = useState(1);
 
@@ -202,7 +213,7 @@ function ProductPage({ category, sub_category, handleToCartBtn, cart, handleColo
     }
     let id = cityMap[name] ? cityMap[name] : "63777e74c505252a8fc59c0b"
     let value = selectedProduct.firstc_data.price[id]
-    return Number(value).toLocaleString('us')
+    return Number(value)
   }
 
   const isInFavorite = selectedProduct && favouritesProducts && favouritesProducts.filter((item) => {
@@ -224,144 +235,156 @@ function ProductPage({ category, sub_category, handleToCartBtn, cart, handleColo
 
   }
 
+  const priceValue = selectedProduct ? price() : 0
+
   return (
     <div className="product-page">
-      <Crumbs links={[
-        {
-          name: 'Главная',
-          to: '/',
-        },
-        {
-          name: category && category.name,
-          to: `/categories/${category.translit_name}`,
-        },
-        {
-          name: sub_category && sub_category.name,
-          to: `/categories/${category.translit_name}/${sub_category.translit_name}`,
-        },
-        {
-          name: selectedProduct && selectedProduct.name,
-          to: `${url}`,
-        },
+      {isPreloaderVisible ?
+        <div className='product-page__preloader'>
+          <SofaPreloader />
+        </div>
+        :
+        <>
+          <Crumbs links={[
+            {
+              name: 'Главная',
+              to: '/',
+            },
+            {
+              name: selectedProduct && selectedProduct.category.name,
+              to: `/categories/${selectedProduct.category.translit_name}`,
+            },
+            {
+              name: selectedProduct && selectedProduct.sub_category.name,
+              to: `/sub-category/${selectedProduct.category.translit_name}/${selectedProduct.sub_category.translit_name}`,
+            },
+            {
+              name: selectedProduct && selectedProduct.name,
+              to: `${url}`,
+            },
 
-      ]} />
-      {selectedProduct &&
-        <div className="product-page__container">
-          <div className='product-page__content-container'>
-            <h2 className="product-page__title">{selectedProduct.name}</h2>
-            <div className="product-page__photo-and-info">
-              <div className="product-page__photos">
-                <div className="product-page__photos-mini" id="mini-photos">
-                  {selectedProduct.photos && selectedProduct.photos.slice(0, 5).map((item, i) => (
-                    <div className={`product-page__photo-mini ${selectedPhotoId === i + 1 ? 'product-page__photo-mini_selected' : ''}`} key={`product-page__photo-mini${i}`} onClick={() => { setSelectedPhotoId(i + 1) }}>
-                      <img className="product-page__photo-mini-img" src={`${MAIN_URL}/get-file/${item}`} alt={`${selectedProduct.name} фото №${i + 1}`}></img>
+          ]} />
+          {selectedProduct &&
+            <div className="product-page__container">
+              <div className='product-page__content-container'>
+                <h2 className="product-page__title">{selectedProduct.name}</h2>
+                <div className="product-page__photo-and-info">
+                  <div className="product-page__photos">
+                    <div className="product-page__photos-mini" id="mini-photos">
+                      {selectedProduct.photos && selectedProduct.photos.slice(0, 5).map((item, i) => (
+                        <div className={`product-page__photo-mini ${selectedPhotoId === i + 1 ? 'product-page__photo-mini_selected' : ''}`} key={`product-page__photo-mini${i}`} onClick={() => { setSelectedPhotoId(i + 1) }}>
+                          <img className="product-page__photo-mini-img" src={`${MAIN_URL}/get-file/${item}`} alt={`${selectedProduct.name} фото №${i + 1}`}></img>
+                        </div>
+                      ))}
                     </div>
-                  ))}
+
+                    <div className="product-page__big-photo-container" unselectable='true'>
+
+                      <div className="product-page__big-photo-controllers">
+                        {selectedProduct.photos.length > 1 ?
+                          <>
+                            <div onClick={handlePrevFotoClick} className="product-page__big-photo-controller-area">
+                              <svg className="product-page__big-photo-controller product-page__big-photo-controller_left" width="41" height="41" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M20.7848 40.4688C9.7391 40.4688 0.78479 31.5144 0.78479 20.4688V20.4688C0.78479 9.42306 9.7391 0.46875 20.7848 0.46875V0.46875C31.8305 0.46875 40.7848 9.42306 40.7848 20.4688V20.4688C40.7848 31.5144 31.8305 40.4688 20.7848 40.4688V40.4688Z" fill="var(--contrast-color)" />
+                                <path d="M23.7848 14.4688L18.4919 19.7616C18.1014 20.1522 18.1014 20.7853 18.4919 21.1759L23.7848 26.4688" stroke="white" strokeLinecap="round" />
+                              </svg>
+                            </div>
+                            <div onClick={handleNextFotoClick} className="product-page__big-photo-controller-area">
+                              <svg className="product-page__big-photo-controller product-page__big-photo-controller_right" width="41" height="41" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M20.2152 0.46875C31.2609 0.46875 40.2152 9.42306 40.2152 20.4688V20.4688C40.2152 31.5144 31.2609 40.4688 20.2152 40.4688V40.4688C9.16952 40.4687 0.21521 31.5144 0.21521 20.4687V20.4687C0.21521 9.42306 9.16952 0.46875 20.2152 0.46875V0.46875Z" fill="var(--contrast-color)" />
+                                <path d="M17.2152 26.4688L22.5081 21.1759C22.8986 20.7853 22.8986 20.1522 22.5081 19.7616L17.2152 14.4687" stroke="white" strokeLinecap="round" />
+                              </svg>
+                            </div>
+                          </>
+                          : <></>}
+
+                      </div>
+
+
+                      <img className="product-page__big-photo-img" src={selectedProduct.photos && `${MAIN_URL}/get-file/${selectedProduct.photos[selectedPhotoId - 1]}`} key={`${selectedProduct._id}${selectedPhotoId}`} alt={`${selectedProduct.name} фото №${selectedPhotoId}`}></img>
+                    </div>
+                  </div>
+
                 </div>
+                <BuyInfo
+                  selectedByColorProduct={selectedByColorProduct}
+                  handleLikeBtn={handleLikeBtn}
+                  isInFavorite={isInFavorite}
+                  isInCart={isInCart}
+                  price={priceValue}
+                  selectedProduct={selectedProduct}
+                  handleColorOpen={handleColorOpen}
+                  addToCart={addToCart}
+                  isMobile={true}
+                />
 
-                <div className="product-page__big-photo-container" unselectable='true'>
+                <div className="product-page__specifications" id='specifications'>
+                  {selectedProduct.description ?
+                    <>
+                      <p className="product-page__specifications-title">Описание</p>
+                      <p className="product-page__description">{selectedProduct.description}</p>
+                    </> : <></>}
 
-                  <div className="product-page__big-photo-controllers">
-                    {selectedProduct.photos.length > 1 ?
-                      <>
-                        <div onClick={handlePrevFotoClick} className="product-page__big-photo-controller-area">
-                          <svg className="product-page__big-photo-controller product-page__big-photo-controller_left" width="41" height="41" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M20.7848 40.4688C9.7391 40.4688 0.78479 31.5144 0.78479 20.4688V20.4688C0.78479 9.42306 9.7391 0.46875 20.7848 0.46875V0.46875C31.8305 0.46875 40.7848 9.42306 40.7848 20.4688V20.4688C40.7848 31.5144 31.8305 40.4688 20.7848 40.4688V40.4688Z" fill="var(--contrast-color)" />
-                            <path d="M23.7848 14.4688L18.4919 19.7616C18.1014 20.1522 18.1014 20.7853 18.4919 21.1759L23.7848 26.4688" stroke="white" strokeLinecap="round" />
-                          </svg>
+                  <div className="product-page__specification-items">
+
+                    {selectedProduct && selectedProduct.firstc_data.brand_name ?
+                      <div className="product-page__specification-item">
+                        <p className="product-page__specification-name">Производитель</p>
+                        <div className="product-page__specification-line"></div>
+                        <p className={`product-page__specification-value ${selectedProduct.firstc_data.brand_name.length <= 36 ? 'product-page__specification-value_nowrap' : ''}`}>{selectedProduct.firstc_data.brand_name}</p>
+                      </div>
+                      : <></>}
+
+                    <div className="product-page__specification-item">
+                      <p className="product-page__specification-name">Артикул</p>
+                      <div className="product-page__specification-line"></div>
+                      <p className={`product-page__specification-value ${selectedProduct.firstc_data.barcode <= 36 ? 'product-page__specification-value_nowrap' : ''}`}>{selectedProduct.firstc_data.barcode}</p>
+                    </div>
+
+
+                    {selectedProduct.features && selectedProduct.features.length > 0 ?
+                      selectedProduct.features.map((item) => (
+                        <div className="product-page__specification-item">
+                          <p className="product-page__specification-name">
+                            {parseFeatureKey(item)}
+                          </p>
+                          <div className="product-page__specification-line"></div>
+                          <p className={`product-page__specification-value ${parseFeatureValue(item).length <= 20 ? 'product-page__specification-value_nowrap' : ''}`}>{parseFeatureValue(item)}</p>
                         </div>
-                        <div onClick={handleNextFotoClick} className="product-page__big-photo-controller-area">
-                          <svg className="product-page__big-photo-controller product-page__big-photo-controller_right" width="41" height="41" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M20.2152 0.46875C31.2609 0.46875 40.2152 9.42306 40.2152 20.4688V20.4688C40.2152 31.5144 31.2609 40.4688 20.2152 40.4688V40.4688C9.16952 40.4687 0.21521 31.5144 0.21521 20.4687V20.4687C0.21521 9.42306 9.16952 0.46875 20.2152 0.46875V0.46875Z" fill="var(--contrast-color)" />
-                            <path d="M17.2152 26.4688L22.5081 21.1759C22.8986 20.7853 22.8986 20.1522 22.5081 19.7616L17.2152 14.4687" stroke="white" strokeLinecap="round" />
-                          </svg>
-                        </div>
-                      </>
+                      ))
                       : <></>}
 
                   </div>
 
-
-                  <img className="product-page__big-photo-img" src={selectedProduct.photos && `${MAIN_URL}/get-file/${selectedProduct.photos[selectedPhotoId - 1]}`} key={`${selectedProduct._id}${selectedPhotoId}`} alt={`${selectedProduct.name} фото №${selectedPhotoId}`}></img>
                 </div>
-              </div>
-
-            </div>
-            <BuyInfo
-              selectedByColorProduct={selectedByColorProduct}
-              handleLikeBtn={handleLikeBtn}
-              isInFavorite={isInFavorite}
-              isInCart={isInCart}
-              price={price}
-              selectedProduct={selectedProduct}
-              handleColorOpen={handleColorOpen}
-              addToCart={addToCart}
-              isMobile={true}
-            />
-
-            <div className="product-page__specifications" id='specifications'>
-              {selectedProduct.description ?
-                <>
-                  <p className="product-page__specifications-title">Описание</p>
-                  <p className="product-page__description">{selectedProduct.description}</p>
-                </> : <></>}
-
-              <div className="product-page__specification-items">
-
-                {selectedProduct && selectedProduct.firstc_data.brand_name ?
-                  <div className="product-page__specification-item">
-                    <p className="product-page__specification-name">Производитель</p>
-                    <div className="product-page__specification-line"></div>
-                    <p className={`product-page__specification-value ${selectedProduct.firstc_data.brand_name.length <= 36 ? 'product-page__specification-value_nowrap' : ''}`}>{selectedProduct.firstc_data.brand_name}</p>
-                  </div>
-                  : <></>}
-
-                <div className="product-page__specification-item">
-                  <p className="product-page__specification-name">Артикул</p>
-                  <div className="product-page__specification-line"></div>
-                  <p className={`product-page__specification-value ${selectedProduct.firstc_data.barcode <= 36 ? 'product-page__specification-value_nowrap' : ''}`}>{selectedProduct.firstc_data.barcode}</p>
-                </div>
-
-
-                {selectedProduct.features && selectedProduct.features.length > 0 ?
-                  selectedProduct.features.map((item) => (
-                    <div className="product-page__specification-item">
-                      <p className="product-page__specification-name">
-                        {parseFeatureKey(item)}
-                      </p>
-                      <div className="product-page__specification-line"></div>
-                      <p className={`product-page__specification-value ${parseFeatureValue(item).length <= 20 ? 'product-page__specification-value_nowrap' : ''}`}>{parseFeatureValue(item)}</p>
-                    </div>
-                  ))
-                  : <></>}
 
               </div>
 
+              <div className='product-page__infos'>
+                <BuyInfo
+                  selectedByColorProduct={selectedByColorProduct}
+                  handleLikeBtn={handleLikeBtn}
+                  isInFavorite={isInFavorite}
+                  isInCart={isInCart}
+                  price={priceValue}
+                  selectedProduct={selectedProduct}
+                  handleColorOpen={handleColorOpen}
+                  addToCart={addToCart}
+                  isMobile={false}
+                />
+
+              </div>
+
+
+
             </div>
-
-          </div>
-
-          <div className='product-page__infos'>
-            <BuyInfo
-              selectedByColorProduct={selectedByColorProduct}
-              handleLikeBtn={handleLikeBtn}
-              isInFavorite={isInFavorite}
-              isInCart={isInCart}
-              price={price}
-              selectedProduct={selectedProduct}
-              handleColorOpen={handleColorOpen}
-              addToCart={addToCart}
-              isMobile={false}
-            />
-
-          </div>
-
-
-
-        </div>
+          }
+        </>
       }
 
     </div >
+
+
   );
 }
 
