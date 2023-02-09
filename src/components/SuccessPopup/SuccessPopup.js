@@ -10,6 +10,7 @@ import React from "react";
 function SuccessPopup({
     handleClose,
     isOpen,
+    ai_id,
 }) {
 
   return (
@@ -20,7 +21,7 @@ function SuccessPopup({
             <path d="M2 18L18 2M2 2L18 18" stroke="black" strokeWidth="3.2" strokeLinecap="round" />
           </svg>
         </div>
-        <p className="success-popup__text">Вы успешно оформили заказ!</p>
+        <p className="success-popup__text">Вы успешно оформили заказ {ai_id ? ai_id : ''}!</p>
         <p className="success-popup__subtext">В ближайшее время с вами свяжется менеджер для уточнения деталей заказа</p>
         <div className="success-popup__btns">
           <div className="success-popup__btn success-popup__btn_disagree" onClick={handleClose}>

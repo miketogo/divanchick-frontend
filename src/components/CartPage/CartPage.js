@@ -53,6 +53,7 @@ function CartPage({
     history.goBack()
   }
   const [isPreloaderVisible, setPreloaderVisible] = useState(false)
+  const [createdOrder, setCreatedOrder] = useState(undefined)
   function handleCreateOrder() {
     if (isPreloaderVisible) return
     setPreloaderVisible(true)
@@ -75,6 +76,7 @@ function CartPage({
     })
       .then((res) => {
         console.log(res)
+        setCreatedOrder(res)
         setSuccessPopupOpen(true)
         let cartArray = []
         setCart(cartArray)
@@ -91,7 +93,7 @@ function CartPage({
 
   return (
     <div className="cart-page">
-      <SuccessPopup isOpen={isSuccessPopupOpen} handleClose={handleCloseSuccessPopup} />
+      <SuccessPopup ai_id={createdOrder ? `№${('00000000' + createdOrder.ai_id).slice(-8)}` : ''} isOpen={isSuccessPopupOpen} handleClose={handleCloseSuccessPopup} />
       {allCartProductsCount.count && allCartProductsCount.count > 0 ?
         <>
           <div className="cart-page__main">
