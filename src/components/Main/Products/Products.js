@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import mainApi from '../../../assets/api/MainApi';
 import useWindowSize from '../../../assets/hooks/useWindowSize';
+import MiniPreloader from '../../MiniPreloader/MiniPreloader';
 import ProductCard from '../../ProductCard/ProductCard';
 
 
@@ -18,8 +19,10 @@ function Products({
 
     const windowSize = useWindowSize()
     const [products, setProducts] = useState(undefined)
+    const [isPreloaderVisible, setPreloaderVisible] = useState(true)
     useEffect(() => {
         if (!type) return
+        setPreloaderVisible(true)
         mainApi.getHitsOrNews({ type: type })
             .then((res) => {
                 console.log(res.data)
@@ -27,6 +30,9 @@ function Products({
             })
             .catch((err) => {
                 console.log(err)
+            })
+            .finally(() => {
+                setPreloaderVisible(false)
             })
     }, [type])
 
@@ -57,21 +63,28 @@ function Products({
                 :
                 <p className='products__title'>Новинки</p>
             }
-            <div className='products__cards'>
-                {productsByWindowSize && productsByWindowSize.length > 0 ? productsByWindowSize.map((item, i) => (
-                    <ProductCard
-                        handleLikeBtn={handleLikeBtn}
-                        favouritesProducts={favouritesProducts}
-                        setCartPopupOpen={setCartPopupOpen}
-                        cart={cart}
-                        handleToCartBtn={handleToCartBtn}
-                        link={`/item/${item.category.translit_name}/${item.sub_category.translit_name}/${item._id}`}
-                        product={item}
+            {isPreloaderVisible ?
+                <div className='products__preloader'>
+                    <MiniPreloader />
+                </div>
+                :
+                <div className='products__cards'>
+                    {productsByWindowSize && productsByWindowSize.length > 0 ? productsByWindowSize.map((item, i) => (
+                        <ProductCard
+                            handleLikeBtn={handleLikeBtn}
+                            favouritesProducts={favouritesProducts}
+                            setCartPopupOpen={setCartPopupOpen}
+                            cart={cart}
+                            handleToCartBtn={handleToCartBtn}
+                            link={`/item/${item.category.translit_name}/${item.sub_category.translit_name}/${item._id}`}
+                            product={item}
 
-                        key={`Main-ProductCard${type}${i}`}
-                    />
-                )) : null}
-            </div>
+                            key={`Main-ProductCard${type}${i}`}
+                        />
+                    )) : null}
+                </div>
+            }
+
 
         </div>
     );

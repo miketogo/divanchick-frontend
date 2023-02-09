@@ -6,7 +6,10 @@
 :root {
     --text-color: #000000;
     --contrast-color: #E11C23;
+    --preloader-first-color: #E5EEFC;
+    --preloader-second-color: #D6DEFF;
 }
+
 
 
 
@@ -34,4 +37,26 @@ button {
     cursor: pointer;
     outline: none;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+
+
+.dislpay_none {
+    display: none;
+}
+
+.image_preloader {
+
+    background: linear-gradient(to right, var(--preloader-first-color) 8%, var(--preloader-second-color) 38%, var(--preloader-first-color) 54%);
+    background-size: 100vw 100vh;
+    animation-duration: 1.5s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-name: placeHolderShimmer;
+    animation-timing-function: linear;
+
+    height: 100%;
+    width: 100%;
+    position: relative;
+
 }

@@ -1,0 +1,112 @@
+.rooms-drop {
+    opacity: 0;
+    visibility: hidden;
+    display: none;
+    opacity: 0;
+    display: none;
+    background: #FBFBFB;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+
+    box-sizing: border-box;
+    position: absolute;
+    top: calc(100% + 20px);
+    left: 0;
+    z-index: 10;
+    padding: 24px 16px;
+    /* min-height: 200px; */
+    box-shadow: 0px 0px 10px rgba(2, 2, 2, 0.08);
+}
+
+.rooms-drop_active {
+    visibility: visible;
+    opacity: 1;
+    display: flex;
+    animation: fadein 0.5s;
+    /*
+    animation-iteration-count: 1; */
+}
+
+@keyframes fadein {
+    0% {
+        transform: translateY(-50px);
+        opacity: 0
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1
+    }
+}
+
+
+.rooms-drop__cards {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.rooms-drop__card {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 24px;
+    grid-template-rows: max-content;
+    column-gap: 20px;
+    padding: 12px 10px;
+    border-radius: 1000px;
+    box-sizing: border-box;
+    background-color: transparent;
+    transition: all 0.2s linear;
+    cursor: pointer;
+}
+
+.rooms-drop__card:hover {
+    background: #F0F0F0;
+}
+
+.rooms-drop__card-info {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 34px 1fr;
+    grid-template-rows: max-content;
+    column-gap: 5px;
+}
+
+.rooms-drop__card-icon {
+    width: 24px;
+    height: 24px;
+}
+
+.rooms-drop__card-icon-fill {
+    fill: var(--text-color);
+}
+
+.rooms-drop__card-icon-stroke {
+    stroke: var(--text-color);
+}
+
+.rooms-drop__card-name {
+    margin: 0;
+    color: var(--text-color);
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 130%;
+}
+
+.rooms-drop__card-arrow{
+    width: 20px;
+    height: 20px;
+}
+
+.rooms-drop__card-arrow-fill{
+    fill: var(--contrast-color);
+}
+
+@media (max-width: 780px) {
+    .rooms-drop{
+        display: none !important;
+    }
+}

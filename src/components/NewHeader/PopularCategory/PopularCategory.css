@@ -1,0 +1,123 @@
+.popular-category {
+    box-sizing: border-box;
+    padding: 0 60px;
+    /* margin: 24px 0 0; */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+
+}
+
+.popular-category__items {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    justify-content: space-around;
+}
+
+.popular-category__item {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    width: 130px;
+}
+
+.popular-category__item-icon-box {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid #EEEEEE;
+    border-radius: 50%;
+}
+
+.popular-category__item-icon {
+    width: 34px;
+    height: 34px;
+}
+
+.popular-category__item-icon-fill {
+    fill: var(--text-color);
+}
+
+.popular-category__item-icon-stroke {
+    stroke: var(--text-color);
+}
+
+.popular-category__item-name {
+    margin: 0;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 130%;
+    color: var(--text-color);
+    white-space: nowrap;
+}
+
+
+
+.popular-category__items::-webkit-scrollbar {
+    height: 3px;
+}
+
+.popular-category__items::-webkit-scrollbar-track {
+    /* box-shadow: inset 0 0 6px var(--main-element-secondary-bg); */
+    border: none;
+    outline: none;
+    background-color: transparent;
+}
+
+.popular-category__items::-webkit-scrollbar-thumb {
+    background-color: var(--contrast-color);
+    outline: none;
+    border-radius: 100px;
+    overflow: visible;
+}
+
+.item-comments__items_hide-scroll::-webkit-scrollbar-track {
+    /* box-shadow: inset 0 0 6px var(--main-element-secondary-bg); */
+    border: none;
+    outline: none;
+    background-color: transparent !important;
+}
+
+
+@media (max-width: 1505px) {
+    .popular-category {
+        padding: 0 20px;
+
+    }
+}
+
+
+@media (max-width: 670px) {
+    .popular-category {}
+
+    .popular-category__items {
+        gap: 20px;
+        overflow: auto;
+        width: unset;
+        justify-content: unset;
+        padding-bottom: 10px;
+    }
+
+    .popular-category__item {
+        min-width: 100px;
+    }
+
+    .popular-category__item-icon {
+        width: 26px;
+        height: 26px;
+    }
+
+    .popular-category__item-icon-box {
+        width: 50px;
+        height: 50px;
+    }
+}

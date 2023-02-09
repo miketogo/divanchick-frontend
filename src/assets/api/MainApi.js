@@ -230,7 +230,7 @@ class MainApi {
     }).then(this._checkResponse)
   };
 
-  getHitsOrNews({ type}) {
+  getHitsOrNews({ type }) {
     let params = {}
     if (type) params.type = type
 
@@ -257,6 +257,71 @@ class MainApi {
 
     }).then(this._checkResponse);
   }
+
+  getRooms({ last_id, limit }) {
+    let params = {}
+    if (last_id) params.last_id = last_id
+    if (limit) params.limit = limit
+
+
+    return fetch(`${MAIN_URL}/rooms/get-all?` + new URLSearchParams(params), {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+
+    }).then(this._checkResponse);
+  }
+
+  getSubcategoriesByRoom({ translit_name, last_id, limit }) {
+    let params = {}
+    if (translit_name) params.translit_name = translit_name
+    if (last_id) params.last_id = last_id
+    if (limit) params.limit = limit
+
+    return fetch(`${MAIN_URL}/rooms-to-sub-categories/get-all?` + new URLSearchParams(params), {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+
+    }).then(this._checkResponse);
+  }
+
+  getAllCategories({ last_id, limit }) {
+    let params = {}
+
+    if (last_id) params.last_id = last_id
+    if (limit) params.limit = limit
+
+    return fetch(`${MAIN_URL}/categories/get-all?` + new URLSearchParams(params), {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+
+    }).then(this._checkResponse);
+  }
+
+  getTopCategories() {
+    return fetch(`${MAIN_URL}/categories/get-top`, {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+
+    }).then(this._checkResponse);
+  }
+
+
 
 }
 

@@ -27,6 +27,8 @@ import Main from '../Main/Main';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import SubCategory from '../SubCategory/SubCategory';
 import ProductPage from '../ProductPage/ProductPage';
+import NewHeader from '../NewHeader/NewHeader';
+import Room from '../Room/Room';
 
 // import useScrollPosition from '../../utils/useScrollPosition';
 
@@ -383,7 +385,7 @@ function App() {
           <CartPopup handleLikeBtn={handleLikeBtn} favouritesProducts={favouritesProducts} allCartProductsCount={allCartProductsCount} setCart={setCart} cart={cart} isCartPopupOpen={isCartPopupOpen} handleCartPopupClose={handleCartPopupClose} />
 
           <CityPopup isCityPopupOpen={isCityPopupOpen} handleCityPopupClose={handleCityPopupClose} cityValue={cityValue} setCityValue={setCityValue} cities={cities} />
-          <Header currentUser={currentUser} loggedIn={loggedIn} favouritesProducts={favouritesProducts} allCartProductsCount={allCartProductsCount} categories={allCategories} screenWidth={screenWidth} handleCityPopupOpen={handleCityPopupOpen} cityValue={cityValue} products={allProducts} />
+          <NewHeader favouritesProducts={favouritesProducts} allCartProductsCount={allCartProductsCount} />
           <Switch>
             <Route exact path={`/`}>
               <Main
@@ -396,6 +398,9 @@ function App() {
             </Route>
             <Route path={`/categories/:category`}>
               <Category />
+            </Route>
+            <Route path={`/room/:room`}>
+              <Room />
             </Route>
             <Route path={`/sub-category/:category/:sub_category`}>
               <SubCategory

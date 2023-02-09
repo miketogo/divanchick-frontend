@@ -16,3 +16,10 @@
 }
 
 
+@media (max-width: 750px) {
+
+    .main {
+        padding: 10px 20px 80px;
+    }
+
+}
