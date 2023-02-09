@@ -72,6 +72,7 @@ function Banner() {
                         flex: 1,
                         opacity: i === index ? 1 : 0,
                         transition: "opacity 0.5s ease",
+                        zIndex: i === index ? 2 : 0,
                     }}
                     className="banner__slide"
                     to={`/item/${slide.item_data.item.category.translit_name}/${slide.item_data.item.sub_category.translit_name}/${slide.item_data.item._id}`}

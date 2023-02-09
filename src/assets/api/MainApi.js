@@ -247,7 +247,7 @@ class MainApi {
   }
 
   getBanners() {
-    return fetch(`${MAIN_URL}/banners/get`, {
+    return fetch(`${MAIN_URL}/big-image/get`, {
       method: "GET",
       credentials: "include",
       headers: {
