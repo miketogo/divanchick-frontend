@@ -263,11 +263,11 @@ function App() {
     }
     if (cart) {
       cart.forEach(item => {
-        counter.count = counter.count + item.count
+        counter.count = counter.count + Number(item.count)
         if (item.discount && item.discount > 0) {
           counter.totalPrice = counter.totalPrice + ((getPrice(item) - (item.price / 100 * item.discount)) * item.count)
         } else {
-          counter.totalPrice = counter.totalPrice + (getPrice(item) * item.count)
+          counter.totalPrice = Number(counter.totalPrice) + (getPrice(item) * Number(item.count))
         }
 
 
