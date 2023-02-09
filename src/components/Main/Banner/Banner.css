@@ -51,15 +51,17 @@
     font-size: 40px;
     line-height: 152%;
     color: var(--text-color);
-    margin: 0;
+    margin: -1px 0 0;
 }
 
 .banner__title:first-of-type {
     min-width: 400px;
     border-radius: 0px 16px 16px 0px;
 
-
+    margin: 0;
 }
+
+
 
 
 .banner__product {
@@ -172,7 +174,8 @@
         font-size: 14px;
         line-height: 150%;
     }
-    .banner__slide-counter{
+
+    .banner__slide-counter {
         width: 10px;
         height: 10px;
     }

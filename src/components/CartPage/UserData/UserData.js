@@ -234,7 +234,7 @@ function UserData({
                 <div className="cart-user-data__contact-inputs">
                     <div className="cart-user-data__input-container-box">
                         <div className={`cart-user-data__input-container ${!phoneValidity.validState && phoneValidity.errorMassage ? 'cart-user-data__input-container_error' : ''} ${phoneValidity.validState ? 'cart-user-data__input-container_valid' : ''}`}>
-                            <input onKeyDown={(e) => handlePhoneDelite(e)} placeholder='+7 (___) ___ __ __' className="cart-user-data__input" name="text" type="phone" value={personalValues.phone} onChange={handlePhoneChange} maxLength="250"></input>
+                            <input inputMode='tel' onKeyDown={(e) => handlePhoneDelite(e)} placeholder='+7 (___) ___ __ __' className="cart-user-data__input" name="text" type="phone" value={personalValues.phone} onChange={handlePhoneChange} maxLength="250"></input>
                             <p className="cart-user-data__input-title">Контактный телефон <span className="cart-user-data__input-reqiered">*</span></p>
                         </div>
                         {!phoneValidity.validState && phoneValidity.errorMassage && <p className="cart-user-data__input-error">{phoneValidity.errorMassage}</p>}

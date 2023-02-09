@@ -25,6 +25,19 @@
     width: 130px;
 }
 
+.popular-category__item:hover .popular-category__item-icon-fill{
+    fill: var(--contrast-color);
+}
+
+.popular-category__item:hover .popular-category__item-icon-stroke{
+    stroke: var(--contrast-color);
+}
+
+.popular-category__item:hover .popular-category__item-name{
+    color: var(--contrast-color);
+}
+
+
 .popular-category__item-icon-box {
     width: 60px;
     height: 60px;

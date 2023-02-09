@@ -17,6 +17,7 @@ import { getCorrectWordForm } from '../../assets/utils/utils';
 import SuccessPopup from '../SuccessPopup/SuccessPopup';
 import { getCityId } from '../../assets/utils/constants';
 import mainApi from '../../assets/api/MainApi';
+import MiniPreloader from '../MiniPreloader/MiniPreloader';
 // import { copyText } from '../../assets/utils/utils';
 
 
@@ -51,9 +52,10 @@ function CartPage({
     setSuccessPopupOpen(false)
     history.goBack()
   }
-
+  const [isPreloaderVisible, setPreloaderVisible] = useState(false)
   function handleCreateOrder() {
-
+    if (isPreloaderVisible) return
+    setPreloaderVisible(true)
     let cart_to_api = cart.map((item) => {
       return {
         item_id: item._id,
@@ -71,16 +73,19 @@ function CartPage({
       phone: personalValues.phone.replace(/\D/g, ''),
       email: personalValues.email,
     })
-    .then((res)=>{
-      console.log(res)
-      setSuccessPopupOpen(true)
-      let cartArray = []
-      setCart(cartArray)
-      localStorage.setItem("cart", JSON.stringify(cartArray));
-    })
-    .catch((err)=>{
-      console.log(err)
-    })
+      .then((res) => {
+        console.log(res)
+        setSuccessPopupOpen(true)
+        let cartArray = []
+        setCart(cartArray)
+        localStorage.setItem("cart", JSON.stringify(cartArray));
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+      .finally(() => {
+        setPreloaderVisible(false)
+      })
 
   }
 
@@ -148,7 +153,12 @@ function CartPage({
               {/* <p className="cart-page__summary-date">Дата: <span className="cart-page__summary-date-period">{deliveryMethod === 'Самовывоз'.toLowerCase() ? 'Завтра после 17:00' : '2 Октября - 16 Ноября'}</span></p> */}
               {/* <p className="cart-page__summary-payment">Оплата: <span className="cart-page__summary-payment-method">{paymentMethod}</span></p> */}
               <button className={`cart-page__summary-pay-btn ${userDataValid ? '' : 'cart-page__summary-pay-btn_inactive'}`} type="button" onClick={handleCreateOrder}>
-                <p className="cart-page__summary-pay-btn-text">Оформить заказ</p>
+                {
+                  isPreloaderVisible ?
+                    <MiniPreloader isLinkColor={true} />
+                    :
+                    <p className="cart-page__summary-pay-btn-text">Оформить заказ</p>
+                }
               </button>
             </div>
             {/* <button type='button' className="cart-page__summary-share" onClick={() => {
