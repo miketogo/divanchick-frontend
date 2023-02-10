@@ -127,3 +127,4 @@ export function getIconByType({ type, mainClassName, fillClassName, strokeClassN
             break;
     }
 }
+

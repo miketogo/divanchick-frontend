@@ -142,7 +142,7 @@ export const promotedCardsLinks = {
   kitchen: {
     title: `Кухонная
 зона`,
-    path: `/categories/kuhni`,
+    path: `/room/kuhnja`,
     type: 'kuhnia',
     img: kuhniaImg,
     items: [
@@ -166,7 +166,7 @@ export const promotedCardsLinks = {
   },
   bedroom: {
     title: `Спальня`,
-    path: `/categories/krovati`,
+    path: `/room/spalnja`,
     type: 'spalnia',
     img: spalniaImg,
     items: [
@@ -182,7 +182,7 @@ export const promotedCardsLinks = {
   },
   livingroom: {
     title: `Гостиная`,
-    path: `/categories/tumby-i-komody`,
+    path: `/room/gostinaja`,
     type: 'livingroom',
     img: livingroomImg,
     items: [
@@ -202,7 +202,7 @@ export const promotedCardsLinks = {
   },
   office: {
     title: `Офис`,
-    path: `/categories/kresla-i-stulja`,
+    path: `/room/ofis`,
     type: 'office',
     img: officeImg,
     items: [
