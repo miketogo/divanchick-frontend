@@ -59,7 +59,7 @@ function Footer() {
       <div className="footer__contacts">
         <h2 className="footer__contacts-title">Позвоните нам, если остались вопросы</h2>
         <a target="_blank" rel="noreferrer" href="tel:+79199401208" className="footer__contacts-tel">+7 (919) 940-12-08</a>
-        <p className="footer__contacts-time">Ежедневно с 09:00 до 20:00</p>
+        <p className="footer__contacts-time">Пн-Cб 09–20 / Вс 09–19</p>
         <div className="footer__contacts-socials">
           <a className="footer__contacts-social" target="_blank" rel="noreferrer" href="https://vk.com/divanchik72">
             <svg className="footer__contacts-social-icon" width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -171,7 +171,7 @@ function NewHeader({
                     <div className='header__phone-and-time'>
                         <a className="header__phone" rel="noreferrer" href="tel:+79199401208" >+7 919 940 12 08</a>
                         <div className='header__time'>
-                            <p className='header__time-value'>Пн-Cб 09–21</p>
+                            <p className='header__time-value'>Пн-Cб 09–20</p>
                             <p className='header__time-value'>Вс 09–19</p>
 
                         </div>
