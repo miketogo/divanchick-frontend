@@ -7,7 +7,7 @@ import officeImg from '../images/main/office.png'
 
 
 
-export const MAIN_URL = 'https://divanchik-backend.cabatest.ru'
+export const MAIN_URL = 'https://app.xn--80adfqcmt4f.shop'
 
 
 export const MAIN_CATEGORIES = [
