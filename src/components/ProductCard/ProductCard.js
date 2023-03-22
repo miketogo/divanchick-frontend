@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import { CartIcon, PhoneIcon } from '../../assets/icons/icons';
 import { getAmountByCity, MAIN_URL } from '../../assets/utils/constants';
@@ -58,9 +58,18 @@ function ProductCard({
 
   const priceValue = price()
 
+  const [photo, setPhoto] = useState(product.photos[0] !== 'Не указано' ? `${MAIN_URL}/get-file/${product.photos[0]}` : '')
+  const [slide, setSlide] = useState(0)
+
+  function handlePhotoSlide(i) {
+    console.log(i)
+    setSlide(i)
+    setPhoto(`${MAIN_URL}/get-file/${product.photos[i]}`)
+  }
+
   return (
 
-    <Link to={link} key={link} className='product-card' title={product.name}>
+    <Link to={link} key={link} className='product-card' >
       <div className='product-card__like-container' onClick={(e) => {
         e.stopPropagation();
         e.preventDefault();
@@ -76,12 +85,39 @@ function ProductCard({
       </div>
 
       <div className='product-card__link'>
-        <img className='product-card__img' src={product.photos[0] !== 'Не указано' ? `${MAIN_URL}/get-file/${product.photos[0]}` : ''} alt={product.name} key={product._id} />
+        <div className='product-card__img-box' onMouseLeave={() => {
+          if (photo !== `${MAIN_URL}/get-file/${product.photos[0]}`) {
+            setPhoto(`${MAIN_URL}/get-file/${product.photos[0]}`)
+          }
+        }}>
+          {product.photos.length > 1 ?
+            <div className='product-card__img-grid' style={{
+              gridTemplateColumns: `repeat(${product.photos.length > 4 ? 4 : product.photos.length}, minMax(0, 1fr))`,
+            }}>
+              {product.photos.slice(0, 4).map((item, i) => (
+                <div className='product-card__img-grid-item' onMouseEnter={() => {
+                  handlePhotoSlide(i)
+                }}>
+                  {i === 0 ? <img className='product-card__img-grid-item-cache' src={`${MAIN_URL}/get-file/${product.photos[i]}`} alt=''></img> : null}
+                </div>
+              ))}
+            </div>
+            : null}
+          {product.photos.length > 1 ?
+            <div className='product-card__img-sliders' style={{
+              gridTemplateColumns: `repeat(${product.photos.length > 4 ? 4 : product.photos.length}, minMax(0, 1fr))`,
+            }}>
+              {product.photos.slice(0, 4).map((item, i) => (
+                <div className={`product-card__img-slider ${photo === `${MAIN_URL}/get-file/${product.photos[i]}` ? 'product-card__img-slider_active' : ''}`}></div>
+              ))}
+            </div> : null}
+          <img className='product-card__img' src={photo} alt={product.name} key={photo} />
+        </div>
         <div className='product-card__price'>
           <p className='product-card__main-price'>{Number(priceValue) > 0 ? `${priceValue.toLocaleString('us')} ₽` : ""}</p>
 
         </div>
-        <p className='product-card__name' >{product.name}</p>
+        <p className='product-card__name' title={product.name}>{product.name}</p>
         <p className={`product-card__amount ${amount > 0 ? '' : 'product-card__amount_zero'}`}>{amount > 0 ? `На складе ${amount} шт.` : `Нет в наличии`}</p>
       </div>
       {amount === 0 ?

@@ -20,7 +20,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "npm run build &&  scp -r ./build/*  caba@51.250.18.151:/home/caba/divanchik-frontend"
+    "deploy": "npm run build &&  scp -r ./build/*  caba@51.250.27.229:/home/caba/divanchik-frontend"
   },
   "eslintConfig": {
     "extends": [
