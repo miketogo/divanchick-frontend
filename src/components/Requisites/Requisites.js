@@ -1,4 +1,5 @@
 import React from 'react'
+import { Helmet } from 'react-helmet';
 import './Requisites.css';
 
 const requisites = [
@@ -47,6 +48,9 @@ function Requisites(props) {
 
     return (
         <div className="requisites">
+          <Helmet>
+            <title>Диванчик - Реквизиты</title>
+          </Helmet>
             {requisites.map((item, i) => (
                 <div className="requisites__card" key={`requisites__card${i}`}>
                     <p className="requisites__title">{item.title}</p>

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Helmet } from 'react-helmet';
 import { Switch, useParams, useRouteMatch } from 'react-router';
 
 import mainApi from '../../assets/api/MainApi';
@@ -55,6 +56,11 @@ function Room() {
 
   return (
     <>
+      {selectedRoom ?
+        <Helmet>
+          <title>Диванчик - {selectedRoom.name}</title>
+        </Helmet>
+        : null}
       {isPreloaderVisible ?
         <div className='room__preloader'>
           <SofaPreloader />

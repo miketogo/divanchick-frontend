@@ -1,5 +1,9 @@
 # https://www.robotstxt.org/robotstxt.html
 User-agent: *
-Disallow:
+Disallow: /cart
+Disallow: /favourites
+
+
 
 Sitemap: https://app.divanchik72.com/get-file/additional_data/sitemap.xml
+

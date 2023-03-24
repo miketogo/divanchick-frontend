@@ -9,6 +9,7 @@ import './ProductPage.css';
 import mainApi from '../../assets/api/MainApi';
 import { getAmountByCity, MAIN_URL } from '../../assets/utils/constants';
 import SofaPreloader from '../SofaPreloader/SofaPreloader';
+import { Helmet } from 'react-helmet';
 
 function parseFeatureKey(item) {
   switch (item.key) {
@@ -239,31 +240,40 @@ function ProductPage({ handleToCartBtn, cart, handleColorPopupOpen, handleLikeBt
 
   return (
     <div className="product-page">
+      {selectedProduct ?
+        <Helmet>
+          <title>Диванчик - {selectedProduct.name}</title>
+        </Helmet>
+        : null}
+
       {isPreloaderVisible ?
         <div className='product-page__preloader'>
           <SofaPreloader />
         </div>
         :
         <>
-          <Crumbs links={[
-            {
-              name: 'Главная',
-              to: '/',
-            },
-            {
-              name: selectedProduct && selectedProduct.category.name,
-              to: `/categories/${selectedProduct.category.translit_name}`,
-            },
-            {
-              name: selectedProduct && selectedProduct.sub_category.name,
-              to: `/sub-category/${selectedProduct.category.translit_name}/${selectedProduct.sub_category.translit_name}`,
-            },
-            {
-              name: selectedProduct && selectedProduct.name,
-              to: `${url}`,
-            },
+          {selectedProduct ?
+            <Crumbs links={[
+              {
+                name: 'Главная',
+                to: '/',
+              },
+              {
+                name: selectedProduct && selectedProduct?.category?.name,
+                to: `/categories/${selectedProduct?.category?.translit_name}`,
+              },
+              {
+                name: selectedProduct && selectedProduct?.sub_category?.name,
+                to: `/sub-category/${selectedProduct?.category?.translit_name}/${selectedProduct?.sub_category?.translit_name}`,
+              },
+              {
+                name: selectedProduct && selectedProduct.name,
+                to: `${url}`,
+              },
 
-          ]} />
+            ]} />
+            : null}
+
           {selectedProduct &&
             <div className="product-page__container">
               <div className='product-page__content-container'>

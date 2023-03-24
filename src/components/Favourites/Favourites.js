@@ -1,4 +1,5 @@
 import React from 'react'
+import { Helmet } from 'react-helmet';
 import { useHistory } from 'react-router-dom';
 
 import ProductCard from '../ProductCard/ProductCard';
@@ -20,6 +21,9 @@ function Favourites({
     const history = useHistory();
     return (
         <div className="favourites">
+          <Helmet>
+            <title>Диванчик - Избранное</title>
+          </Helmet>
             <h2 className="favourites__title">Избранное</h2>
             {favouritesProducts && favouritesProducts.length > 0 ?
                 <div className="favourites__products">

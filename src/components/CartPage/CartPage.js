@@ -18,6 +18,7 @@ import SuccessPopup from '../SuccessPopup/SuccessPopup';
 import { getCityId } from '../../assets/utils/constants';
 import mainApi from '../../assets/api/MainApi';
 import MiniPreloader from '../MiniPreloader/MiniPreloader';
+import { Helmet } from 'react-helmet';
 // import { copyText } from '../../assets/utils/utils';
 
 
@@ -93,6 +94,9 @@ function CartPage({
 
   return (
     <div className="cart-page">
+      <Helmet>
+        <title>Диванчик - Корзина</title>
+      </Helmet>
       <SuccessPopup ai_id={createdOrder ? `№${('00000000' + createdOrder.ai_id).slice(-8)}` : ''} isOpen={isSuccessPopupOpen} handleClose={handleCloseSuccessPopup} />
       {allCartProductsCount.count && allCartProductsCount.count > 0 ?
         <>

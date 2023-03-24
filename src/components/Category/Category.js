@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Helmet } from 'react-helmet';
 import { Switch, useParams, useRouteMatch } from 'react-router';
 import { Route, Link } from 'react-router-dom';
 import mainApi from '../../assets/api/MainApi';
@@ -54,6 +55,11 @@ function Category() {
 
   return (
     <>
+      {selectedCategory ?
+        <Helmet>
+          <title>Диванчик - {selectedCategory.name}</title>
+        </Helmet>
+        : null}
       {isPreloaderVisible ?
         <div className='category__preloader'>
           <SofaPreloader />

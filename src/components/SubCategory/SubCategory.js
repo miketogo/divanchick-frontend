@@ -1,5 +1,6 @@
 import React, { createRef, useEffect, useRef, useState } from 'react'
-import {  useParams, useRouteMatch } from 'react-router';
+import { Helmet } from 'react-helmet';
+import { useParams, useRouteMatch } from 'react-router';
 // import { Route } from 'react-router-dom';
 import mainApi from '../../assets/api/MainApi';
 import { getCityId } from '../../assets/utils/constants';
@@ -71,7 +72,7 @@ function SubCategory({
         {
           translit_name: 'ROOT.amount',
           type: 'slider_bool',
-          translit_value: '1'
+          translit_value: '0'
         }
       ]
       data.last_id = null
@@ -127,7 +128,7 @@ function SubCategory({
       {
         translit_name: 'ROOT.amount',
         type: 'slider_bool',
-        translit_value: '1'
+        translit_value: '0'
       }
     ]
     data.last_id = null
@@ -232,7 +233,7 @@ function SubCategory({
       {
         translit_name: 'ROOT.amount',
         type: 'slider_bool',
-        translit_value: '1'
+        translit_value: '0'
       }
     ]
     data.last_id = null
@@ -345,7 +346,11 @@ function SubCategory({
 
   return (
     <div className="sub-category" ref={divRef}>
-
+      {subcategory ?
+        <Helmet>
+          <title>Диванчик - {`${subcategory.category.name} / ${subcategory.name}`}</title>
+        </Helmet>
+        : null}
       {
         isPreloaderVisible ?
           <div className='sub-category__preloader'>
