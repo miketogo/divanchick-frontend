@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom';
 import mainApi from '../../assets/api/MainApi';
-import { CartIcon, CatalogIcon, CatalogIconHeader, FavoriteIcon, GeoIcon, LogoIcon, MenuIcon, RoomsIcon, SearchIcon } from '../../assets/icons/icons';
+import { CartIcon, CatalogIcon, CatalogIconHeader, CloseIcon, FavoriteIcon, GeoIcon, LogoIcon, MenuIcon, RoomsIcon, SearchIcon } from '../../assets/icons/icons';
 import CatalogDrop from './CatalogDrop/CatalogDrop';
 import MenuPopup from './MenuPopup/MenuPopup';
 
@@ -12,6 +12,8 @@ import './NewHeader.css';
 import PopularCategory from './PopularCategory/PopularCategory';
 import RoomsDrop from './RoomsDrop/RoomsDrop';
 import SearchDrop from './SearchDrop/SearchDrop';
+import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
+import { CONTACT_PHONE, FORMATED_PHONE, WORK_TIME } from '../../assets/utils/constants';
 
 
 function NewHeader({
@@ -19,6 +21,7 @@ function NewHeader({
   allCartProductsCount,
 }) {
 
+  const location = useLocation()
 
 
   const [searchValue, setSearchValue] = useState('')
@@ -154,11 +157,12 @@ function NewHeader({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMenuOpen]);
 
-
+  const catalogBtnRef = useRef(null)
+  const roomsBtnRef = useRef(null)
   return (
     <header className={`header`}>
       <MenuPopup isOpened={isMenuOpen} setOpened={setMenuOpen} categories={categories} rooms={rooms} />
-      <CatalogDrop isOpened={isCatalogOpen} setOpened={setCatalogOpen} categories={categories} />
+      <CatalogDrop isOpened={isCatalogOpen} setOpened={setCatalogOpen} categories={categories} catalogBtnRef={catalogBtnRef} />
       <div className='header__head'>
         <div className='header__first-row'>
           <Link className='header__logo-box header__logo-box_mobile' to={'/'}>
@@ -169,10 +173,10 @@ function NewHeader({
             <p className='header__location-name'>Тобольск</p>
           </a>
           <div className='header__phone-and-time'>
-            <a className="header__phone" rel="noreferrer" href="tel:+79199401208" >+7 919 940 12 08</a>
+            <a className="header__phone" rel="noreferrer" href={`tel:+${FORMATED_PHONE}`}>{CONTACT_PHONE}</a>
             <div className='header__time'>
-              <p className='header__time-value'>Пн-Cб 09–20</p>
-              <p className='header__time-value'>Вс 09–19</p>
+              <p className='header__time-value'>{WORK_TIME[0]}</p>
+              <p className='header__time-value'>{WORK_TIME[1]}</p>
 
             </div>
           </div>
@@ -209,27 +213,23 @@ function NewHeader({
             <LogoIcon mainClassName={'header__logo'} fillClassName={'header__logo-fill'} />
           </Link>
           <div className='header__hendlers'>
-            <button className='header__btn header__btn_type_catalog header__btn_pc' type='button' onClick={() => {
-              if (!isCatalogOpen) {
-                setCatalogOpen(true)
-              }
-
-            }}>
-              <svg className='header__btn-icon' width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect className='header__btn-icon-fill' y="6" width="20" height="2" rx="1" fill="white" />
+            <button className='header__btn header__btn_type_catalog header__btn_pc' type='button' ref={catalogBtnRef} >
+              <CloseIcon mainClassName={`header__btn-icon header__btn-icon_close-catalog ${isCatalogOpen ? 'header__btn-icon_close-catalog-open' : ''}`} fillClassName={'header__btn-icon-fill'} />
+              <svg className={`header__btn-icon`} width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect className={`header__btn-icon-fill`} y="6" width="20" height="2" rx="1" fill="white" />
                 <rect className='header__btn-icon-fill' y="12" width="13" height="2" rx="1" fill="white" />
               </svg>
+
 
               <p className='header__btn-text'>Каталог</p>
             </button>
             <div className='header__btn-box header__btn_pc'>
-              <button className='header__btn header__btn_type_rooms' type='button' onClick={() => {
-                setRoomsOpen(!isRoomsOpen)
-              }}>
+              <button className='header__btn header__btn_type_rooms' type='button' ref={roomsBtnRef}>
+                <CloseIcon mainClassName={`header__btn-icon header__btn-icon_close-rooms ${isRoomsOpen ? 'header__btn-icon_close-rooms-open' : ''}`} fillClassName={'header__btn-icon-rooms-fill'} />
                 <RoomsIcon mainClassName={'header__btn-icon'} strokeClassName={'header__btn-icon-stroke'} />
                 <p className='header__btn-text'>Комнаты</p>
               </button>
-              <RoomsDrop isOpened={isRoomsOpen} setOpened={setRoomsOpen} rooms={rooms} />
+              <RoomsDrop isOpened={isRoomsOpen} setOpened={setRoomsOpen} rooms={rooms} roomsBtnRef={roomsBtnRef} />
             </div>
 
             <div className='header__input-container'>
@@ -263,7 +263,9 @@ function NewHeader({
         </div>
 
       </div>
-      <PopularCategory topCategories={topCategories} />
+      {location.pathname !== '/cart' ?
+        <PopularCategory topCategories={topCategories} />
+        : null}
 
     </header>
   );

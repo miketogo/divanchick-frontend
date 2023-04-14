@@ -27,7 +27,8 @@ function SubCategory({
   setCartPopupOpen,
   cart,
   handleToCartBtn,
-  handleColorPopupOpen
+  handleColorPopupOpen,
+  handleCallPopupOpen,
 }) {
   let divRef = createRef();
   const { url } = useRouteMatch();
@@ -418,6 +419,7 @@ function SubCategory({
                               handleToCartBtn={handleToCartBtn}
                               link={`/item/${category}/${sub_category}/${product._id}`}
                               product={product}
+                              handleCallPopupOpen={handleCallPopupOpen}
                               key={`ProductCard${i}`} />
                           ))}
                         </div>

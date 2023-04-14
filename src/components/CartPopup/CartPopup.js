@@ -5,7 +5,7 @@ import React from "react";
 import { Link } from 'react-router-dom';
 import moreIcon from '../../assets/images/more.svg'
 import { MAIN_URL } from '../../assets/utils/constants';
-import { getCorrectWordForm } from '../../assets/utils/utils';
+import { getCorrectWordForm, sendMetriс } from '../../assets/utils/utils';
 
 
 
@@ -33,6 +33,7 @@ function CartPopup({
   }, [isCartPopupOpen]);
 
   function handleAddCounter(id) {
+    const product = cart.filter((item, i) => item._id === id)[0]
     let new_cart = cart.map((item) => {
       if (item._id === id) {
         return {
@@ -43,10 +44,27 @@ function CartPopup({
       return item
     })
     setCart(new_cart)
+    window.dataLayer.push({
+      ecommerce: {
+        currencyCode: "RUB",
+        add: {
+          products: [
+            {
+              id: product?._id,
+              name: product?.name,
+              category: product ? `${product.category.name}/${product.sub_category.name}` : '',
+              price: getPrice(product),
+              quantity: 1,
+            },
+          ],
+        },
+      }
+    })
     localStorage.setItem("cart", JSON.stringify(new_cart));
   }
 
   function handleMinusCounter(id) {
+    const product = cart.filter((item, i) => item._id === id)[0]
     let new_cart = cart.map((item) => {
       if (item._id === id) {
         return {
@@ -58,9 +76,26 @@ function CartPopup({
     })
     setCart(new_cart)
     localStorage.setItem("cart", JSON.stringify(new_cart));
+    window.dataLayer.push({
+      ecommerce: {
+        currencyCode: "RUB",
+        remove: {
+          products: [
+            {
+              id: product?._id,
+              name: product?.name,
+              category: product ? `${product.category.name}/${product.sub_category.name}` : '',
+              price: getPrice(product),
+              quantity: 1,
+            },
+          ],
+        },
+      }
+    })
   }
 
   function handleRemoveFromCart(id) {
+    const product = cart.filter((item, i) => item._id === id)[0]
     if (cart.length > 1) {
       let new_cart = cart.filter((item) => {
         if (item._id === id) return false
@@ -73,6 +108,22 @@ function CartPopup({
       localStorage.setItem("cart", JSON.stringify([]));
       handleCartPopupClose()
     }
+    window.dataLayer.push({
+      ecommerce: {
+        currencyCode: "RUB",
+        remove: {
+          products: [
+            {
+              id: product?._id,
+              name: product?.name,
+              category: product ? `${product.category.name}/${product.sub_category.name}` : '',
+              price: getPrice(product),
+              quantity: product.count,
+            },
+          ],
+        },
+      }
+    })
 
   }
 
@@ -218,15 +269,24 @@ function CartPopup({
         </div>
         <div className="cart-popup__lower-btns">
           <p className="cart-popup__amount">{allCartProductsCount.count} {getCorrectWordForm(allCartProductsCount.count)} на {allCartProductsCount.totalPrice.toLocaleString('us')}&nbsp;₽</p>
-          <Link to="/cart" className="cart-popup__order-btn" onClick={handleCartPopupClose}>
+          <Link to="/cart" className="cart-popup__order-btn" onClick={() => {
+            sendMetriс('reachGoal', 'CART_POPUP_GO_CART')
+            handleCartPopupClose()
+          }}>
             <p className="cart-popup__order-btn-text">Оформить заказ</p>
           </Link>
-          <div className="cart-popup__go-back-btn" onClick={handleCartPopupClose}>
+          <div className="cart-popup__go-back-btn" onClick={() => {
+            sendMetriс('reachGoal', 'CART_POPUP_RETURN_TO_GOODS')
+            handleCartPopupClose()
+          }}>
             <p className="cart-popup__go-back-btn-text">Продолжить покупки</p>
           </div>
         </div>
       </div>
-      <div className={`cart-popup__background ${isCartPopupOpen ? 'cart-popup__background_active' : ''}`} onClick={handleCartPopupClose}>
+      <div className={`cart-popup__background ${isCartPopupOpen ? 'cart-popup__background_active' : ''}`} onClick={() => {
+        sendMetriс('reachGoal', 'CART_POPUP_RETURN_TO_GOODS')
+        handleCartPopupClose()
+      }}>
 
       </div>
     </div>

@@ -11,7 +11,7 @@ import { getIconByType } from '../../../assets/utils/utils';
 import './RoomsDrop.css';
 
 
-function RoomsDrop({ isOpened, setOpened, rooms }) {
+function RoomsDrop({ isOpened, setOpened, rooms, roomsBtnRef }) {
     const dorpRef = useRef()
 
 
@@ -30,6 +30,21 @@ function RoomsDrop({ isOpened, setOpened, rooms }) {
             // Cleanup the event listener
             document.removeEventListener("mousedown", checkIfClickedOutside)
         }
+    }, [isOpened])
+
+    useEffect(() => {
+      // catalogBtnRef.current.onclick = null;
+      if (isOpened) {
+        roomsBtnRef.current.onclick = null;
+      } else {
+        setTimeout(() => {
+          roomsBtnRef.current.onclick = () => {
+
+            setOpened(true)
+          };
+        }, 300);
+
+      }
     }, [isOpened])
 
 

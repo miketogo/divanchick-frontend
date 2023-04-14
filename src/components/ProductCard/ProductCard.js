@@ -4,6 +4,7 @@ import { CartIcon, PhoneIcon } from '../../assets/icons/icons';
 import { getAmountByCity, MAIN_URL } from '../../assets/utils/constants';
 
 import './ProductCard.css';
+import { sendMetriс } from '../../assets/utils/utils';
 
 
 
@@ -16,7 +17,8 @@ function ProductCard({
   setCartPopupOpen,
   link,
   handleLikeBtn,
-  favouritesProducts
+  favouritesProducts,
+  handleCallPopupOpen,
 }) {
 
   function addToCart() {
@@ -121,13 +123,18 @@ function ProductCard({
         <p className={`product-card__amount ${amount > 0 ? '' : 'product-card__amount_zero'}`}>{amount > 0 ? `На складе ${amount} шт.` : `Нет в наличии`}</p>
       </div>
       {amount === 0 ?
-        <a className={`product-card__cart-btn`} href="tel:+79199401208" onClick={(e) => {
+        <button className={`product-card__cart-btn`} type='button' onClick={(e) => {
           e.stopPropagation();
+          e.preventDefault();
+          handleCallPopupOpen()
+          sendMetriс('reachGoal', 'CLICK_CALL_MANAGER')
+
         }}>
           <p className='product-card__cart-btn-text'>Звонок менеджеру</p>
           {PhoneIcon({ mainClassName: 'product-card__cart-btn-icon', fillClassName: 'product-card__cart-btn-icon-fill' })}
-
-        </a>
+          {/* <p className='product-card__cart-btn-text'>В корзину</p>
+          {CartIcon({ mainClassName: 'product-card__cart-btn-icon', strokeClassName: 'product-card__cart-btn-icon-stroke' })} */}
+        </button>
         :
         <div className={`product-card__cart-btn ${isInCart ? 'product-card__cart-btn_selected' : ''}`} onClick={(e) => {
           e.stopPropagation();
@@ -158,7 +165,7 @@ function ProductCard({
 
         </div>
       }
-    </Link>
+    </Link >
 
   );
 }

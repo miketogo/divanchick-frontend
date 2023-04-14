@@ -16,6 +16,7 @@ function Favourites({
     setCartPopupOpen,
     cart,
     handleToCartBtn,
+    handleCallPopupOpen,
 }) {
 
     const history = useHistory();
@@ -37,6 +38,7 @@ function Favourites({
                                 handleToCartBtn={handleToCartBtn}
                                 link={`/item/${product.category.translit_name}/${product.sub_category.translit_name}/${product._id}`}
                                 product={product}
+                                handleCallPopupOpen={handleCallPopupOpen}
                                 key={`FavoriteProductCard${i}`} />
                         ))
 

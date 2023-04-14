@@ -29,6 +29,8 @@ import SubCategory from '../SubCategory/SubCategory';
 import ProductPage from '../ProductPage/ProductPage';
 import NewHeader from '../NewHeader/NewHeader';
 import Room from '../Room/Room';
+import CallPopup from '../CallPopup/CallPopup';
+import { sendMetriс } from '../../assets/utils/utils';
 
 // import useScrollPosition from '../../utils/useScrollPosition';
 
@@ -135,10 +137,27 @@ function App() {
   }
 
   function handleSubmitActionPopupSubmit() {
+    let cartPrevArray = JSON.parse(localStorage.getItem("cart"));
     let cartArray = []
     setCart(cartArray)
     localStorage.setItem("cart", JSON.stringify(cartArray));
     setSubmitActionPopupOpen(false)
+    window.dataLayer.push({
+      ecommerce: {
+        currencyCode: "RUB",
+        remove: {
+          products: cartPrevArray.map((product, i) => {
+            return {
+              id: product?._id,
+              name: product?.name,
+              category: product ? `${product.category.name}/${product.sub_category.name}` : '',
+              price: getPrice(product),
+              quantity: product.count,
+            }
+          }),
+        },
+      }
+    })
   }
 
 
@@ -285,13 +304,35 @@ function App() {
   function handleToCartBtn(item) {
 
     let cartArray = JSON.parse(localStorage.getItem("cart"));
-    item.count = 1
+    const product_from_cart = cartArray.filter((item2, i) => item2._id === item._id)[0]
+    console.log(product_from_cart)
+    if (product_from_cart) {
+      item.count = product_from_cart.count
+    } else {
+      item.count = 1
+    }
+
     if (!cartArray || cartArray === []) {
+      sendMetriс('reachGoal', 'ADD_TO_CART_BTN')
       cartArray = [item]
-      // let cartJson = JSON.stringify(cartArray)
-      // console.log(cartJson)
       setCart(cartArray)
       localStorage.setItem("cart", JSON.stringify(cartArray));
+      window.dataLayer.push({
+        ecommerce: {
+          currencyCode: "RUB",
+          add: {
+            products: [
+              {
+                id: item?._id,
+                name: item?.name,
+                category: item ? `${item.category.name}/${item.sub_category.name}` : '',
+                price: getPrice(item),
+                quantity: item.count,
+              },
+            ],
+          },
+        }
+      })
     }
     else if (cartArray && cartArray.filter((cart_item) => {
       if (cart_item._id === item._id) return true
@@ -303,10 +344,44 @@ function App() {
       })
       setCart(cartArray)
       localStorage.setItem("cart", JSON.stringify(cartArray));
+      sendMetriс('reachGoal', 'REMOVE_FROM_CART_BTN')
+      window.dataLayer.push({
+        ecommerce: {
+          currencyCode: "RUB",
+          remove: {
+            products: [
+              {
+                id: item?._id,
+                name: item?.name,
+                category: item ? `${item.category.name}/${item.sub_category.name}` : '',
+                price: getPrice(item),
+                quantity: item.count,
+              },
+            ],
+          },
+        }
+      })
     } else {
+      sendMetriс('reachGoal', 'ADD_TO_CART_BTN')
       cartArray = [...cartArray, item]
       setCart(cartArray)
       localStorage.setItem("cart", JSON.stringify(cartArray));
+      window.dataLayer.push({
+        ecommerce: {
+          currencyCode: "RUB",
+          add: {
+            products: [
+              {
+                id: item?._id,
+                name: item?.name,
+                category: item ? `${item.category.name}/${item.sub_category.name}` : '',
+                price: getPrice(item),
+                quantity: item.count,
+              },
+            ],
+          },
+        }
+      })
     }
 
   }
@@ -331,6 +406,8 @@ function App() {
     let liked = JSON.parse(localStorage.getItem("favourites"));
     if (!liked || liked === []) {
       liked = [item]
+      sendMetriс('reachGoal', 'ADD_TO_FAVORITES')
+
       // let cartJson = JSON.stringify(cartArray)
       // console.log(cartJson)
       setFavouritesProducts(liked)
@@ -340,6 +417,8 @@ function App() {
       if (liked_item._id === item._id) return true
       else return false
     }).length > 0) {
+      sendMetriс('reachGoal', 'REMOVE_FROM_FAVORITES')
+
       liked = liked.filter((liked_item) => {
         if (liked_item._id === item._id) return false
         else return true
@@ -348,6 +427,7 @@ function App() {
       localStorage.setItem("favourites", JSON.stringify(liked));
     } else {
       liked = [...liked, item]
+      sendMetriс('reachGoal', 'ADD_TO_FAVORITES')
       setFavouritesProducts(liked)
       localStorage.setItem("favourites", JSON.stringify(liked));
     }
@@ -374,6 +454,12 @@ function App() {
     setColorPopupOpen(true)
   }
 
+  const [isCallPopupOpen, setCallPopupOpen] = useState(false)
+
+  function handleCallPopupOpen() {
+    setCallPopupOpen(true)
+  }
+
   // console.log(scrollPosition)
   return (
     // ${isCartPopupOpen ? 'app-stop-scrol' : ''}
@@ -383,7 +469,7 @@ function App() {
           <ColorPopup selectedColor={selectedColor} availibleColors={availibleColors} isColorPopupOpen={isColorPopupOpen} handleColorPopupClose={handleColorPopupClose} />
           <SubmitActionPopup handleSubmitActionPopupSubmit={handleSubmitActionPopupSubmit} isSubmitActionPopupOpen={isSubmitActionPopupOpen} handleSubmitActionPopupClose={handleSubmitActionPopupClose} />
           <CartPopup handleLikeBtn={handleLikeBtn} favouritesProducts={favouritesProducts} allCartProductsCount={allCartProductsCount} setCart={setCart} cart={cart} isCartPopupOpen={isCartPopupOpen} handleCartPopupClose={handleCartPopupClose} />
-
+          <CallPopup isOpen={isCallPopupOpen} handleClose={() => { setCallPopupOpen(false) }} />
           <CityPopup isCityPopupOpen={isCityPopupOpen} handleCityPopupClose={handleCityPopupClose} cityValue={cityValue} setCityValue={setCityValue} cities={cities} />
           <NewHeader favouritesProducts={favouritesProducts} allCartProductsCount={allCartProductsCount} />
           <Switch>
@@ -394,6 +480,7 @@ function App() {
                 setCartPopupOpen={setCartPopupOpen}
                 cart={cart}
                 handleToCartBtn={handleToCartBtn}
+                handleCallPopupOpen={handleCallPopupOpen}
               />
             </Route>
             <Route path={`/categories/:category`}>
@@ -410,6 +497,7 @@ function App() {
                 setCartPopupOpen={setCartPopupOpen}
                 cart={cart}
                 handleToCartBtn={handleToCartBtn}
+                handleCallPopupOpen={handleCallPopupOpen}
               />
             </Route>
 
@@ -421,6 +509,7 @@ function App() {
                 handleToCartBtn={handleToCartBtn}
                 handleLikeBtn={handleLikeBtn}
                 favouritesProducts={favouritesProducts}
+                handleCallPopupOpen={handleCallPopupOpen}
               />
             </Route>
             <Route path={`/cart`}>
@@ -445,7 +534,7 @@ function App() {
               <Register setLoggedIn={setLoggedIn} setCurrentUser={setCurrentUser} currentUser={currentUser} />
             </Route>
             <Route path={`/favourites`}>
-              <Favourites handleLikeBtn={handleLikeBtn} favouritesProducts={favouritesProducts} setCartPopupOpen={setCartPopupOpen} cart={cart} handleToCartBtn={handleToCartBtn} />
+              <Favourites handleCallPopupOpen={handleCallPopupOpen} handleLikeBtn={handleLikeBtn} favouritesProducts={favouritesProducts} setCartPopupOpen={setCartPopupOpen} cart={cart} handleToCartBtn={handleToCartBtn} />
             </Route>
             <Route path={`/profile/:page`}>
               {loggedIn ?

@@ -174,6 +174,8 @@ export function CatalogIconHeader({ mainClassName, fillClassName }) {
 }
 
 
+
+
 export function RoomsIcon({ mainClassName, strokeClassName }) {
     return (
         <svg

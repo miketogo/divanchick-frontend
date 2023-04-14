@@ -15,6 +15,7 @@ function Products({
     setCartPopupOpen,
     cart,
     handleToCartBtn,
+    handleCallPopupOpen,
 }) {
 
     const windowSize = useWindowSize()
@@ -78,7 +79,7 @@ function Products({
                             handleToCartBtn={handleToCartBtn}
                             link={`/item/${item.category.translit_name}/${item.sub_category.translit_name}/${item._id}`}
                             product={item}
-
+                            handleCallPopupOpen={handleCallPopupOpen}
                             key={`Main-ProductCard${type}${i}`}
                         />
                     )) : null}

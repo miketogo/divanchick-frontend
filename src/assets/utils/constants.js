@@ -217,3 +217,9 @@ export const promotedCardsLinks = {
     ],
   }
 }
+
+
+export const CONTACT_PHONE = '+7 919 940 12 08'
+export const FORMATED_PHONE = CONTACT_PHONE.replace(/\D/g, '')
+
+export const WORK_TIME = ['Пн-Cб 09–20', 'Вс 09–19']

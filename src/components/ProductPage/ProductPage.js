@@ -10,6 +10,7 @@ import mainApi from '../../assets/api/MainApi';
 import { getAmountByCity, MAIN_URL } from '../../assets/utils/constants';
 import SofaPreloader from '../SofaPreloader/SofaPreloader';
 import { Helmet } from 'react-helmet';
+import { getPrice, sendMetriс } from '../../assets/utils/utils';
 
 function parseFeatureKey(item) {
   switch (item.key) {
@@ -57,7 +58,18 @@ function parseFeatureValue(item) {
 moment.locale('ru')
 
 
-function BuyInfo({ selectedByColorProduct, handleLikeBtn, isInFavorite, isInCart, price, selectedProduct, handleColorOpen, addToCart, isMobile }) {
+function BuyInfo({
+  selectedByColorProduct,
+  handleLikeBtn,
+  isInFavorite,
+  isInCart,
+  price,
+  selectedProduct,
+  handleColorOpen,
+  addToCart,
+  isMobile,
+  handleCallPopupOpen,
+}) {
   return (
     <div className={`product-page__info-container ${isMobile ? 'product-page__info-container_mobile' : 'product-page__info-container_pc'}`}>
       <div className="product-page__firts-info-row">
@@ -81,13 +93,16 @@ function BuyInfo({ selectedByColorProduct, handleLikeBtn, isInFavorite, isInCart
         {price > 0 ? <p className="product-page__price">{price.toLocaleString('us')}&nbsp;₽</p> : null}
 
         {selectedProduct.amount > 0 ?
-          <div className={`product-page__buy-btn ${isInCart ? 'product-page__buy-btn_in-cart' : ''}`} onClick={addToCart}>
+          <button className={`product-page__buy-btn ${isInCart ? 'product-page__buy-btn_in-cart' : ''}`} type='button' onClick={addToCart}>
             <p className={`product-page__buy-btn-text ${isInCart ? 'product-page__buy-btn-text_in-cart' : ''}`}>{isInCart ? 'Убрать из корзины' : 'Купить'}</p>
-          </div>
+          </button>
           :
-          <a className={`product-page__buy-btn`} href="tel:+79199401208">
+          <button className={`product-page__buy-btn`} type='button' onClick={() => {
+            sendMetriс('reachGoal', 'CLICK_CALL_MANAGER')
+            handleCallPopupOpen()
+          }}>
             <p className={`product-page__buy-btn-text`}>Звонок менеджеру</p>
-          </a>
+          </button>
         }
 
       </div>
@@ -109,7 +124,14 @@ function BuyInfo({ selectedByColorProduct, handleLikeBtn, isInFavorite, isInCart
   )
 }
 
-function ProductPage({ handleToCartBtn, cart, handleColorPopupOpen, handleLikeBtn, favouritesProducts }) {
+function ProductPage({
+  handleToCartBtn,
+  cart,
+  handleColorPopupOpen,
+  handleLikeBtn,
+  favouritesProducts,
+  handleCallPopupOpen,
+}) {
   const { url } = useRouteMatch();
   const history = useHistory();
   let { id, color, category, sub_category } = useParams();
@@ -132,6 +154,21 @@ function ProductPage({ handleToCartBtn, cart, handleColorPopupOpen, handleLikeBt
           setSelectedProduct({
             ...res,
             amount: getAmountByCity(res.seller_cities)
+          })
+          window.dataLayer.push({
+            ecommerce: {
+              currencyCode: "RUB",
+              detail: {
+                products: [
+                  {
+                    id: res?._id,
+                    name: res?.name,
+                    category: res ? `${res.category.name}/${res.sub_category.name}` : '',
+                    price: getPrice(res),
+                  },
+                ],
+              },
+            }
           })
         })
         .catch((err) => {
@@ -326,6 +363,7 @@ function ProductPage({ handleToCartBtn, cart, handleColorPopupOpen, handleLikeBt
                   handleColorOpen={handleColorOpen}
                   addToCart={addToCart}
                   isMobile={true}
+                  handleCallPopupOpen={handleCallPopupOpen}
                 />
 
                 <div className="product-page__specifications" id='specifications'>
@@ -381,6 +419,7 @@ function ProductPage({ handleToCartBtn, cart, handleColorPopupOpen, handleLikeBt
                   handleColorOpen={handleColorOpen}
                   addToCart={addToCart}
                   isMobile={false}
+                  handleCallPopupOpen={handleCallPopupOpen}
                 />
 
               </div>

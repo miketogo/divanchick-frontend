@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import './Footer.css';
 import privacypolicy from '../../assets/images/privacypolicy.pdf'
+import { CONTACT_PHONE, FORMATED_PHONE, WORK_TIME } from '../../assets/utils/constants';
 
 const firstColumnLinks = [
   // {
@@ -58,8 +59,8 @@ function Footer() {
       </nav>
       <div className="footer__contacts">
         <h2 className="footer__contacts-title">Позвоните нам, если остались вопросы</h2>
-        <a target="_blank" rel="noreferrer" href="tel:+79199401208" className="footer__contacts-tel">+7 (919) 940-12-08</a>
-        <p className="footer__contacts-time">Пн-Cб 09–20 / Вс 09–19</p>
+        <a className="footer__contacts-tel" target="_blank" rel="noreferrer" href={`tel:+${FORMATED_PHONE}`}>{CONTACT_PHONE}</a>
+        <p className="footer__contacts-time">{WORK_TIME[0]} / {WORK_TIME[1]}</p>
         <div className="footer__contacts-socials">
           <a className="footer__contacts-social" target="_blank" rel="noreferrer" href="https://vk.com/divanchik72">
             <svg className="footer__contacts-social-icon" width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">

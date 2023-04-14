@@ -16,6 +16,7 @@ function Main({
   setCartPopupOpen,
   cart,
   handleToCartBtn,
+  handleCallPopupOpen,
 }) {
 
 
@@ -35,6 +36,7 @@ function Main({
         cart={cart}
         handleToCartBtn={handleToCartBtn}
         type={'hits'}
+        handleCallPopupOpen={handleCallPopupOpen}
       />
       <Reviews />
       <Products
@@ -44,6 +46,7 @@ function Main({
         cart={cart}
         handleToCartBtn={handleToCartBtn}
         type={'new_items'}
+        handleCallPopupOpen={handleCallPopupOpen}
       />
     </section>
 

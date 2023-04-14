@@ -128,3 +128,8 @@ export function getIconByType({ type, mainClassName, fillClassName, strokeClassN
     }
 }
 
+
+
+export const sendMetriс = (type, value) => {
+  window.ym(92911435, type, value)
+}

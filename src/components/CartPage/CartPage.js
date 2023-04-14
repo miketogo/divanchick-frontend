@@ -13,7 +13,7 @@ import UserData from './UserData/UserData';
 
 
 import emptyIcon from '../../assets/images/empry-cart.png'
-import { getCorrectWordForm } from '../../assets/utils/utils';
+import { getCorrectWordForm, getPrice, sendMetriс } from '../../assets/utils/utils';
 import SuccessPopup from '../SuccessPopup/SuccessPopup';
 import { getCityId } from '../../assets/utils/constants';
 import mainApi from '../../assets/api/MainApi';
@@ -57,6 +57,7 @@ function CartPage({
   const [createdOrder, setCreatedOrder] = useState(undefined)
   function handleCreateOrder() {
     if (isPreloaderVisible) return
+    let cartPrevArray = JSON.parse(localStorage.getItem("cart"));
     setPreloaderVisible(true)
     let cart_to_api = cart.map((item) => {
       return {
@@ -82,6 +83,27 @@ function CartPage({
         let cartArray = []
         setCart(cartArray)
         localStorage.setItem("cart", JSON.stringify(cartArray));
+        sendMetriс('reachGoal', 'CREATE_ORDER_2')
+        window.dataLayer.push({
+          ecommerce: {
+            currencyCode: "RUB",
+            purchase: {
+              products: cartPrevArray.map((product, i) => {
+                return {
+                  id: product?._id,
+                  name: product?.name,
+                  category: product ? `${product.category.name}/${product.sub_category.name}` : '',
+                  price: getPrice(product),
+                  quantity: product.count,
+                }
+              }),
+              actionField: {
+                id: `№${('00000000' + res.ai_id).slice(-8)}`,
+                goal_id: 291857837,
+              }
+            },
+          }
+        })
       })
       .catch((err) => {
         console.log(err)
@@ -92,8 +114,10 @@ function CartPage({
 
   }
 
+  const [step, setStep] = useState(0)
+
   return (
-    <div className="cart-page">
+    <div className={`cart-page ${step === 1 ? 'cart-page_step-1' : ''}`}>
       <Helmet>
         <title>Диванчик - Корзина</title>
       </Helmet>
@@ -101,27 +125,43 @@ function CartPage({
       {allCartProductsCount.count && allCartProductsCount.count > 0 ?
         <>
           <div className="cart-page__main">
-            <div className="cart-page__section-heading">
+            <div className="cart-page__section-go-back" onClick={() => {
+              if (step === 0) {
+                history.goBack()
 
-              <h2 className="cart-page__section-heading-title">Корзина</h2>
-              <div className="cart-page__section-reset-cart" onClick={() => { setSubmitActionPopupOpen(true) }}>
-                <p className="cart-page__section-reset-cart-text">очистить корзину</p>
-              </div>
-              <div className="cart-page__section-go-back" onClick={() => history.goBack()}>
-                <svg className="cart-page__section-go-back-arrow" width="10" height="9" viewBox="0 0 10 9" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path fillRule="evenodd" clipRule="evenodd" d="M1.30926 4.5L4.77722 7.86484L4.12259 8.5L0 4.5L4.12259 0.5L4.77723 1.13516L1.30926 4.5Z" fill="var(--contrast-color)" />
-                  <path fillRule="evenodd" clipRule="evenodd" d="M0.633865 4.94907H10V4.05082H0.633865V4.94907Z" fill="var(--contrast-color)" />
-                </svg>
-                <p className="cart-page__section-go-back-text">Вернуться к покупкам</p>
-              </div>
+                sendMetriс('reachGoal', 'CREATE_ORDER_GO_BACK_TO_GOODS')
+
+              } else {
+                sendMetriс('reachGoal', 'CREATE_ORDER_RETURN_TO_1')
+                setStep(0)
+              }
+            }}>
+              <svg className="cart-page__section-go-back-arrow" width="10" height="9" viewBox="0 0 10 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fillRule="evenodd" clipRule="evenodd" d="M1.30926 4.5L4.77722 7.86484L4.12259 8.5L0 4.5L4.12259 0.5L4.77723 1.13516L1.30926 4.5Z" fill="var(--contrast-color)" />
+                <path fillRule="evenodd" clipRule="evenodd" d="M0.633865 4.94907H10V4.05082H0.633865V4.94907Z" fill="var(--contrast-color)" />
+              </svg>
+              <p className="cart-page__section-go-back-text">{step === 0 ? 'Вернуться к покупкам' : 'Вернуться к товарам'}</p>
             </div>
-            <Cart
-              handleLikeBtn={handleLikeBtn}
-              favouritesProducts={favouritesProducts}
-              allCartProductsCount={allCartProductsCount}
-              setCart={setCart}
-              cart={cart}
-            />
+            {step === 0 ?
+              <>
+                <div className="cart-page__section-heading">
+
+                  <h2 className="cart-page__section-heading-title">Корзина</h2>
+                  <div className="cart-page__section-reset-cart" onClick={() => { setSubmitActionPopupOpen(true) }}>
+                    <p className="cart-page__section-reset-cart-text">Очистить корзину</p>
+                  </div>
+
+                </div>
+                <Cart
+                  handleLikeBtn={handleLikeBtn}
+                  favouritesProducts={favouritesProducts}
+                  allCartProductsCount={allCartProductsCount}
+                  setCart={setCart}
+                  cart={cart}
+                />
+              </>
+
+              : null}
             {/* <div className="cart-page__section-heading">
               <h2 className="cart-page__section-heading-title">2 Способ и дата получения</h2>
             </div>
@@ -138,16 +178,22 @@ function CartPage({
               paymentMethod={paymentMethod}
               setPaymentMethod={setPaymentMethod}
             /> */}
-            <div className="cart-page__section-heading">
-              <h2 className="cart-page__section-heading-title">Ваши данные</h2>
-            </div>
-            <UserData
-              setUserDataValid={setUserDataValid}
-              currentUser={currentUser}
-              loggedIn={loggedIn}
-              personalValues={personalValues}
-              setPersonalValues={setPersonalValues}
-            />
+            {step === 1 ?
+              <>
+                <div className="cart-page__section-heading">
+                  <h2 className="cart-page__section-heading-title">Контакты</h2>
+
+                </div>
+                <UserData
+                  setUserDataValid={setUserDataValid}
+                  currentUser={currentUser}
+                  loggedIn={loggedIn}
+                  personalValues={personalValues}
+                  setPersonalValues={setPersonalValues}
+                />
+              </>
+              : null}
+
           </div>
           <div className="cart-page__summary">
             <div className="cart-page__summary-info">
@@ -158,12 +204,21 @@ function CartPage({
               {/* <p className="cart-page__summary-delivery-adress">{deliveryMethod === 'Самовывоз'.toLowerCase() ? 'Магазин Диванчик по адресу: 7-й микрорайон, 2А, Тобольск, Тюменская область' : fullAdressValue ? fullAdressValue : 'Укажите адрес'}</p> */}
               {/* <p className="cart-page__summary-date">Дата: <span className="cart-page__summary-date-period">{deliveryMethod === 'Самовывоз'.toLowerCase() ? 'Завтра после 17:00' : '2 Октября - 16 Ноября'}</span></p> */}
               {/* <p className="cart-page__summary-payment">Оплата: <span className="cart-page__summary-payment-method">{paymentMethod}</span></p> */}
-              <button className={`cart-page__summary-pay-btn ${userDataValid ? '' : 'cart-page__summary-pay-btn_inactive'}`} type="button" onClick={handleCreateOrder}>
+              <button className={`cart-page__summary-pay-btn ${step === 0 ? '' : userDataValid ? '' : 'cart-page__summary-pay-btn_inactive'}`} type="button" onClick={() => {
+                if (step === 0) {
+                  sendMetriс('reachGoal', 'CREATE_ORDER_2')
+                  setStep(1)
+                  window.scrollTo(0, 0);
+                }
+                else {
+                  handleCreateOrder()
+                }
+              }}>
                 {
                   isPreloaderVisible ?
                     <MiniPreloader isLinkColor={true} />
                     :
-                    <p className="cart-page__summary-pay-btn-text">Оформить заказ</p>
+                    <p className="cart-page__summary-pay-btn-text">{step === 0 ? 'Оформить заказ' : 'Подтвердить заказ'}</p>
                 }
               </button>
             </div>
