@@ -43,11 +43,11 @@ function SubCategory({
   }
 
   const listRef = useRef()
-  const [pageValue, setPageValue] = useState(0);
-  const [prevScrollPosition, setPrevScrollPosition] = useState(-1);
-  const [scrollPosition, setScrollPosition] = useState(0);
+  // const [pageValue, setPageValue] = useState(0);
+  // const [prevScrollPosition, setPrevScrollPosition] = useState(-1);
+  // const [scrollPosition, setScrollPosition] = useState(0);
 
-  const [scrollTraking, setScrollTraking] = useState(true);
+  // const [scrollTraking, setScrollTraking] = useState(true);
 
   const [subcategory, setSubcategory] = useState(undefined)
   const [items, setItems] = useState(undefined)
@@ -57,12 +57,13 @@ function SubCategory({
   const [isItemPreloaderVisible, setItemPreloaderVisible] = useState(true)
   useEffect(() => {
     if (sub_category && category) {
+      console.log('1mk')
       setItemPreloaderVisible(true)
       setPreloaderVisible(true)
       setItems(undefined)
-      setPageValue(0)
-      setPrevScrollPosition(0)
-      setScrollPosition(0)
+      // setPageValue(0)
+      // setPrevScrollPosition(0)
+      // setScrollPosition(0)
 
       let data = {}
       data.category_translit_name = category
@@ -119,6 +120,8 @@ function SubCategory({
   const [priceSortByDecrease, setPriceSortByDecrease] = useState(true);
 
   function handleResetFilters() {
+    console.log('2mk')
+
     setItemPreloaderVisible(true)
     setFilterPopupOpen(false)
     let data = {}
@@ -139,9 +142,9 @@ function SubCategory({
     console.log(data)
 
     setItems(undefined)
-    setPageValue(0)
-    setPrevScrollPosition(0)
-    setScrollPosition(0)
+    // setPageValue(0)
+    // setPrevScrollPosition(0)
+    // setScrollPosition(0)
 
     mainApi.getItemsBySubAndCategory({ data: JSON.stringify(data) })
       .then((res) => {
@@ -158,11 +161,14 @@ function SubCategory({
   }
 
   const [filters, setFilters] = useState([])
-  function handleUpdateByFilters({ filters, inStock }) {
+  function handleUpdateByFilters({ filters_from_func, inStock }) {
+
+    console.log('3mk', filters_from_func, inStock)
+
     setItemPreloaderVisible(true)
     const defMaxValue = '999999999'
     const defMinValue = '0'
-    let array = Object.values(filters)
+    let array = Object.values(filters_from_func)
     array = array.map((item) => {
 
       if (item.type === 'min_max') {
@@ -201,9 +207,9 @@ function SubCategory({
     data.limit = product_limit
 
     setItems(undefined)
-    setPageValue(0)
-    setPrevScrollPosition(0)
-    setScrollPosition(0)
+    // setPageValue(0)
+    // setPrevScrollPosition(0)
+    // setScrollPosition(0)
 
     mainApi.getItemsBySubAndCategory({ data: JSON.stringify(data) })
       .then((res) => {
@@ -223,6 +229,8 @@ function SubCategory({
 
 
   function handleSortChange(value) {
+    console.log('4mk')
+
     setPriceSortByDecrease(value)
     setItemPreloaderVisible(true)
     let data = {}
@@ -242,9 +250,9 @@ function SubCategory({
     data.limit = product_limit
 
     setItems(undefined)
-    setPageValue(0)
-    setPrevScrollPosition(0)
-    setScrollPosition(0)
+    // setPageValue(0)
+    // setPrevScrollPosition(0)
+    // setScrollPosition(0)
 
     mainApi.getItemsBySubAndCategory({ data: JSON.stringify(data) })
       .then((res) => {
@@ -265,85 +273,85 @@ function SubCategory({
 
 
 
-  const handleScroll = () => {
-    const position = window.pageYOffset;
+  // const handleScroll = () => {
+  //   const position = window.pageYOffset;
 
-    setScrollPosition(position);
-  };
+  //   setScrollPosition(position);
+  // };
 
 
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll, { passive: true });
+  // useEffect(() => {
+  //   window.addEventListener('scroll', handleScroll, { passive: true });
 
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
+  //   return () => {
+  //     window.removeEventListener('scroll', handleScroll);
+  //   };
+  // }, []);
 
-  useEffect(() => {
-    // console.log(scrollPosition, prevScrollPosition)
-    if (listRef.current && scrollTraking && scrollPosition > prevScrollPosition && items && items.length > 0) {
-      // console.log(listRef.current)
-      setPrevScrollPosition(scrollPosition)
-      const { scrollHeight } = listRef.current;
-      if (scrollHeight < scrollPosition + 1000) {
-        setScrollTraking(false)
-        setPageValue(pageValue + 1)
-        setTimeout(() => {
-          setScrollTraking(true)
-        }, 500);
-      }
+  // useEffect(() => {
+  //   // console.log(scrollPosition, prevScrollPosition)
+  //   if (listRef.current && scrollTraking && scrollPosition > prevScrollPosition && items && items.length > 0) {
+  //     // console.log(listRef.current)
+  //     setPrevScrollPosition(scrollPosition)
+  //     const { scrollHeight } = listRef.current;
+  //     if (scrollHeight < scrollPosition + 1000) {
+  //       setScrollTraking(false)
+  //       setPageValue(pageValue + 1)
+  //       setTimeout(() => {
+  //         setScrollTraking(true)
+  //       }, 500);
+  //     }
+  //   }
+  // }, [scrollPosition, scrollTraking, prevScrollPosition, pageValue, items]);
+
+  const [isMoreLoading, setMoreLoading] = useState(false)
+
+  function handleLoadMore() {
+    if (isMoreLoading) return
+    setMoreLoading(true)
+    let last_id = items[items.length - 1]._id
+
+    const name = localStorage.getItem('city') ? localStorage.getItem('city') : 'Тобольск'
+    let cityMap = {
+      "Новый Уренгой": "63777e52c505252a8fc59c09",
+      "Надым": "63777e62c505252a8fc59c0a",
+      "Тобольск": "63777e74c505252a8fc59c0b",
     }
-  }, [scrollPosition, scrollTraking, prevScrollPosition, pageValue, items]);
+    let id = cityMap[name] ? cityMap[name] : "63777e74c505252a8fc59c0b"
+    let last_price = items[items.length - 1].firstc_data.price[id]
 
-  useEffect(() => {
+    console.log(last_id)
+    console.log('ss')
 
-    if (pageValue > 0 && items && items.length > 0 && items.length === product_limit * pageValue) {
-      let last_id = items[items.length - 1]._id
-
-      const name = localStorage.getItem('city') ? localStorage.getItem('city') : 'Тобольск'
-      let cityMap = {
-        "Новый Уренгой": "63777e52c505252a8fc59c09",
-        "Надым": "63777e62c505252a8fc59c0a",
-        "Тобольск": "63777e74c505252a8fc59c0b",
+    let data = {}
+    data.category_translit_name = category
+    data.city_id = localStorage.getItem('city') ? getCityId(localStorage.getItem('city')) : '63777e74c505252a8fc59c0b'
+    data.sub_category_translit_name = sub_category
+    data.price_sort = priceSortByDecrease
+    data.filters = filters.length > 0 ? filters : [
+      {
+        translit_name: 'ROOT.amount',
+        type: 'slider_bool',
+        translit_value: '1'
       }
-      let id = cityMap[name] ? cityMap[name] : "63777e74c505252a8fc59c0b"
-      let last_price = items[items.length - 1].firstc_data.price[id]
-
-      console.log(last_id)
-      console.log('ss')
-
-      let data = {}
-      data.category_translit_name = category
-      data.city_id = localStorage.getItem('city') ? getCityId(localStorage.getItem('city')) : '63777e74c505252a8fc59c0b'
-      data.sub_category_translit_name = sub_category
-      data.price_sort = priceSortByDecrease
-      data.filters = filters.length > 0 ? filters : [
-        {
-          translit_name: 'ROOT.amount',
-          type: 'slider_bool',
-          translit_value: '1'
-        }
-      ]
-      data.last_id = last_id
-      data.last_price = last_price
-      data.limit = product_limit
-      console.log(data)
-      mainApi.getItemsBySubAndCategory({ data: JSON.stringify(data) })
-        .then((res) => {
-          console.log(res)
-          setItems(prevList => prevList.concat(res.data))
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-        .finally(() => {
-          // setItemPreloaderVisible(false)
-        })
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pageValue, items])
+    ]
+    data.last_id = last_id
+    data.last_price = last_price
+    data.limit = product_limit
+    console.log(data)
+    mainApi.getItemsBySubAndCategory({ data: JSON.stringify(data) })
+      .then((res) => {
+        console.log(res)
+        setItems(prevList => prevList.concat(res.data))
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+      .finally(() => {
+        setMoreLoading(false)
+        // setItemPreloaderVisible(false)
+      })
+  }
 
   return (
     <div className="sub-category" ref={divRef}>
@@ -423,6 +431,12 @@ function SubCategory({
                               key={`ProductCard${i}`} />
                           ))}
                         </div>
+                        {/* в масииве = {items?.length}/ колличество по данным с бека = {itemsCount} */}
+                        {items?.length !== itemsCount ?
+                          <button className='sub-category__load-more' type='button' onClick={handleLoadMore}>
+                            {isMoreLoading ? <MiniPreloader /> : 'Загрузить еще'}
+                          </button>
+                          : null}
                       </> : <p className='sub-category__no-products-text'>Товары по указанным фильтрам не найдены</p>}
                   </div>
                 </div>

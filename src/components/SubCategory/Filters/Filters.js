@@ -64,6 +64,9 @@ function Filters({ handleUpdateByFilters, filters, divRef, handleResetFilters })
       ...filtersValue,
       inStock: !filtersValue.inStock
     })
+    handleUpdateByFilters({
+      filters_from_func: filtersValues ? filtersValues : [], inStock: !filtersValue.inStock
+    })
   }
 
   // function handleCloseAll() {
@@ -76,154 +79,22 @@ function Filters({ handleUpdateByFilters, filters, divRef, handleResetFilters })
 
   const [isPriceOpen, setPriceOpen] = useState(false)
 
-  function handlePriceOpen() {
-    setPriceOpen(!isPriceOpen)
-    setWidthOpen(false)
-    setHeightOpen(false)
-    setDepthOpen(false)
-    setBrandsOpen(false)
-  }
-
-
-  function handlePriceMinChange(e) {
-    let inputValue = e.target.value.replace(/\D/g, '')
-
-    setFiltersValue({
-      ...filtersValue,
-      price: {
-        min: inputValue,
-        max: filtersValue.price.max
-      }
-    })
-  }
-
-  function handlePriceMaxChange(e) {
-    let inputValue = e.target.value.replace(/\D/g, '')
-    setFiltersValue({
-      ...filtersValue,
-      price: {
-        min: filtersValue.price.min,
-        max: inputValue
-      }
-    })
-  }
 
   const [isWidthOpen, setWidthOpen] = useState(false)
 
-  function handleWidthOpen() {
-    setWidthOpen(!isWidthOpen)
-    setPriceOpen(false)
-    setHeightOpen(false)
-    setDepthOpen(false)
-    setBrandsOpen(false)
-  }
-
-  function handleWidthMinChange(e) {
-    let inputValue = e.target.value.replace(/\D/g, '')
-    setFiltersValue({
-      ...filtersValue,
-      width: {
-        min: inputValue,
-        max: filtersValue.width.max
-
-      }
-    })
-  }
-
-  function handleWidthMaxChange(e) {
-    let inputValue = e.target.value.replace(/\D/g, '')
-    setFiltersValue({
-      ...filtersValue,
-      width: {
-        min: filtersValue.width.min,
-        max: inputValue
-      }
-    })
-  }
 
   const [isHeightOpen, setHeightOpen] = useState(false)
-
-  function handleHeightOpen() {
-    setHeightOpen(!isHeightOpen)
-    setPriceOpen(false)
-    setWidthOpen(false)
-    setDepthOpen(false)
-    setBrandsOpen(false)
-  }
-
-
-
-  function handleHeightMinChange(e) {
-    let inputValue = e.target.value.replace(/\D/g, '')
-    setFiltersValue({
-      ...filtersValue,
-      height: {
-        min: inputValue,
-        max: filtersValue.height.max
-      }
-    })
-  }
-
-  function handleHeightMaxChange(e) {
-    let inputValue = e.target.value.replace(/\D/g, '')
-    setFiltersValue({
-      ...filtersValue,
-      height: {
-        min: filtersValue.height.min,
-        max: inputValue
-
-      }
-    })
-  }
 
 
   const [isDepthOpen, setDepthOpen] = useState(false)
 
-  function handleDepthOpen() {
-    setDepthOpen(!isDepthOpen)
-    setPriceOpen(false)
-    setWidthOpen(false)
-    setHeightOpen(false)
-    setBrandsOpen(false)
-  }
-
-
-
-  function handleDepthMinChange(e) {
-    let inputValue = e.target.value.replace(/\D/g, '')
-    setFiltersValue({
-      ...filtersValue,
-      depth: {
-        min: inputValue,
-        max: filtersValue.depth.max
-      }
-    })
-  }
-
-  function handleDepthMaxChange(e) {
-    let inputValue = e.target.value.replace(/\D/g, '')
-    setFiltersValue({
-      ...filtersValue,
-      depth: {
-        min: filtersValue.depth.min,
-        max: inputValue
-
-      }
-    })
-  }
 
 
   const [isBrandsOpen, setBrandsOpen] = useState(false)
 
   const [brandsValue, setBrandsValue] = useState('')
 
-  function handleBrandsOpen() {
-    setBrandsOpen(!isBrandsOpen)
-    setPriceOpen(false)
-    setWidthOpen(false)
-    setHeightOpen(false)
-    setDepthOpen(false)
-  }
+
 
   function handleBrandsChange(e) {
     let inputValue = e.target.value
@@ -240,6 +111,9 @@ function Filters({ handleUpdateByFilters, filters, divRef, handleResetFilters })
     window.scrollTo({ top: 0, behavior: 'smooth' })
     handleResetFilters()
     setFiltersValues(undefined)
+    handleUpdateByFilters({
+      filters_from_func: [], inStock: filtersValue.inStock
+    })
     setOpendFilter(undefined)
     // setFiltersValue({
     //     inStock: false,
@@ -288,6 +162,17 @@ function Filters({ handleUpdateByFilters, filters, divRef, handleResetFilters })
           type: filtersValues && filtersValues[openedFilter.translit_name] && filtersValues[openedFilter.translit_name].type ? filtersValues[openedFilter.translit_name].type : openedFilter.type,
         }
       })
+      handleUpdateByFilters({
+        filters_from_func: {
+          ...filtersValues,
+          [openedFilter.translit_name]: {
+            min: filtersValues && filtersValues[openedFilter.translit_name] && filtersValues[openedFilter.translit_name].max ? filtersValues[openedFilter.translit_name].max : '',
+            max: inputValue,
+            translit_name: filtersValues && filtersValues[openedFilter.translit_name] && filtersValues[openedFilter.translit_name].translit_name ? filtersValues[openedFilter.translit_name].translit_name : openedFilter.translit_name,
+            type: filtersValues && filtersValues[openedFilter.translit_name] && filtersValues[openedFilter.translit_name].type ? filtersValues[openedFilter.translit_name].type : openedFilter.type,
+          }
+        }, inStock: filtersValue.inStock
+      })
     } else {
       setFiltersValues({
         ...filtersValues,
@@ -297,6 +182,17 @@ function Filters({ handleUpdateByFilters, filters, divRef, handleResetFilters })
           translit_name: filtersValues && filtersValues[openedFilter.translit_name] && filtersValues[openedFilter.translit_name].translit_name ? filtersValues[openedFilter.translit_name].translit_name : openedFilter.translit_name,
           type: filtersValues && filtersValues[openedFilter.translit_name] && filtersValues[openedFilter.translit_name].type ? filtersValues[openedFilter.translit_name].type : openedFilter.type,
         }
+      })
+      handleUpdateByFilters({
+        filters_from_func: {
+          ...filtersValues,
+          [openedFilter.translit_name]: {
+            min: inputValue,
+            max: filtersValues && filtersValues[openedFilter.translit_name] && filtersValues[openedFilter.translit_name].max ? filtersValues[openedFilter.translit_name].max : '',
+            translit_name: filtersValues && filtersValues[openedFilter.translit_name] && filtersValues[openedFilter.translit_name].translit_name ? filtersValues[openedFilter.translit_name].translit_name : openedFilter.translit_name,
+            type: filtersValues && filtersValues[openedFilter.translit_name] && filtersValues[openedFilter.translit_name].type ? filtersValues[openedFilter.translit_name].type : openedFilter.type,
+          }
+        }, inStock: filtersValue.inStock
       })
     }
 
@@ -319,6 +215,17 @@ function Filters({ handleUpdateByFilters, filters, divRef, handleResetFilters })
           type: filtersValues && filtersValues[openedFilter.translit_name] && filtersValues[openedFilter.translit_name].type ? filtersValues[openedFilter.translit_name].type : openedFilter.type,
         }
       })
+      handleUpdateByFilters({
+        filters_from_func: {
+          ...filtersValues,
+          [openedFilter.translit_name]: {
+            criterions: newBrands,
+
+            translit_name: filtersValues && filtersValues[openedFilter.translit_name] && filtersValues[openedFilter.translit_name].translit_name ? filtersValues[openedFilter.translit_name].translit_name : openedFilter.translit_name,
+            type: filtersValues && filtersValues[openedFilter.translit_name] && filtersValues[openedFilter.translit_name].type ? filtersValues[openedFilter.translit_name].type : openedFilter.type,
+          }
+        }, inStock: filtersValue.inStock
+      })
     } else {
       setFiltersValues({
         ...filtersValues,
@@ -328,6 +235,17 @@ function Filters({ handleUpdateByFilters, filters, divRef, handleResetFilters })
           translit_name: filtersValues && filtersValues[openedFilter.translit_name] && filtersValues[openedFilter.translit_name].translit_name ? filtersValues[openedFilter.translit_name].translit_name : openedFilter.translit_name,
           type: filtersValues && filtersValues[openedFilter.translit_name] && filtersValues[openedFilter.translit_name].type ? filtersValues[openedFilter.translit_name].type : openedFilter.type,
         }
+      })
+      handleUpdateByFilters({
+        filters_from_func: {
+          ...filtersValues,
+          [openedFilter.translit_name]: {
+            criterions: filtersValues && filtersValues[openedFilter.translit_name] && filtersValues[openedFilter.translit_name].criterions ? [...filtersValues[openedFilter.translit_name].criterions, brand] : [brand],
+
+            translit_name: filtersValues && filtersValues[openedFilter.translit_name] && filtersValues[openedFilter.translit_name].translit_name ? filtersValues[openedFilter.translit_name].translit_name : openedFilter.translit_name,
+            type: filtersValues && filtersValues[openedFilter.translit_name] && filtersValues[openedFilter.translit_name].type ? filtersValues[openedFilter.translit_name].type : openedFilter.type,
+          }
+        }, inStock: filtersValue.inStock
       })
     }
 
@@ -345,6 +263,17 @@ function Filters({ handleUpdateByFilters, filters, divRef, handleResetFilters })
           type: filtersValues && filtersValues[openedFilter.translit_name] && filtersValues[openedFilter.translit_name].type ? filtersValues[openedFilter.translit_name].type : openedFilter.type,
         }
       })
+      handleUpdateByFilters({
+        filters_from_func: {
+          ...filtersValues,
+          [openedFilter.translit_name]: {
+            min: inputValue,
+            max: filtersValues && filtersValues[openedFilter.translit_name] && filtersValues[openedFilter.translit_name].min ? filtersValues[openedFilter.translit_name].min : '',
+            translit_name: filtersValues && filtersValues[openedFilter.translit_name] && filtersValues[openedFilter.translit_name].translit_name ? filtersValues[openedFilter.translit_name].translit_name : openedFilter.translit_name,
+            type: filtersValues && filtersValues[openedFilter.translit_name] && filtersValues[openedFilter.translit_name].type ? filtersValues[openedFilter.translit_name].type : openedFilter.type,
+          }
+        }, inStock: filtersValue.inStock
+      })
     } else {
       setFiltersValues({
         ...filtersValues,
@@ -355,21 +284,32 @@ function Filters({ handleUpdateByFilters, filters, divRef, handleResetFilters })
           type: filtersValues && filtersValues[openedFilter.translit_name] && filtersValues[openedFilter.translit_name].type ? filtersValues[openedFilter.translit_name].type : openedFilter.type,
         }
       })
+      handleUpdateByFilters({
+        filters_from_func: {
+          ...filtersValues,
+          [openedFilter.translit_name]: {
+            min: filtersValues && filtersValues[openedFilter.translit_name] && filtersValues[openedFilter.translit_name].min ? filtersValues[openedFilter.translit_name].min : '',
+            max: inputValue,
+            translit_name: filtersValues && filtersValues[openedFilter.translit_name] && filtersValues[openedFilter.translit_name].translit_name ? filtersValues[openedFilter.translit_name].translit_name : openedFilter.translit_name,
+            type: filtersValues && filtersValues[openedFilter.translit_name] && filtersValues[openedFilter.translit_name].type ? filtersValues[openedFilter.translit_name].type : openedFilter.type,
+          }
+        }, inStock: filtersValue.inStock
+      })
     }
 
   }
 
-  useEffect(() => {
-    console.log(filtersValues)
-    //  setItems()
-    // //  setItemsCount()
-    if (filtersValues) {
-      handleUpdateByFilters({ filters: filtersValues, inStock: filtersValue.inStock })
-    } else {
-      handleUpdateByFilters({ filters: [], inStock: filtersValue.inStock })
-    }
+  // useEffect(() => {
+  //   console.log({ filtersValues, filtersValue })
+  //   //  setItems()
+  //   // //  setItemsCount()
+  //   if (filtersValues) {
+  //     handleUpdateByFilters({ filters_from_func: filtersValues, inStock: filtersValue.inStock })
+  //   } else {
+  //     handleUpdateByFilters({ filters_from_func: [], inStock: filtersValue.inStock })
+  //   }
 
-  }, [filtersValues, filtersValue])
+  // }, [filtersValues, filtersValue])
 
   return (
     <div className="filters">
