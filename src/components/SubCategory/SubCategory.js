@@ -273,37 +273,6 @@ function SubCategory({
 
 
 
-  // const handleScroll = () => {
-  //   const position = window.pageYOffset;
-
-  //   setScrollPosition(position);
-  // };
-
-
-  // useEffect(() => {
-  //   window.addEventListener('scroll', handleScroll, { passive: true });
-
-  //   return () => {
-  //     window.removeEventListener('scroll', handleScroll);
-  //   };
-  // }, []);
-
-  // useEffect(() => {
-  //   // console.log(scrollPosition, prevScrollPosition)
-  //   if (listRef.current && scrollTraking && scrollPosition > prevScrollPosition && items && items.length > 0) {
-  //     // console.log(listRef.current)
-  //     setPrevScrollPosition(scrollPosition)
-  //     const { scrollHeight } = listRef.current;
-  //     if (scrollHeight < scrollPosition + 1000) {
-  //       setScrollTraking(false)
-  //       setPageValue(pageValue + 1)
-  //       setTimeout(() => {
-  //         setScrollTraking(true)
-  //       }, 500);
-  //     }
-  //   }
-  // }, [scrollPosition, scrollTraking, prevScrollPosition, pageValue, items]);
-
   const [isMoreLoading, setMoreLoading] = useState(false)
 
   function handleLoadMore() {
@@ -320,7 +289,7 @@ function SubCategory({
     let id = cityMap[name] ? cityMap[name] : "63777e74c505252a8fc59c0b"
     let last_price = items[items.length - 1].firstc_data.price[id]
 
-    console.log(last_id)
+    console.log({ filters })
     console.log('ss')
 
     let data = {}
@@ -332,7 +301,7 @@ function SubCategory({
       {
         translit_name: 'ROOT.amount',
         type: 'slider_bool',
-        translit_value: '1'
+        translit_value: '0'
       }
     ]
     data.last_id = last_id
@@ -395,7 +364,7 @@ function SubCategory({
 
                 <div className="sub-category__products-and-filters" key={subcategory.category.translit_name}>
                   <div className='sub-category__filters'>
-                    <Filters handleResetFilters={handleResetFilters} divRef={divRef} setFiltersUpd={setFiltersUpd} filters={subcategory.filters} handleUpdateByFilters={handleUpdateByFilters} />
+                    <Filters isMoreLoading={isMoreLoading} handleResetFilters={handleResetFilters} divRef={divRef} setFiltersUpd={setFiltersUpd} filters={subcategory.filters} handleUpdateByFilters={handleUpdateByFilters} />
                   </div>
                   <div className="sub-category__products-with-btn">
                     <div className="sub-category__btns">

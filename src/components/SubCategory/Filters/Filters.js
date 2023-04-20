@@ -4,7 +4,7 @@ import './Filters.css';
 
 
 
-function Filters({ handleUpdateByFilters, filters, divRef, handleResetFilters }) {
+function Filters({ handleUpdateByFilters, filters, divRef, handleResetFilters, isMoreLoading }) {
   const [allBrands, setAllBrands] = useState([])
   const [filtersValue, setFiltersValue] = useState({
     inStock: false,
@@ -312,7 +312,7 @@ function Filters({ handleUpdateByFilters, filters, divRef, handleResetFilters })
   // }, [filtersValues, filtersValue])
 
   return (
-    <div className="filters">
+    <div className={`filters ${isMoreLoading ? 'filters_more-loading' : ''}`}>
 
       <div className="filters__in-stock">
         <p className="filters__in-stock-text">Только&nbsp;в&nbsp;наличии</p>
